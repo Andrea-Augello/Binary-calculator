@@ -1,27 +1,23 @@
 HEX
 FE000000 CONSTANT PERI_BASE
 1	 CONSTANT OUTPUT
-
-: GPIO_BASE PERI_BASE 200000 + ;
-: GPSET0 GPIO_BASE 1C + ;
-: GPCLR0 GPIO_BASE 28 + ;
+PERI_BASE 200000 + CONSTANT GPIO_BASE
+GPIO_BASE 1C +     CONSTANT GPSET0
+GPIO_BASE 28 +     CONSTANT GPCLR0
 
 : PIN ;
-: ON/OFF-MASK 1 SWAP LSHIFT ;
-: ON ON/OFF-MASK GPSET0 ! ;
-: OFF ON/OFF-MASK GPCLR0 ! ;
-: ENABLE-PINS 1224000 GPFSEL0 4 + ! ;
-
-
-: ENABLE
-	>R
-	A /MOD
+: MASK ( position n -- mask )SWAP LSHIFT ;
+: ON  1 MASK GPSET0 ! ;
+: OFF 1 MASK GPCLR0 ! ;
+: ENABLE ( pin# func -- )
+	>R \ puts the function# on the return stack for ease of handling
+	A /MOD ( pin# -- 3bitset# gpfsel# )
 	SWAP >R
-	4 * GPIO_BASE + DUP @
-	R> 3 * DUP
-	7 SWAP LSHIFT INVERT ROT AND
-	R> rot LSHIFT OR
-	SWAP ! ;
+	4 * GPIO_BASE + DUP @ \ gets the current content of gpfsel
+	R> 3 * DUP \ masking offset
+	7 MASK INVERT ROT AND \ sets to zero the bits linked to the pin
+	R> ROT LSHIFT OR \ sets the bits linked to the pin to func
+	SWAP ! ; \ writes the new value into gpfsel
 
 
 DECIMAL
