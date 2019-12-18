@@ -6,7 +6,7 @@ GPIO_BASE 1C +     CONSTANT GPSET0
 GPIO_BASE 28 +     CONSTANT GPCLR0
 
 : PIN ;
-: MASK ( position n -- mask )SWAP LSHIFT ;
+: MASK ( position n -- mask ) SWAP LSHIFT ;
 : ON  1 MASK GPSET0 ! ;
 : OFF 1 MASK GPCLR0 ! ;
 : ENABLE ( pin# func -- )
