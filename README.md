@@ -1,1 +1,1 @@
-# Embedded-Systems-Project
+# Binary Calculator
