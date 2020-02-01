@@ -15,7 +15,7 @@ CREATE DISPLAY 21 , 20 , 16 , 12 , 7 , 8 , 25 , 24 ,
 		ROT LSB_MASK	( n mask loop_counter -- mask n/2 n_mask )
 		ROT OR 			\ adds the newly computed mask to the previous result
 		R> DUP
-		DISPLAY_SIZE <=
+		DISPLAY_SIZE <
 	UNTIL
 	DROP NIP ;			
 
@@ -38,10 +38,10 @@ CREATE DISPLAY 21 , 20 , 16 , 12 , 7 , 8 , 25 , 24 ,
 		DISPLAY SWAP GET
 		OUTPUT ENABLE
 		R> DUP
-		DISPLAY_SIZE <=
+		DISPLAY_SIZE <
 	UNTIL
 	DROP 
 	CLEAR	
 ;
 
-\ DISPLAY_SETUP
+ DISPLAY_SETUP
