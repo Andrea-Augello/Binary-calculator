@@ -8,19 +8,19 @@ CREATE DISPLAY 21 , 20 , 16 , 12 , 7 , 8 , 25 , 24 ,
 	DISPLAY SWAP GET  ( n/2 LSB shift -- n/2 LSB display[shift] )
 	LSHIFT ;
 	
-: DISPLAY_MASK ( n -- mask ) 
-	0 0 			( n -- n mask loop_counter )
+: DISPLAY_MASK ( n -- mask )
+	0 0 					\ adds an empy mask and a loop counter to the stack
 	BEGIN
 		DUP 1 + >R
 		ROT LSB_MASK	( n mask loop_counter -- mask n/2 n_mask )
 		ROT OR 			\ adds the newly computed mask to the previous result
 		R> DUP
-		DISPLAY_SIZE <
+		DISPLAY_SIZE >=
 	UNTIL
 	DROP NIP ;			
 
 : CLEAR ( -- )
-	 1 DISPLAY_SIZE LSHIFT 1 - DISPLAY_MASK  	\ mask with every display bit set to 1
+	[ 1 DISPLAY_SIZE LSHIFT 1 - DISPLAY_MASK ] LITERAL 	\ mask with every display bit set to 1
 	GPCLR0 ! 
 	OVERFLOW OFF
 	NEGATIVE OFF ;
@@ -38,10 +38,12 @@ CREATE DISPLAY 21 , 20 , 16 , 12 , 7 , 8 , 25 , 24 ,
 		DISPLAY SWAP GET
 		OUTPUT ENABLE
 		R> DUP
-		DISPLAY_SIZE <
+		DISPLAY_SIZE >=
 	UNTIL
 	DROP 
+	OVERFLOW OUTPUT ENABLE
+	NEGATIVE OUTPUT ENABLE
 	CLEAR	
 ;
 
- DISPLAY_SETUP
+DISPLAY_SETUP
