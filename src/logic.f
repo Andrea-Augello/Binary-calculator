@@ -10,7 +10,7 @@ VARIABLE OPERATION
 : MULTIPLICATION ['] * ;
 : DIVISION ['] / ;
 
-/ Bit twiddling 
+\ Bit twiddling 
 : ?OVERFLOW [ 1 WORD_SIZE  1 - LSHIFT ] LITERAL > STATUS @ SWAP 
 	IF 
 		1 OR  

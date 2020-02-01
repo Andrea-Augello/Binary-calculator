@@ -11,7 +11,8 @@ TIMER_BASE 4 +			CONSTANT TIMER_CNT
 	DUP NEGATE DUP 0 > IF NIP ELSE DROP THEN ;
 
 : PIN ;
-: MASK ( position n -- mask ) SWAP LSHIFT ;
+: MASK ( position n -- mask ) 
+	SWAP LSHIFT ;
 : ON  1 MASK GPSET0 ! ;
 : OFF 1 MASK GPCLR0 ! ;
 : ENABLE ( pin# func -- )
@@ -28,7 +29,8 @@ DECIMAL
 
 : MILLISECONDS 1000 * ;
 : SECONDS 1000000 * ;
-: CURRENT_TIME ( -- time ) TIMER_CNT @ ;
+: CURRENT_TIME ( -- time ) 
+	TIMER_CNT @ ;
 : DELAY ( useconds -- )
 	CURRENT_TIME
 	BEGIN
@@ -37,3 +39,7 @@ DECIMAL
 		>R OVER R>	<=
 	UNTIL 
 	DROP DROP ;
+
+
+: GET ( array, cell -- array[cell] ) 
+	CELLS + @ ;
