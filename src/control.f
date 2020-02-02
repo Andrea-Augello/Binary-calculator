@@ -1,0 +1,21 @@
+: APPEND ( n var -- var << 1 + n )
+	DUP
+	@ 2 * ROT +
+	SWAP ! ;
+
+: GET_NUMBER
+	0
+	BEGIN
+		READ_KEYPRESS DUP
+		0 <>
+		IF
+			DUP ?DIGIT
+				IF
+					SWAP 1 + SWAP
+					GET_DIGIT CURRENT_VALUE APPEND
+				THEN
+		THEN DROP
+	DUP WORD_SIZE >=
+	STATUS CURRENT_VALUE @ SHOW
+	UNTIL
+	DROP ;
