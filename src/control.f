@@ -1,12 +1,9 @@
-: APPEND ( n var -- var << 1 + n )
-	DUP
-	@ 2 * ROT +
-	SWAP ! ;
+: APPEND ( n1 n2  -- 2n2 + n1  )
+	1 LSHIFT + ;
 
 : GET_NUMBER
 	0
 	BEGIN
-		50 MILLISECONDS DELAY
 		>R 
 		READ_KEYPRESS DUP
 		0 <> 
@@ -14,7 +11,8 @@
 			DUP ?DIGIT 
 				IF 
 					R> 1 + >R 
-					GET_DIGIT CURRENT_VALUE APPEND 
+					GET_DIGIT CURRENT_VALUE @ APPEND 
+					STORE_VALUE
 					STATUS CURRENT_VALUE @ SHOW 
 				ELSE 
 					DROP
