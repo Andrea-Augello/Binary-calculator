@@ -37,9 +37,9 @@ DIGIT_MASK CONSTANT DIGIT_MASK
 	DIGIT_MASK AND 0 <>  ;
 
 : GET_OP ( GPEDS0@ -- operation )
-	-1 0 
+	5 0 
 	BEGIN
-		DUP >R							( GPEDS0 selected_op loop_counter )
+		DUP >R								( GPEDS0 selected_op loop_counter )
 		1 OP_KEYS ROT GET LSHIFT		( GPEDS0 selected_op tentative_op )
 		ROT DUP ROT AND					( selected_op GPEDS0 T/F )
 		IF 
@@ -59,12 +59,9 @@ DIGIT_MASK CONSTANT DIGIT_MASK
 	IF
 		DROP 0
 	ELSE
-		DIGIT_KEYS 1 GET 1 MASK
-		AND
+		DIGIT_KEYS 1 GET 1 MASK	AND
 		IF
 			1
-		ELSE
-			-1
 		THEN
 	THEN  ;
 
