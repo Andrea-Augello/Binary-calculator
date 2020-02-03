@@ -27,30 +27,37 @@ OP_MASK CONSTANT OP_MASK
 
 DIGIT_MASK CONSTANT DIGIT_MASK
 
+: PEEK_KEYPRESS
+	[ OP_MASK DIGIT_MASK OR ] LITERAL
+	GPEDS0 @ AND ;
+
+: CLEAR_KEYPRESS
+	[ OP_MASK DIGIT_MASK OR ] LITERAL
+	GPEDS0 ! ;
+
 : READ_KEYPRESS
-	[ OP_MASK DIGIT_MASK OR ] LITERAL DUP
-	GPEDS0 @ AND
-	SWAP GPEDS0 ! 
-	50 MILLISECONDS DELAY ;
+	PEEK_KEYPRESS
+	CLEAR_KEYPRESS ;
 
 : ?DIGIT ( GPEDS0@ -- T/F )
 	DIGIT_MASK AND 0 <>  ;
 
-: GET_OP ( GPEDS0@ -- operation )
+: READ_OP ( GPEDS0@ -- operation )
 	5 0 
 	BEGIN
 		DUP >R								( GPEDS0 selected_op loop_counter )
-		1 OP_KEYS ROT GET LSHIFT		( GPEDS0 selected_op tentative_op )
+		1 OP_KEYS ROT GET LSHIFT		( GPEDS0 selected_op tentative_op_mask )
 		ROT DUP ROT AND					( selected_op GPEDS0 T/F )
 		IF 
-			ROT DROP
+			DROP
 			R> DUP >R
-			ROT ROT
+			NIP
 		THEN
 		R> 1 + 
+		DUP
 		#OPS >=
 	UNTIL
-	DROP NIP ;
+	DROP ;
 		
 : GET_DIGIT ( GPEDS0@ -- 0/1 )
 	DUP
