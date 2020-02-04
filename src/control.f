@@ -54,15 +54,22 @@
 
 : MAIN_LOOP 
 	BEGIN 
-	
-		GET_NUMBER 
 		OPERATION @ 0 <> 					\ check if a valid operation has been set
 		IF
+			PREPARE_NEXT
+			GET_NUMBER 
  			COMPUTE_RESULT
 			0 OPERATION !
 		ELSE
+			PEEK_KEYPRESS ?DIGIT
+			IF
+				PREPARE_NEXT
+				GET_NUMBER
+			ELSE
+				
+			THEN
 		THEN	
-			GET_OPERATION
+		GET_OPERATION
 
 		OPERATION @ EQUALS =
 		IF
@@ -73,7 +80,6 @@
 			UNTIL
 		ELSE
 		THEN
-			PREPARE_NEXT
 
 
 	0 UNTIL ;
