@@ -12,7 +12,7 @@ VARIABLE OPERATION
 	DUP 0 <> 
 	IF
 		OVER 0 < OVER 0 <	\ sign of the two operands
-		XOR 0 <>				\ Checks if the two operands have differt sign
+		XOR 	 				\ Checks if the two operands have differt sign
 		IF
 			-1
 		ELSE
