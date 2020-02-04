@@ -43,9 +43,11 @@ DIGIT_MASK CONSTANT DIGIT_MASK
 	DIGIT_MASK AND 0 <>  ;
 
 : READ_OP ( GPEDS0@ -- operation )
-	5 0 
+	-1 0 										\ by default, if no op matches, 
+												\ an invalid code ( -1 ) is returned
 	BEGIN
-		DUP >R								( GPEDS0 selected_op loop_counter )
+		DUP >R								\ stores in the return stack a copy of the
+												\ loop counter, the other one will be consumed
 		1 OP_KEYS ROT GET LSHIFT		( GPEDS0 selected_op tentative_op_mask )
 		ROT DUP ROT AND					( selected_op GPEDS0 T/F )
 		IF 
