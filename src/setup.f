@@ -49,3 +49,20 @@ DECIMAL
 
 : GET ( array, cell -- array[cell] ) 
 	CELLS + @ ;
+
+: 150_OPS_DELAY
+   0
+   BEGIN
+      1 + DUP
+      150 >=
+   UNTIL
+   DROP ;
+
+: SET_PUD		( GPPUDCLK0_MASK, UP/DOWN -- )
+	GPPUD !
+	150_OPS_DELAY
+	DUP INVERT SWAP
+	GPPUDCLK0 @ OR GPPUDCLK0 ! 
+	150_OPS_DELAY
+	GPPUDCLK0 @ AND GPPUDCLK0 ! ;
+	
