@@ -69,7 +69,7 @@
 			DISPLAY_RESULT
 			0 OPERATION !
 			BEGIN
-				PEEK_KEYPRESS				\ displays result until a key is pressed
+				PEEK_KEYPRESS 0 <>		\ displays result until a key is pressed
 			UNTIL
 		ELSE
 		THEN

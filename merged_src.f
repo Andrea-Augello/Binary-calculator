@@ -225,15 +225,21 @@ DIGIT_MASK CONSTANT DIGIT_MASK
 	DIGIT_MASK AND 0 <>  ;
 
 : READ_OP
-	5 0 
+	-1 0 										
+												
 	BEGIN
-		DUP >R
-		1 OP_KEYS ROT GET LSHIFT
-		ROT DUP ROT AND
+		DUP >R								
+												
+		OP_KEYS SWAP GET 1 MASK			
+		ROT DUP 								
+												
+		ROT AND 0 <>						
+												
 		IF 
-			DROP
-			R> DUP >R
-			NIP
+			NIP								
+			R> DUP >R						
+		ELSE
+			SWAP
 		THEN
 		R> 1 + 
 		DUP
@@ -376,7 +382,7 @@ INPUT_SETUP
 			DISPLAY_RESULT
 			0 OPERATION !
 			BEGIN
-				PEEK_KEYPRESS				
+				PEEK_KEYPRESS 0 <>		
 			UNTIL
 		ELSE
 		THEN
