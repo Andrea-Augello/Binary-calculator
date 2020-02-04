@@ -9,10 +9,10 @@ VARIABLE OPERATION
 : SUBTRACTION  - ;
 : MULTIPLICATION  * ;
 : DIVISION 					\ There's an additional check for division by zero
-	OVER 0 <> 
+	DUP 0 <> 
 	IF
-		OVER ?NEGATIVE OVER ?NEGATIVE	\ sign of the two operands
-		XOR									\ Checks if the two operands have differt sign
+		OVER 0 < OVER 0 <	\ sign of the two operands
+		XOR 0 <>				\ Checks if the two operands have differt sign
 		IF
 			-1
 		ELSE

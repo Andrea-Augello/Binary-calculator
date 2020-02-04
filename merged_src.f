@@ -111,10 +111,10 @@ VARIABLE OPERATION
 : SUBTRACTION  - ;
 : MULTIPLICATION  * ;
 : DIVISION 					
-	OVER 0 <> 
+	DUP 0 <> 
 	IF
-		OVER ?NEGATIVE OVER ?NEGATIVE	
-		XOR									
+		OVER 0 < OVER 0 <	
+		XOR 0 <>				
 		IF
 			-1
 		ELSE
