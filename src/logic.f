@@ -27,7 +27,7 @@ CREATE OP_SET ' ADDITION , ' SUBTRACTION , ' MULTIPLICATION , ' DIVISION , EQUAL
 	IF
 		[ 1 WORD_SIZE  LSHIFT 1 - INVERT ] LITERAL AND 0 <>
 	ELSE
-		[ 1 WORD_SIZE  LSHIFT 1 - INVERT DUP ] LITERAL ROT
+		[ 1 WORD_SIZE  LSHIFT 1 - INVERT ] LITERAL DUP ROT
 		AND												\ Zeroes bits in the allowed range 
 		XOR 0 <>											\ Checks if there are non zero bits 
 															\ after the ( WORD_SIZE )th one
