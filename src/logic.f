@@ -11,7 +11,15 @@ VARIABLE OPERATION
 : DIVISION 					\ There's an additional check for division by zero
 	OVER 0 <> 
 	IF
-		/
+		OVER ?NEGATIVE OVER ?NEGATIVE	\ sign of the two operands
+		XOR									\ Checks if the two operands have differt sign
+		IF
+			-1
+		ELSE
+			1
+		THEN
+			ROT ABS ROT ABS /			 	\ Performs division on the absolute values
+			*									\ Adjusts for sign
 	ELSE
 		DROP DROP -1
 	THEN ;
