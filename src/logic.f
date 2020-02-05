@@ -31,15 +31,10 @@ CREATE OP_SET ' ADDITION , ' SUBTRACTION , ' MULTIPLICATION , ' DIVISION , EQUAL
 : ?OVERFLOW 
 	STATUS @ SWAP
 	DUP
-	0 >=
-	IF
-		[ 1 WORD_SIZE  LSHIFT 1 - INVERT ] LITERAL AND 0 <>
-	ELSE
-		[ 1 WORD_SIZE  LSHIFT 1 - INVERT ] LITERAL DUP ROT
-		AND												\ Zeroes bits in the allowed range 
-		XOR 0 <>											\ Checks if there are non zero bits 
-															\ after the ( WORD_SIZE )th one
-	THEN
+	[ 1 WORD_SIZE 1 -  LSHIFT  1 - ] LITERAL >	\ Upper bound of interval
+	SWAP
+	[ 1 WORD_SIZE 1 - LSHIFT NEGATE ] LITERAL <	\ Lower bound of interval
+	OR
 	IF 
 		1 OR  
 	ELSE
