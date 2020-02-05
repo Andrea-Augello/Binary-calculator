@@ -8,11 +8,13 @@ VARIABLE OPERATION
 : ADDITION  + ;
 : SUBTRACTION  - ;
 : MULTIPLICATION  * ;
-: DIVISION 					\ There's an additional check for division by zero
+: DIVISION 			\ There's an additional check for division by zero and 
 	DUP 0 <> 
 	IF
-		OVER 0 < OVER 0 <	\ sign of the two operands
-		XOR 	 				\ Checks if the two operands have differt sign
+		OVER OVER	\ Makes a copy of the two operands
+		XOR 0 >=		\ Checks if the two operands have a different sign
+						\ If they differ the MSB of their XOR will be 1 and the 
+						\ resulting value will be interpreted as a negative number
 		IF
 			-1
 		ELSE
@@ -28,7 +30,7 @@ VARIABLE OPERATION
 CREATE OP_SET ' ADDITION , ' SUBTRACTION , ' MULTIPLICATION , ' DIVISION , EQUALS ,
 
 \ Bit twiddling 
-: ?OVERFLOW 
+: CHECK_OVERFLOW 
 	STATUS @ SWAP
 	DUP
 	[ 1 WORD_SIZE 1 -  LSHIFT  1 - ] LITERAL >	\ Upper bound of interval
@@ -42,9 +44,9 @@ CREATE OP_SET ' ADDITION , ' SUBTRACTION , ' MULTIPLICATION , ' DIVISION , EQUAL
 	THEN 	
 	STATUS ! ;
 
-: ?NEGATIVE 
+: CHECK_NEGATIVE 
 	STATUS @ SWAP
-	[ 1 31 LSHIFT ]  LITERAL AND 0 <> 
+	0 < 
 	IF
 		2 OR
 	ELSE
@@ -52,14 +54,25 @@ CREATE OP_SET ' ADDITION , ' SUBTRACTION , ' MULTIPLICATION , ' DIVISION , EQUAL
 	THEN
 	STATUS ! ;
 
-: TRUNCATE DUP ?OVERFLOW [ 1 WORD_SIZE LSHIFT 1 - ] LITERAL AND ;
+: TRUNCATE 		\ Sets to zero the bits outside the representable range
+	[ 1 WORD_SIZE LSHIFT 1 - ] LITERAL AND ;
 
-: EXTEND_SIGN [ 1 WORD_SIZE 1 - LSHIFT ] LITERAL DUP ROT XOR SWAP - DUP ?NEGATIVE ;
+: EXTEND_SIGN 
+	TRUNCATE
+	[ 1 WORD_SIZE 1 - LSHIFT ] LITERAL 	
+	DUP ROT 
+	XOR SWAP 									\ Complements the (WORD_SIZE)th bit 
+													\ of the input value 
+	- 												\ If the input value was positive it resets
+													\ the (WORD_SIZE)th bit to zero, else 
+													\ the subtraction sets it back to 1 and
+													\ also the following bits by borrowing
+	DUP CHECK_NEGATIVE ;
 
-: STORE_VALUE TRUNCATE EXTEND_SIGN CURRENT_VALUE ! ;
+: STORE_VALUE EXTEND_SIGN CURRENT_VALUE ! ;
 
 : COMPUTE_RESULT 
-	LAST_VALUE @ CURRENT_VALUE @ OPERATION @ EXECUTE STORE_VALUE ;
+	LAST_VALUE @ CURRENT_VALUE @ OPERATION @ EXECUTE DUP CHECK_OVERFLOW STORE_VALUE ;
 
 : PREPARE_NEXT 
 	CURRENT_VALUE @ LAST_VALUE ! ;
