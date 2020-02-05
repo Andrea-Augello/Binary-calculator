@@ -8,7 +8,9 @@ VARIABLE OPERATION
 : ADDITION  + ;
 : SUBTRACTION  - ;
 : MULTIPLICATION  * ;
-: DIVISION 			\ There's an additional check for division by zero and 
+: DIVISION 			\ There's an additional check for division by zero and negative
+						\ values as the FORTH implementation does not behave 
+						\ appropriately for the intended use
 	DUP 0 <> 
 	IF
 		OVER OVER	\ Makes a copy of the two operands
@@ -25,11 +27,14 @@ VARIABLE OPERATION
 	ELSE
 		DROP DROP -1
 	THEN ;
-: EQUALS -1 ;
 
-CREATE OP_SET ' ADDITION , ' SUBTRACTION , ' MULTIPLICATION , ' DIVISION , EQUALS ,
+: EQUALS ;	\ Does nothing, this operation is intended to never be executed and 
+				\ only stands as a flag for wich another module has to take
+				\ action appropriately
 
-\ Bit twiddling 
+
+CREATE OP_SET ' ADDITION , ' SUBTRACTION , ' MULTIPLICATION , ' DIVISION , ' EQUALS ,
+
 : CHECK_OVERFLOW 
 	STATUS @ SWAP
 	DUP
@@ -54,7 +59,7 @@ CREATE OP_SET ' ADDITION , ' SUBTRACTION , ' MULTIPLICATION , ' DIVISION , EQUAL
 	THEN
 	STATUS ! ;
 
-: TRUNCATE 		\ Sets to zero the bits outside the representable range
+: TRUNCATE 				\ Sets to zero the bits outside the representable range
 	[ 1 WORD_SIZE LSHIFT 1 - ] LITERAL AND ;
 
 : EXTEND_SIGN 
@@ -72,7 +77,8 @@ CREATE OP_SET ' ADDITION , ' SUBTRACTION , ' MULTIPLICATION , ' DIVISION , EQUAL
 : STORE_VALUE EXTEND_SIGN CURRENT_VALUE ! ;
 
 : COMPUTE_RESULT 
-	LAST_VALUE @ CURRENT_VALUE @ OPERATION @ EXECUTE DUP CHECK_OVERFLOW STORE_VALUE ;
+	LAST_VALUE @ CURRENT_VALUE @ OPERATION @ EXECUTE 
+	DUP CHECK_OVERFLOW STORE_VALUE ;
 
 : PREPARE_NEXT 
 	CURRENT_VALUE @ LAST_VALUE ! ;
