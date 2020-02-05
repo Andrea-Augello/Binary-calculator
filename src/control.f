@@ -34,7 +34,6 @@
 			DROP 
 		THEN 
 		R> DUP WORD_SIZE >=
-		100 MILLISECONDS DELAY 
 	UNTIL 
 	DROP ;
 
@@ -49,7 +48,6 @@
 			DROP								\ discard invalid/null input
 			0									\ stay in loop
 		THEN
-		100 MILLISECONDS DELAY 
 	UNTIL ;
 
 : MAIN_LOOP 
