@@ -37,8 +37,21 @@ DIGIT_MASK CONSTANT DIGIT_MASK
 
 : READ_KEYPRESS
 	PEEK_KEYPRESS
-	100 MILLISECONDS DELAY				\ Debouncing
-	CLEAR_KEYPRESS ;
+	DUP 0 <>
+	IF
+		180 MILLISECONDS DELAY				\ Debouncing, delay found by trial and error
+		CLEAR_KEYPRESS 
+	THEN ;
+
+: READ_LOOP
+		0
+	BEGIN
+		READ_KEYPRESS .
+		1 + DUP
+		200 >=
+		100 milliseconds delay
+	UNTIL 
+	DROP ;
 
 : ?DIGIT ( GPEDS0@ -- T/F )
 	DIGIT_MASK AND 0 <>  ;
