@@ -18,14 +18,14 @@ VARIABLE OPERATION
 						\ If they differ the MSB of their XOR will be 1 and the 
 						\ resulting value will be interpreted as a negative number
 		IF
-			-1
-		ELSE
 			1
+		ELSE
+			-1
 		THEN
 			ROT ABS ROT ABS /			 	\ Performs division on the absolute values
 			*									\ Adjusts for sign
 	ELSE
-		DROP DROP -1
+		DROP DROP [ 1 31 LSHIFT 1 - ] LITERAL \ Highest positive 32 bit number
 	THEN ;
 
 : EQUALS ;	\ Does nothing, this operation is intended to never be executed and 
@@ -78,6 +78,7 @@ CREATE OP_SET ' ADDITION , ' SUBTRACTION , ' MULTIPLICATION , ' DIVISION , ' EQU
 
 : COMPUTE_RESULT 
 	LAST_VALUE @ CURRENT_VALUE @ OPERATION @ EXECUTE 
+	\ DEBUG PURPOSE: LAST_VALUE @ . CURRENT_VALUE @ . OPERATION @ . CR DUP . CR
 	DUP CHECK_OVERFLOW STORE_VALUE ;
 
 : PREPARE_NEXT 
