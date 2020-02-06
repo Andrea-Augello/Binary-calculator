@@ -9,7 +9,14 @@
 
 
 ### FTDI FT232RL
+The FT232RL<sup>[9]</sup> is a USB to serial UART interface,
+it has been connected to the Raspberry Pi 4 UART1 in the following configuration:
+* FTDI-RX to RPi-GPIO14 (TX)
+* FTDI-TX to RPi-GPIO15 (RX)
+* FTDI-Ground to RPi-GND
 
+The micro USB of the FTDI module was connected tho a USB port on a computer with the appropriate software to use it.
+Without this module it would not have been possible to send data to and from the  Board.
 
 ### I/O choices
 
@@ -28,8 +35,16 @@
 ### Ubuntu 19.04
 
 ### Picocom and Minicom
-Minicom<sup>[7]</sup> is a terminal emulator software for Unix-like operating systems, it is commonly used when setting up a remote serial console
+Minicom<sup>[7]</sup> is a terminal emulator software for Unix-like operating systems, it is commonly used when setting up a remote serial console.
 
+[...]
+
+ASCII-XFR<sup>[8]</sup> to load the source file
+
+[...]
+Trough the command
+`sudo picocom --b 115200 /dev/ttyUSB0 --imap delbs -s "ascii-xfr -sv -l100 -c10"
+`
 
 ## Software
 
@@ -55,4 +70,9 @@ Minicom<sup>[7]</sup> is a terminal emulator software for Unix-like operating sy
 [5] [BCM2835 datasheet errata](https://elinux.org/BCM2835_datasheet_errata)
 
 [6] [pijFORTHos built-in words](https://github.com/Avoncliff/pijFORTHos/blob/master/doc/forth.md)
+
 [7] [Minicom man page](http://man7.org/linux/man-pages/man1/minicom.1.html)
+
+[8] [ASCII-XFR man page](http://man7.org/linux/man-pages//man1/ascii-xfr.1.html)
+
+[9] [FT232RL datasheet](https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT232R.pdf)
