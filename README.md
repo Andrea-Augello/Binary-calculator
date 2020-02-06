@@ -19,7 +19,8 @@ The micro USB of the FTDI module was connected to a USB port on a computer with 
 Without this module, it would not have been possible to send data to and from the  Board.
 
 ### I/O choices
-
+#### QTEATAK push buttons
+#### LED
 
 ### Pull-down resistors
 
