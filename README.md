@@ -79,7 +79,7 @@ JonesForth is not ANSI compliant<sup>[6](##References)</sup>, hence some standar
 
 The `se-ans.f` code provided in the course materials contains some definitions to ensure compliance for some words of common use.
 
-This code is the first to be loaded as to ensure that the subsequent instructions are executed correctly.
+This code is the first to be loaded to ensure that the subsequent instructions are executed correctly.
 
 ### Utilities
 
@@ -92,6 +92,7 @@ This code is the first to be loaded as to ensure that the subsequent instruction
 While testing the input code it occurred that a single button press sometimes originated up to three valid reads from the `GPEDS0` register, a phenomenon known as bouncing.<sup>[1](##References)</sup>
 
 Although there are some widely available valid hardware solutions<sup>[11](##References)</sup> the nature of this application does not warrant the added hardware complexity:
+By trial and error it was found that the bouncing lasts less than 0.2 seconds, and
 it is not unreasonable to assume that two keypresses in less than 0.2 seconds are unlikely to occur, therefore it is feasible to implement a software workaround by adding a delay after each successful read,
 and then clearing the register before polling again.
 
