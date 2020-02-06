@@ -7,8 +7,10 @@ CREATE DIGIT_KEYS 9 , 11 ,
 	0 0
 	BEGIN
 		DUP 1 + >R
-		OP_KEYS SWAP GET 
-		1 MASK OR
+		OP_KEYS SWAP GET 	\ On each cycle gets the pin# of the 
+								\ (cycle number)th button
+		1 MASK OR			\ Computes the mask for the current pin and adds it to the
+								\ mask computed so far
 		R> DUP
 		#OPS >=
 	UNTIL
@@ -16,7 +18,7 @@ CREATE DIGIT_KEYS 9 , 11 ,
 
 OP_MASK CONSTANT OP_MASK
 
-: DIGIT_MASK 
+: DIGIT_MASK 				\ Same as OP_MASK
 	0 0
 	BEGIN
 		DUP 1 + >R
