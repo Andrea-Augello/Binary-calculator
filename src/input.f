@@ -4,11 +4,11 @@ CREATE OP_KEYS 5 , 6 , 13 , 19 , 26 ,
 CREATE DIGIT_KEYS 9 , 11 ,
 
 : OP_MASK 
-	0 0
+	0 0						\ 0-set mask and loop counter
 	BEGIN
 		DUP 1 + >R
 		OP_KEYS SWAP GET 	\ On each cycle gets the pin# of the 
-								\ (cycle number)th button
+								\ (loop number)th button
 		1 MASK OR			\ Computes the mask for the current pin and adds it to the
 								\ mask computed so far
 		R> DUP
