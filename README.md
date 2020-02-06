@@ -24,7 +24,7 @@ Without this module, it would not have been possible to send data to and from th
 
 ### Pull-down resistors
 
-
+![schematic](./schematic.png)
 ## Environment
 
 
