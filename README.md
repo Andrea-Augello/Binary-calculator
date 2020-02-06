@@ -51,11 +51,28 @@ In the scope of this project, it is used as a serial communications program to a
 As ASCII-XFR<sup>[8](##References)</sup> was chosen to send the source file to the Raspberry, it  
 
 [...]
+
 Trough the command
 `sudo picocom --b 115200 /dev/ttyUSB0 --imap delbs -s "ascii-xfr -sv -l100 -c10"
 `
 
 ## Software
+Since it is not possible with the selected environment to have the Raspberry automatically load the source code at startup, the code is to be sent via a serial connection.
+
+Since the file transfer happens character by character at a quite limited speed and every file has to be selected singularly, it is convenient to use a bash script to remove unessential parts of the code (i.e. comments and empty lines) and merge everything into a single file.
+
+The developed script, `merge_source.sh`, makes use of awk to recognize comments and not print them, and sed to remove lines containing only whitespaces.
+
+```bash
+#!/bin/bash
+cd src
+cat se-ans.f setup.f logic.f output.f input.f control.f |
+awk -F"\\" '{print $1}' |
+awk -F"[^A-Z]+[()][^A-Z]+" '{print $1 $    3}' | 
+sed '/^[[:space:]]*$/d' > ../merged_src.f
+
+```
+
 
 ### ANSI compliance
 
