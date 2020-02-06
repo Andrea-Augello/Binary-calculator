@@ -12,7 +12,7 @@
 The FT232RL<sup>[9]</sup> is a USB to serial UART interface,
 it has been connected to the Raspberry Pi 4 UART1 in the following configuration:
 * FTDI-RX to RPi-GPIO14 (TX)
-* FTDI-TX to RPi-GPIO15 (RX)
+* FTDI-TX to RPi-GPIO16 (RX)
 * FTDI-Ground to RPi-GND
 
 The micro USB of the FTDI module was connected to a USB port on a computer with the appropriate software to use it.
@@ -37,6 +37,9 @@ Without this module, it would not have been possible to send data to and from th
 ### Picocom and Minicom
 Minicom<sup>[7]</sup> is a terminal emulator software for Unix-like operating systems, it is commonly used when setting up a remote serial console.
 
+Picocom is, in principle, very similar to minicom.
+It was designed as a simple, manual, modem configuration, testing, and debugging tool.
+In the scope of this project, it is used as a serial communications program to allow access to the serial console of the Raspberry.
 [...]
 
 ASCII-XFR<sup>[8]</sup> to load the source file
