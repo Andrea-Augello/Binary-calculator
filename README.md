@@ -9,7 +9,7 @@
 
 
 ### FTDI FT232RL
-The FT232RL is a USB to serial UART interface<sup>[9]</sup>,
+The FT232RL is a USB to serial UART interface<sup>[9](##References)</sup>,
 it has been connected to the Raspberry Pi 4 UART1 in the following configuration:
 * FTDI-RX to RPi-GPIO14 (TX)
 * FTDI-TX to RPi-GPIO16 (RX)
@@ -39,16 +39,16 @@ Their mechanical life expectancy is of 100000 uses which leads to a worst-case s
 ### Ubuntu 19.04
 
 ### Picocom and Minicom
-Minicom is a terminal emulator software for Unix-like operating systems, it is commonly used when setting up a remote serial console.<sup>[7]</sup>
+Minicom is a terminal emulator software for Unix-like operating systems, it is commonly used when setting up a remote serial console.<sup>[7](##References)</sup>
 
 Picocom is, in principle, very similar to minicom.
-It was designed as a simple, manual, modem configuration, testing, and debugging tool.<sup>[10]</sup>
+It was designed as a simple, manual, modem configuration, testing, and debugging tool.<sup>[10](##References)</sup>
 
 In effect, picocom is not an "emulator" per se. It is a simple program that opens, configures, manages a serial port (tty device) and its settings, and connects to it the terminal emulator already in use.
 
 In the scope of this project, it is used as a serial communications program to allow access to the serial console of the Raspberry.
 
-As ASCII-XFR<sup>[8]</sup> was chosen to send the source file to the Raspberry, it  
+As ASCII-XFR<sup>[8](##References)</sup> was chosen to send the source file to the Raspberry, it  
 
 [...]
 Trough the command
