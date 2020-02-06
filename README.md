@@ -5,6 +5,8 @@
 ## Hardware
 ### Raspberry Pi model 4B
 ### FTDI FT232RL
+### I/O choices
+### Pull down resistors
 ## Environment
 ### pijFORTHos
 ### Ubuntu 19.04
