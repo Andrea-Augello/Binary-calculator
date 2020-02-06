@@ -77,7 +77,7 @@ sed '/^[[:space:]]*$/d' > ../merged_src.f
 ### ANSI compliance
 JonesForth is not ANSI compliant<sup>[6](##References)</sup>, hence some standard words do not behave as one would expect.
 
-The `se-ans.f` code provided contains some definitions to ensure compliance for some words of common use.
+The `se-ans.f` code provided in the course materials contains some definitions to ensure compliance for some words of common use.
 
 ### Utilities1
 
