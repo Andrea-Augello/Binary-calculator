@@ -32,7 +32,7 @@ Their mechanical life expectancy is of 100000 uses which leads to a worst-case s
 
 
 ### pijFORTHos
- The pijFORTHos environment is based on an assembly FORTH interpreter called JonesFOrth, originally written for i686 assembly by _Richard WM Jones_.
+ The pijFORTHos environment is based on an assembly FORTH interpreter called JonesForth, originally written for i686 assembly by _Richard WM Jones_.
 
  Following portings  brought to the Bare-Metal OS for the Raspberry Pi
 
@@ -75,8 +75,11 @@ sed '/^[[:space:]]*$/d' > ../merged_src.f
 
 
 ### ANSI compliance
+JonesForth is not ANSI compliant<sup>[6](##References)</sup>, hence some standard words do not behave as one would expect.
 
-### Utilities
+The `se-ans.f` code provided contains some definitions to ensure compliance for some words of common use.
+
+### Utilities1
 
 ### Control flow
 
