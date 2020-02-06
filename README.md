@@ -15,13 +15,13 @@ it has been connected to the Raspberry Pi 4 UART1 in the following configuration
 * FTDI-TX to RPi-GPIO15 (RX)
 * FTDI-Ground to RPi-GND
 
-The micro USB of the FTDI module was connected tho a USB port on a computer with the appropriate software to use it.
-Without this module it would not have been possible to send data to and from the  Board.
+The micro USB of the FTDI module was connected to a USB port on a computer with the appropriate software to use it.
+Without this module, it would not have been possible to send data to and from the  Board.
 
 ### I/O choices
 
 
-### Pull down resistors
+### Pull-down resistors
 
 
 ## Environment
@@ -71,7 +71,7 @@ Trough the command
 
 [6] [pijFORTHos built-in words](https://github.com/Avoncliff/pijFORTHos/blob/master/doc/forth.md)
 
-[7] [Minicom man page](http://man7.org/linux/man-pages/man1/minicom.1.html)
+[7] [Minicom man page](http://man8.org/linux/man-pages/man1/minicom.1.html)
 
 [8] [ASCII-XFR man page](http://man7.org/linux/man-pages//man1/ascii-xfr.1.html)
 
