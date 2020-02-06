@@ -25,7 +25,6 @@ Without this module, it would not have been possible to send data to and from th
 Their mechanical life expectancy is of 100000 uses which leads to a worst-case scenario of 6250 operations before a malfunction, that is deemed sufficient for the intended purpose of this project.  
 #### LED
 
-### Pull-down resistors
 
 ![schematic](./schematic.png)
 ## Environment
@@ -83,9 +82,11 @@ This code is the first to be loaded to ensure that the subsequent instructions a
 
 ### Utilities
 
+The Raspberry Pi 4 B has a different procedure to set the internal pull-up/down compared to the older models, hence two functions are provided for compatibility's sake.
 ### Control flow
 
 ### Input
+
 
 #### Debouncing
 

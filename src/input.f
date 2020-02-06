@@ -97,28 +97,30 @@ DIGIT_MASK CONSTANT DIGIT_MASK
 	THEN  ;
 
 : OP_KEYS_SETUP 
-        0
-        BEGIN
-                DUP 1 + >R
-                OP_KEYS SWAP GET 
-                INPUT ENABLE
-                R> DUP 
-                #OPS >=
-        UNTIL
-        DROP 
-;
+	0
+	BEGIN
+		DUP 1 + >R
+		OP_KEYS SWAP GET 
+		DUP
+		INPUT ENABLE
+		DOWN SET_PUD
+		R> DUP 
+		#OPS >=
+	UNTIL
+	DROP ;
 
 : DIGIT_KEYS_SETUP 
-        0
-        BEGIN
-                DUP 1 + >R
-                DIGIT_KEYS SWAP GET 
-                INPUT ENABLE
-                R> DUP 
-                #DIGITS >=
-        UNTIL
-        DROP 
-;
+	0
+	BEGIN
+		DUP 1 + >R
+		DIGIT_KEYS SWAP GET 
+		DUP
+		INPUT ENABLE
+		DOWN SET_PUD
+		R> DUP 
+		#DIGITS >=
+	UNTIL
+	DROP ;
 
 : FALLING_EDGE_DETECT_SET
 	DIGIT_MASK OP_MASK OR GPFEN0 ! ;
@@ -126,7 +128,6 @@ DIGIT_MASK CONSTANT DIGIT_MASK
 : INPUT_SETUP 
 	OP_KEYS_SETUP
 	DIGIT_KEYS_SETUP
-	\ [ DIGIT_MASK OP_MASK OR ] 1 SET_PUD 
 	FALLING_EDGE_DETECT_SET ;
 
 INPUT_SETUP
