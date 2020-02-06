@@ -37,12 +37,14 @@ Without this module, it would not have been possible to send data to and from th
 ### Picocom and Minicom
 Minicom<sup>[7]</sup> is a terminal emulator software for Unix-like operating systems, it is commonly used when setting up a remote serial console.
 
-Picocom is, in principle, very similar to minicom.
+Picocom<sup>[10]</sup> is, in principle, very similar to minicom.
 It was designed as a simple, manual, modem configuration, testing, and debugging tool.
-In the scope of this project, it is used as a serial communications program to allow access to the serial console of the Raspberry.
-[...]
 
-ASCII-XFR<sup>[8]</sup> to load the source file
+In effect, picocom is not an "emulator" per se. It is a simple program that opens, configures, manages a serial port (tty device) and its settings, and connects to it the terminal emulator already in use.
+
+In the scope of this project, it is used as a serial communications program to allow access to the serial console of the Raspberry.
+
+As ASCII-XFR<sup>[8]</sup> was chosen to send the source file to the Raspberry, it  
 
 [...]
 Trough the command
@@ -79,3 +81,5 @@ Trough the command
 [8] [ASCII-XFR man page](http://man7.org/linux/man-pages//man1/ascii-xfr.1.html)
 
 [9] [FT232RL datasheet](https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT232R.pdf)
+
+[10] [Picocom man page](https://www.mankier.com/1/picocom)
