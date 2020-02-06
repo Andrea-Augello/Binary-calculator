@@ -57,8 +57,22 @@ Trough the command
 
 ## Software
 
+### Control flow
 
-### Bouncing
+### Input
+
+#### Debouncing
+
+While testing the input code it occurred that a single button press sometimes originated up to three valid reads from the `GPEDS0` register, a phenomenon known as bouncing.<sup>[1](##References)</sup>
+
+Although there are some widely available valid hardware solutions<sup>[11](##References)</sup> the nature of this application does not warrant the added hardware complexity:
+it is not unreasonable to assume that two keypresses in less than 0.2 seconds are unlikely to occur, therefore a software workaround by adding a delay after each successful read before clearing the register and starting polling again is feasible.
+
+
+### Output
+
+### Inner representation
+
 
 
 ## Conclusion
