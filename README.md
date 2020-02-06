@@ -79,7 +79,9 @@ JonesForth is not ANSI compliant<sup>[6](##References)</sup>, hence some standar
 
 The `se-ans.f` code provided in the course materials contains some definitions to ensure compliance for some words of common use.
 
-### Utilities1
+This code is the first to be loaded as to ensure that the subsequent instructions are executed correctly.
+
+### Utilities
 
 ### Control flow
 
