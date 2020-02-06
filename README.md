@@ -20,6 +20,9 @@ Without this module, it would not have been possible to send data to and from th
 
 ### I/O choices
 #### QTEATAK push buttons
+6x6x5 mm tactile push buttons with two pins, they are rated to work with up to 12V of direct current, so they are safe for use with the 3,3V output of the GPIO pins of the Raspberry.
+
+Their mechanical life expectancy is of 100000 uses which leads to a worst case scenario of 6250 operations before malfunction, that is deemed sufficient for the intended purpose of this project.  
 #### LED
 
 ### Pull-down resistors
