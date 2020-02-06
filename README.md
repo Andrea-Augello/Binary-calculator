@@ -83,3 +83,5 @@ Trough the command
 [9] [FT232RL datasheet](https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT232R.pdf)
 
 [10] [Picocom man page](https://www.mankier.com/1/picocom)
+
+[11] [Gay W. (2017) MC14490 and Software Debouncing. In: Custom Raspberry Pi Interfaces. Apress, Berkeley, CA](https://link.springer.com/chapter/10.1007/978-1-4842-2406-9_5)
