@@ -132,9 +132,8 @@ This has not yet been documented, however, one can gain insight on how to change
 While testing the input code it occurred that a single button press sometimes originated up to three valid reads from the `GPEDS0` register, a phenomenon known as bouncing.[@ganssle2004guide]
 
 Although there are some widely available valid hardware solutions[@gay2017mc14490] the nature of this application does not warrant the added hardware complexity:
-By trial and error it was found that the bouncing lasts less than 0.2 seconds, and
-it is not unreasonable to assume that two keypresses in less than 0.2 seconds are unlikely to occur[@kinkead1975typing], therefore it is feasible to implement a software workaround by adding a delay after each successful read,
-and then clearing the register before polling again.
+By trial and error it was found that the bouncing lasts less than 0.2 seconds, and according to [@kinkead1975typing] that would be a far too long waiting time for most typists,
+ therefore it is not feasible to implement a software workaround by adding a 200 milliseconds delay after each successful read.
 
 
 ## Output
