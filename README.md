@@ -5,34 +5,6 @@ date: "February 2020"
 author: "Andrea Augello, Università degli Studi di Palermo"
 
 ---
-
-# Table of Contents
-
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:0 orderedList:0 -->
-
-- [Introduction](#introduction)
-- [Hardware](#hardware)
-	- [Raspberry Pi model 4B](#raspberry-pi-model-4b)
-	- [FTDI FT232RL](#ftdi-ft232rl)
-	- [I/O choices](#io-choices)
-		- [QTEATAK push buttons](#qteatak-push-buttons)
-		- [LED](#led)
-- [Environment](#environment)
-	- [pijFORTHos](#pijforthos)
-	- [Ubuntu 19.04](#ubuntu-1904)
-	- [Picocom and Minicom](#picocom-and-minicom)
-- [Software](#software)
-	- [ANSI compliance](#ansi-compliance)
-	- [Utilities](#utilities)
-	- [Control flow](#control-flow)
-	- [Input](#input)
-		- [Debouncing](#debouncing)
-	- [Output](#output)
-	- [Inner representation](#inner-representation)
-- [Conclusion](#conclusion)
-	- [Possible improvements](#possible-improvements)
-
-<!-- /TOC -->
 # Introduction
 
 # Hardware
