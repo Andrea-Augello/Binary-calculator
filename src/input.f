@@ -32,8 +32,13 @@ OP_MASK CONSTANT OP_MASK
 DIGIT_MASK CONSTANT DIGIT_MASK
 
 : PEEK_KEYPRESS							
-	[ OP_MASK DIGIT_MASK OR ] LITERAL
-	GPEDS0 @ AND ;
+	[ OP_MASK DIGIT_MASK OR ] LITERAL DUP
+	GPEDS0 @ AND 
+	SWAP
+	10 MILLISECONDS DELAY
+	GPLEV0 @ INVERT AND 				\ Makes sure the button has properly been released
+											\ else a slow keypress could be read twice
+	AND ;
 
 : CLEAR_KEYPRESS
 	[ OP_MASK DIGIT_MASK OR ] LITERAL
@@ -43,7 +48,7 @@ DIGIT_MASK CONSTANT DIGIT_MASK
 	PEEK_KEYPRESS
 	DUP 0 <>
 	IF
-		180 MILLISECONDS DELAY				\ Debouncing, delay found by trial and error
+		\ 50 MILLISECONDS DELAY				\ Debouncing, delay found by trial and error
 		CLEAR_KEYPRESS 
 	THEN ;
 
@@ -52,8 +57,8 @@ DIGIT_MASK CONSTANT DIGIT_MASK
 	BEGIN
 		READ_KEYPRESS .
 		1 + DUP
-		200 >=
-		100 milliseconds delay
+		100 >=
+		10 milliseconds delay
 	UNTIL 
 	DROP ;
 
