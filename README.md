@@ -133,7 +133,7 @@ While testing the input code it occurred that a single button press sometimes or
 
 Although there are some widely available valid hardware solutions[@gay2017mc14490] the nature of this application does not warrant the added hardware complexity:
 By trial and error it was found that the bouncing lasts less than 0.2 seconds, and
-it is not unreasonable to assume that two keypresses in less than 0.2 seconds are unlikely to occur, therefore it is feasible to implement a software workaround by adding a delay after each successful read,
+it is not unreasonable to assume that two keypresses in less than 0.2 seconds are unlikely to occur[@kinkead1975typing], therefore it is feasible to implement a software workaround by adding a delay after each successful read,
 and then clearing the register before polling again.
 
 
