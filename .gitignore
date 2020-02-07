@@ -2,3 +2,5 @@
 *.swp
 merged_src.f
 *.pdf
+
+build_doc.sh
