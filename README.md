@@ -2,7 +2,7 @@
 ---
 title : "Binary Calculator on baremetal Raspberry Pi 4"
 date: "February 2020"
-author: "Andrea Agello, Università degli Studi di Palermo"
+author: "Andrea Augello, Università degli Studi di Palermo"
 
 ---
 
@@ -34,12 +34,32 @@ author: "Andrea Agello, Università degli Studi di Palermo"
 
 <!-- /TOC -->
 # Introduction
-# Abstract
+
 # Hardware
+
+
+![Breadboard schematic](./media/schematic.png)
 
 
 ## Raspberry Pi model 4B
 
+![Raspberry Pi model 4B](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Raspberry_Pi_4_Model_B_-_Side.jpg/450px-Raspberry_Pi_4_Model_B_-_Side.jpg)
+
+The Raspberry Pi 4B [Fig. 2] is the latest iteration of the Raspberry Pi SoC, launched on 24th June 2019[@PI_release],
+it replaces the older Raspberry Pi 3 B+ which was based on the Broadcom BCM2835 chip[@BCM2835][@BCM2835_datasheet_errata] and boasts high-end specs:
+
+* A 1.5GHz quad-core 64-bit ARM Cortex-A72 CPU
+* 1GB, 2GB, or 4GB of LPDDR4 SDRAM
+* Full-throughput Gigabit Ethernet
+* Dual-band 802.11ac wireless networking
+* Bluetooth 5.0
+* Two USB 3.0 and two USB 2.0 ports
+* Dual monitor support, at resolutions up to 4K
+* VideoCore VI graphics, supporting OpenGL ES 3.x
+* 4Kp60 hardware decode of HEVC video
+* Complete compatibility with earlier Raspberry Pi products
+
+Although claiming complete backward compatibility with earlier products, the documentation available in not very comprehensive[@pi4_datasheet], which makes porting code not always straightforward.
 
 ## FTDI FT232RL
 The FT232RL is a USB to serial UART interface[@FT232RL],
@@ -53,14 +73,25 @@ The micro USB of the FTDI module was connected to a USB port on a computer with 
 Without this module, it would not have been possible to send data to and from the  Board.
 
 ## I/O choices
-### QTEATAK push buttons
-6x6x5 mm tactile push buttons with two pins, they are rated to work with up to 12V of direct current, so they are safe for use with the 3,3V output of the GPIO pins of the Raspberry.
+### Qteatak push buttons
+
+![](https://www.ubuy.co.th/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvNTE2bnRENnE4M0wuX0FDX1VTMjE4Xy5qcGc.jpg)
+
+With ease of use and familiarity of a potential end-user with similar products push buttons were considered an appropriate choice for an input method,
+moreover, single buttons were chosen in favor of a button matrix because a 3x3 button matrix would require 6 pin connections against the 7 needed in the other case, but the added complexity does not make it a worthwhile trade-off.  
+
+The chosen buttons are 6x6x5 mm tactile push buttons with two pins produced by Qteatak a Shenzhen based electronics company, they are rated to work with up to 12V of direct current, so they are safe for use with the 3,3V output of the GPIO pins of the Raspberry.
 
 Their mechanical life expectancy is of 100000 uses which leads to a worst-case scenario of 6250 operations before a malfunction, that is deemed sufficient for the intended purpose of this project.  
 
 ### LED
 
-![Breadboard schematic](./media/schematic.png)
+![](https://cdn-reichelt.de/bilder/web/xxl_ws/A500/LED5MM.png)
+
+Due to the base two chosen for the calculator, it seemed a natural decision to display the numbers using LED lights, with lit LEDs standing for a 1 bit and an off light standing for a 0 bit.  
+To avoid possible confusion when interpreting the result an extra LED lights up to signal if the shown number is negative and, as such, has to be read as a two's complement.  
+Moreover, since there is a very limited number of bits to display values if the actual result is outside the representable range and is thus truncated a red LED light will turn on to signal the overflow.
+
 
 # Environment
 
@@ -107,7 +138,6 @@ sed '/^[[:space:]]*$/d' > ../merged_src.f
 
 ```
 
-
 ## ANSI compliance
 JonesForth is not ANSI compliant[@pijFORTHos], hence some standard words do not behave as one would expect.
 
@@ -118,7 +148,7 @@ This code is the first to be loaded to ensure that the subsequent instructions a
 ## Utilities
 
 The Raspberry Pi 4 B has a different procedure to set the internal pull-up/down compared to the older models, hence two functions are provided for compatibility's sake.
-This has not yet been documented, however one can gain insight on how to change the pull-up/down settings by analyzing how some c libraries added support for the Broadcom 2711 GPIO[@pingpio] [@raspi-gpio]
+This has not yet been documented, however, one can gain insight on how to change the pull-up/down settings by analyzing how some c libraries added support for the Broadcom 2711 GPIO[@pingpio] [@raspi-gpio]
 
 ## Control flow
 
@@ -148,9 +178,4 @@ and then clearing the register before polling again.
 
 # References
 
-
-[^3]: [Raspberry Pi 4 Model B preliminary datasheet](https://github.com/raspberrypi/documentation/blob/master/hardware/raspberrypi/bcm2711/rpi_DATA_2711_1p0_preliminary.pdf)
-
-[^4]: [BCM2835 ARM Peripherals](https://github.com/raspberrypi/documentation/blob/master/hardware/raspberrypi/bcm2835/BCM2835-ARM-Peripherals.pdf)
-
-[^5]: [BCM2835 datasheet errata](https://elinux.org/BCM2835_datasheet_errata)
+[Bibtex file](./paper.bib)
