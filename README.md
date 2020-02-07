@@ -1,5 +1,12 @@
-# Binary Calculator
-![Logo UniPa](https://skin-new.unipa.it/images/logo.png)\
+
+---
+title : "Binary Calculator on baremetal Raspberry Pi 4"
+date: "February 2020"
+author: "Andrea Agello, Università degli Studi di Palermo"
+
+---
+
+# Table of Contents
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:0 orderedList:0 -->
 
@@ -27,7 +34,7 @@
 
 <!-- /TOC -->
 # Introduction
-
+# Abstract
 # Hardware
 
 
@@ -35,7 +42,7 @@
 
 
 ## FTDI FT232RL
-The FT232RL is a USB to serial UART interface[^9],
+The FT232RL is a USB to serial UART interface[@FT232RL],
 it has been connected to the Raspberry Pi 4 UART1 in the following configuration:
 
 * FTDI-RX to RPi-GPIO14 (TX)
@@ -66,16 +73,16 @@ Their mechanical life expectancy is of 100000 uses which leads to a worst-case s
 ## Ubuntu 19.04
 
 ## Picocom and Minicom
-Minicom is a terminal emulator software for Unix-like operating systems, it is commonly used when setting up a remote serial console.[^7]
+Minicom is a terminal emulator software for Unix-like operating systems, it is commonly used when setting up a remote serial console.[@Minicom]
 
 Picocom is, in principle, very similar to minicom.
-It was designed as a simple, manual, modem configuration, testing, and debugging tool.[^10]
+It was designed as a simple, manual, modem configuration, testing, and debugging tool.[@Picocom]
 
 In effect, picocom is not an "emulator" per se. It is a simple program that opens, configures, manages a serial port (tty device) and its settings, and connects to it the terminal emulator already in use.
 
 In the scope of this project, it is used as a serial communications program to allow access to the serial console of the Raspberry.
 
-As ASCII-XFR[^8] was chosen to send the source file to the Raspberry, it  
+As ASCII-XFR[@ASCII] was chosen to send the source file to the Raspberry, it  
 
 [...]
 
@@ -102,7 +109,7 @@ sed '/^[[:space:]]*$/d' > ../merged_src.f
 
 
 ## ANSI compliance
-JonesForth is not ANSI compliant[^6], hence some standard words do not behave as one would expect.
+JonesForth is not ANSI compliant[@pijFORTHos], hence some standard words do not behave as one would expect.
 
 The `se-ans.f` code provided in the course materials contains some definitions to ensure compliance for some words of common use.
 
@@ -111,7 +118,7 @@ This code is the first to be loaded to ensure that the subsequent instructions a
 ## Utilities
 
 The Raspberry Pi 4 B has a different procedure to set the internal pull-up/down compared to the older models, hence two functions are provided for compatibility's sake.
-This has not yet been documented, however one can gain insight on how to change the pull-up/down settings by analyzing how some c libraries added support for the Broadcom 2711 GPIO[^12] [^13]
+This has not yet been documented, however one can gain insight on how to change the pull-up/down settings by analyzing how some c libraries added support for the Broadcom 2711 GPIO[@pingpio] [@raspi-gpio]
 
 ## Control flow
 
@@ -120,9 +127,9 @@ This has not yet been documented, however one can gain insight on how to change 
 
 ### Debouncing
 
-While testing the input code it occurred that a single button press sometimes originated up to three valid reads from the `GPEDS0` register, a phenomenon known as bouncing.[^1]
+While testing the input code it occurred that a single button press sometimes originated up to three valid reads from the `GPEDS0` register, a phenomenon known as bouncing.[@ganssle2004guide]
 
-Although there are some widely available valid hardware solutions[^11] the nature of this application does not warrant the added hardware complexity:
+Although there are some widely available valid hardware solutions[@gay2017mc14490] the nature of this application does not warrant the added hardware complexity:
 By trial and error it was found that the bouncing lasts less than 0.2 seconds, and
 it is not unreasonable to assume that two keypresses in less than 0.2 seconds are unlikely to occur, therefore it is feasible to implement a software workaround by adding a delay after each successful read,
 and then clearing the register before polling again.
@@ -139,29 +146,11 @@ and then clearing the register before polling again.
 
 ## Possible improvements
 
+# References
 
-[^1]: [Jack G. Ganssle - A guide to debouncing ](https://my.eng.utah.edu/~cs5780/debouncing.pdf)
-
-[^2]:  [Sean Eron Anderson - Bit Twiddling Hacks](https://graphics.stanford.edu/~seander/bithacks.html)
 
 [^3]: [Raspberry Pi 4 Model B preliminary datasheet](https://github.com/raspberrypi/documentation/blob/master/hardware/raspberrypi/bcm2711/rpi_DATA_2711_1p0_preliminary.pdf)
 
 [^4]: [BCM2835 ARM Peripherals](https://github.com/raspberrypi/documentation/blob/master/hardware/raspberrypi/bcm2835/BCM2835-ARM-Peripherals.pdf)
 
 [^5]: [BCM2835 datasheet errata](https://elinux.org/BCM2835_datasheet_errata)
-
-[^6]: [pijFORTHos built-in words](https://github.com/Avoncliff/pijFORTHos/blob/master/doc/forth.md)
-
-[^7]: [Minicom man page](http://man8.org/linux/man-pages/man1/minicom.1.html)
-
-[^8]: [ASCII-XFR man page](http://man7.org/linux/man-pages//man1/ascii-xfr.1.html)
-
-[^9]: [FT232RL datasheet](https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT232R.pdf)
-
-[^10]: [Picocom man page](https://www.mankier.com/1/picocom)
-
-[^11]: [Gay W. (2017) MC14490 and Software Debouncing. In: Custom Raspberry Pi Interfaces. Apress, Berkeley, CA](https://link.springer.com/chapter/10.1007/978-1-4842-2406-9_5)
-
-[^12]: [pigpio.c](https://github.com/joan2937/pigpio/blob/master/pigpio.c#L8785)
-
-[^13]: [raspi-gpio.c](https://github.com/RPi-Distro/raspi-gpio/commit/80fa7d04eafb3ea34fc6f2d32de5f1873b5fb369)
