@@ -60,7 +60,7 @@ Their mechanical life expectancy is of 100000 uses which leads to a worst-case s
 
 ### LED
 
-![Breadboard schematic](./schematic.png)
+![Breadboard schematic](./media/schematic.png)
 
 # Environment
 
