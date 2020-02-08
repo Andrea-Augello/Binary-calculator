@@ -134,7 +134,8 @@ Since it is not possible with the selected environment to have the Raspberry aut
 The file transfer happens character by character at a quite limited speed, with significant delay after every character and newline, furthermore, every file has to be selected singularly.  
 To cut down on transfer times, it is convenient to use a bash script to exclude unessential parts of the code (i.e. comments and empty lines), remove unnecessary newlines, and merge everything into a single file.
 
-The developed script, `merge_source.sh`, makes use of `awk` to recognize comments and not print them, and remove newlines, `sed` adds a newline after each ';' so that after each word is compiled, there will be a 100 ms delay.  
+The developed script, `merge_source.sh`, makes use of `awk`[@awk] to recognize comments and not print them, and remove newlines,
+ `sed`[@sed] adds a newline after each ';' so that after each word is compiled, there will be a 100 ms delay.  
 A back-of-the-envelope estimate shows a reduction of the loading time of 76.9 seconds.
 
 ```bash
