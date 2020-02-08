@@ -19,18 +19,26 @@ TIMER_BASE 4 +			CONSTANT TIMER_CNT
 : ABS ( n -- |n| )
 	DUP NEGATE DUP 0 > IF NIP ELSE DROP THEN ;
 
-: MASK ( position n -- mask )
-	SWAP LSHIFT ;
-: ON  1 MASK GPSET0 ! ;
-: OFF 1 MASK GPCLR0 ! ;
+
+: GET ( array, cell -- array[cell] )
+	CELLS + @ ;
+
+: #MASK ( shift n -- mask )
+	SWAP LSHIFT ;	
+
+: MASK ( shift -- mask )
+	1 #MASK ;
+
+: ON  GPSET0 ! ;
+: OFF GPCLR0 ! ;
 : ENABLE ( pin# func -- )
 	>R 								\ puts the function# on the return stack for ease of handling
 	A /MOD 							( pin# -- 3bitset# gpfsel# )
 	SWAP >R
 	4 * GPIO_BASE + DUP @ 		\ gets the current content of gpfsel
 	R> 3 * DUP 						\ masking offset
-	7 MASK INVERT ROT AND 		\ sets to zero the bits linked to the pin
-	SWAP R> MASK OR 				\ sets the bits linked to the pin to func
+	7 #MASK INVERT ROT AND 		\ sets to zero the bits linked to the pin
+	SWAP R> #MASK OR 				\ sets the bits linked to the pin to func
 	SWAP ! ; 						\ writes the new value into gpfsel
 
 DECIMAL
@@ -47,10 +55,6 @@ DECIMAL
 		>R OVER R>	<=
 	UNTIL
 	DROP DROP ;
-
-
-: GET ( array, cell -- array[cell] )
-	CELLS + @ ;
 
 : 150_OPS_DELAY
    0
@@ -77,11 +81,11 @@ DECIMAL
 	>R
 	2 *					\ shift for masking
 	DUP
-	3 MASK INVERT		\ Mask to clear bits
+	3 #MASK INVERT		\ Mask to clear bits
 	R> DUP >R			\ Brings a copy of the GPPUPDN register on the stack
 	@ AND					\ Zeroes the bits corresponding to the selected GPIO
 	SWAP R> SWAP R> 	\	( Whitened GPPUPDN@, GPPUPDN#, shift, UP/DOWN )
-	MASK					\ Computes the bit relative to the selected GPIO
+	#MASK					\ Computes the bit relative to the selected GPIO
 	ROT
 	OR						\ OR them to the whitened content of GPPUPDN
 	SWAP ! ;

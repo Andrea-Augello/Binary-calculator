@@ -25,7 +25,7 @@ VARIABLE OPERATION
 			ROT ABS ROT ABS /			 	\ Performs division on the absolute values
 			*									\ Adjusts for sign
 	ELSE
-		DROP DROP [ 1 31 LSHIFT 1 - ] LITERAL \ Highest positive 32 bit number
+		DROP DROP [ 31 MASK 1 - ] LITERAL \ Highest positive 32 bit number
 	THEN ;
 
 : EQUALS ;	\ Does nothing, this operation is intended to never be executed and 
@@ -38,9 +38,9 @@ CREATE OP_SET ' ADDITION , ' SUBTRACTION , ' MULTIPLICATION , ' DIVISION , ' EQU
 : CHECK_OVERFLOW 
 	STATUS @ SWAP
 	DUP
-	[ 1 WORD_SIZE 1 -  LSHIFT  1 - ] LITERAL >	\ Upper bound of interval
+	[ WORD_SIZE 1 - MASK 1 - ] LITERAL >	\ Upper bound of interval
 	SWAP
-	[ 1 WORD_SIZE 1 - LSHIFT NEGATE ] LITERAL <	\ Lower bound of interval
+	[ WORD_SIZE 1 - MASK NEGATE ] LITERAL <	\ Lower bound of interval
 	OR
 	IF 
 		1 OR  
@@ -60,11 +60,11 @@ CREATE OP_SET ' ADDITION , ' SUBTRACTION , ' MULTIPLICATION , ' DIVISION , ' EQU
 	STATUS ! ;
 
 : TRUNCATE 				\ Sets to zero the bits outside the representable range
-	[ 1 WORD_SIZE LSHIFT 1 - ] LITERAL AND ;
+	[ WORD_SIZE MASK 1 - ] LITERAL AND ;
 
 : EXTEND_SIGN 
 	TRUNCATE
-	[ 1 WORD_SIZE 1 - LSHIFT ] LITERAL 	
+	[ WORD_SIZE 1 - MASK ] LITERAL 	
 	DUP ROT 
 	XOR SWAP 									\ Complements the (WORD_SIZE)th bit 
 													\ of the input value 

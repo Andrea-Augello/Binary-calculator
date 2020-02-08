@@ -9,7 +9,7 @@ CREATE DIGIT_KEYS 9 , 11 ,
 		DUP 1 + >R
 		OP_KEYS SWAP GET 	\ On each cycle gets the pin# of the 
 								\ (loop number)th button
-		1 MASK OR			\ Computes the mask for the current pin and adds it to the
+		MASK OR			\ Computes the mask for the current pin and adds it to the
 								\ mask computed so far
 		R> DUP
 		#OPS >=
@@ -23,7 +23,7 @@ CREATE DIGIT_KEYS 9 , 11 ,
 	BEGIN
 		DUP 1 + >R
 		DIGIT_KEYS SWAP GET 
-		1 MASK OR
+		MASK OR
 		R> DUP
 		#DIGITS >=
 	UNTIL
@@ -69,7 +69,7 @@ CREATE DIGIT_KEYS 9 , 11 ,
 	BEGIN
 		DUP >R								\ Stores in the return stack a copy of the
 												\ loop counter, the other one will be consumed
-		OP_KEYS SWAP GET 1 MASK			\ Computes the mask for op_keys[loop_counter]
+		OP_KEYS SWAP GET MASK			\ Computes the mask for op_keys[loop_counter]
 		ROT DUP 								\ Brings GPEDS0@ on top of the stack and makes
 												\ a copy
 		ROT AND 0 <>						\ Compares GPEDS0@ with the previously 
@@ -88,12 +88,12 @@ CREATE DIGIT_KEYS 9 , 11 ,
 		
 : GET_DIGIT ( GPEDS0@ -- 0/1 )
 	DUP
-	DIGIT_KEYS 0 GET 1 MASK 
+	DIGIT_KEYS 0 GET MASK 
 	AND
 	IF
 		DROP 0
 	ELSE
-		DIGIT_KEYS 1 GET 1 MASK	AND
+		DIGIT_KEYS 1 GET MASK AND
 		IF
 			1
 		THEN
