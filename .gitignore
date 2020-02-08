@@ -6,3 +6,5 @@ merged_src.f
 build_doc.sh
 
 *.csl
+
+.fuse_*
