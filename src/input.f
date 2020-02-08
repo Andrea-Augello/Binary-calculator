@@ -32,13 +32,11 @@ CREATE DIGIT_KEYS 9 , 11 ,
 : DIGIT_MASK [ DIGIT_MASK ] LITERAL ;
 
 : PEEK_KEYPRESS							
-	[ OP_MASK DIGIT_MASK OR ] LITERAL DUP
+	[ OP_MASK DIGIT_MASK OR ] LITERAL 
 	GPEDS0 @ AND 
-	SWAP
 	1 MILLISECONDS DELAY
-	GPLEV0 @ INVERT AND 				\ Makes sure the button has properly been released
-											\ else a slow keypress could be read twice
-	AND ;
+	GPLEV0 @ INVERT AND ;		\ Makes sure the button has properly been released
+										\ else a slow keypress could be read twice
 
 : CLEAR_KEYPRESS
 	[ OP_MASK DIGIT_MASK OR ] LITERAL
@@ -48,7 +46,7 @@ CREATE DIGIT_KEYS 9 , 11 ,
 	PEEK_KEYPRESS
 	DUP 0 <>
 	IF
-		\ 50 MILLISECONDS DELAY				\ Debouncing, delay found by trial and error
+		1 MILLISECONDS DELAY				\ Debouncing, delay found by trial and error
 		CLEAR_KEYPRESS 
 	THEN ;
 
