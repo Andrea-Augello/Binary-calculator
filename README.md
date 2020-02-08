@@ -153,7 +153,6 @@ awk -F"[^A-Z]+[()][^A-Z]+" '{print $1 $    3}' |   # Removes '( )' comments
 awk '{ printf "%s ", $0 }' |                       # Removes newlines
 sed 's/\;/\;\n/g' |                                # Adds a newline after ;
 sed '/^[[:space:]]*$/d' > ../merged_src.f   
-
 ```
 
 ## ANSI compliance
@@ -165,7 +164,10 @@ This code is the first to be loaded to ensure that the subsequent instructions a
 
 ## Utilities
 
-This section of code provides some hardware abstraction
+This section of code provides some hardware abstraction, the code begins with peripherals registers definitions, followed by some short words used to make the code more readable.  
+Another utility function defined in this file is `DELAY`, wich implements with a busy loop a wait for the time passed as argument (in microseconds).  
+
+The other FORTH words in this file deal with low level GPIO functionalities: function selection and setting the pull for input pins.  
 The Raspberry Pi 4 B has a different procedure to set the internal pull-up/down compared to the older models, hence two functions are provided for compatibility's sake.
 The available documentation[@pi4_datasheet] does not show this change yet, however,
 by analyzing how some C libraries added support for the Broadcom 2711 GPIO[@pingpio] [@raspi-gpio], one can gain insight on how to change the pull-up/down settings.
