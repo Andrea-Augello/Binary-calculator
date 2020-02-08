@@ -102,7 +102,7 @@ FORTH interpreters can be implemented easily for resource-constrained machines u
 
  The pijFORTHos environment is based on an assembly FORTH interpreter called JonesForth, originally written for i686 assembly by _Richard WM Jones_.
 
- Due to its semplicity JonesForth has been adapted to many different architectures, some of those portings  brought to the Bare-Metal OS for the Raspberry Pi.  
+ Due to its simplicity, JonesForth has been adapted to many different architectures, some of those portings brought to the Bare-Metal OS for the Raspberry Pi.  
  This
 
 
@@ -164,10 +164,10 @@ This code is the first to be loaded to ensure that the subsequent instructions a
 
 ## Utilities
 
-This section of code provides some hardware abstraction, the code begins with peripherals registers definitions, followed by some short words used to make the code more readable.  
-Another utility function defined in this file is `DELAY`, wich implements with a busy loop a wait for the time passed as argument (in microseconds).  
+This section of code provides some hardware abstraction. The code begins with peripherals registers definitions, followed by some short words used to make the code more readable.  
+Another utility function defined in this file is `DELAY`, which implements with a busy loop a wait for the time passed as argument (in microseconds).  
 
-The other FORTH words in this file deal with low level GPIO functionalities: function selection and setting the pull for input pins.  
+The other FORTH words in this file deal with low-level GPIO functionalities: function selection and setting the pull for the input pins.  
 The Raspberry Pi 4 B has a different procedure to set the internal pull-up/down compared to the older models, hence two functions are provided for compatibility's sake.
 The available documentation[@pi4_datasheet] does not show this change yet, however,
 by analyzing how some C libraries added support for the Broadcom 2711 GPIO[@pingpio] [@raspi-gpio], one can gain insight on how to change the pull-up/down settings.
