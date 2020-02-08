@@ -43,10 +43,10 @@
 		0 <> OVER ?DIGIT INVERT AND	\ Input is not null and is not a digit
 		IF
 			SET_OPERATION
-			1									\ exit loop
+			TRUE								\ exit loop
 		ELSE
 			DROP								\ discard invalid/null input
-			0									\ stay in loop
+			FALSE								\ stay in loop
 		THEN
 	UNTIL ;
 

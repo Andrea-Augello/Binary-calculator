@@ -84,7 +84,7 @@ CREATE DIGIT_KEYS 9 , 11 ,
 		DUP
 		#OPS >=
 	UNTIL
-	DROP ;
+	DROP NIP ;
 		
 : GET_DIGIT ( GPEDS0@ -- 0/1 )
 	DUP
