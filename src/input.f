@@ -16,7 +16,7 @@ CREATE DIGIT_KEYS 9 , 11 ,
 	UNTIL
 	DROP NIP ;
 
-OP_MASK CONSTANT OP_MASK
+: OP_MASK [ OP_MASK ] LITERAL ;
 
 : DIGIT_MASK 				\ Same as OP_MASK
 	0 0
@@ -29,13 +29,13 @@ OP_MASK CONSTANT OP_MASK
 	UNTIL
 	DROP NIP ;
 
-DIGIT_MASK CONSTANT DIGIT_MASK
+: DIGIT_MASK [ DIGIT_MASK ] LITERAL ;
 
 : PEEK_KEYPRESS							
 	[ OP_MASK DIGIT_MASK OR ] LITERAL DUP
 	GPEDS0 @ AND 
 	SWAP
-	10 MILLISECONDS DELAY
+	1 MILLISECONDS DELAY
 	GPLEV0 @ INVERT AND 				\ Makes sure the button has properly been released
 											\ else a slow keypress could be read twice
 	AND ;

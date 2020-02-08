@@ -129,11 +129,16 @@ This has not yet been documented, however, one can gain insight on how to change
 
 ### Debouncing
 
-While testing the input code it occurred that a single button press sometimes originated up to three valid reads from the `GPEDS0` register, a phenomenon known as bouncing.[@ganssle2004guide]
+While testing the input code it occurred that a single button press would sometimes originate two from the `GPEDS0` register, a phenomenon known as bouncing.[@ganssle2004guide]
 
-Although there are some widely available valid hardware solutions[@gay2017mc14490] the nature of this application does not warrant the added hardware complexity:
-By trial and error it was found that the bouncing lasts less than 0.2 seconds, and according to [@kinkead1975typing] that would be a far too long waiting time for most typists,
- therefore it is not feasible to implement a software workaround by adding a 200 milliseconds delay after each successful read.
+Although there are some widely available valid hardware solutions[@gay2017mc14490] the nature of this application does not warrant the added hardware complexity: the responsiveness requirements are lax enough that it is possible to use some CPU cycles to solve the bouncing issues in software.
+
+![Bouncing distribution](./media/Bouncing_distribution.png)
+
+After extensive testing it was found that the second falling edge happened within $170.3\mu s$ $(\sigma = 113.97)$ from the first one
+, so, assuming Gaussian distribution, 99% of the bouncing events will be within $435\mu s$ ,[Fig. 5]  so adding delay of 1ms before clearing the event detect register is guaranteed to avoid reading a bounce as an actual keypress.
+
+According to [@kinkead1975typing] and [@wiklund1987optimizing] the expected typing speed of a user is such that the aforementioned delay would not introduce a noticeable delay.
 
 
 ## Output
