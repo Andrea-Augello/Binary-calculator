@@ -172,9 +172,17 @@ The Raspberry Pi 4 B has a different procedure to set the internal pull-up/down 
 The available documentation[@pi4_datasheet] does not show this change yet, however,
 by analyzing how some C libraries added support for the Broadcom 2711 GPIO[@pingpio] [@raspi-gpio], one can gain insight on how to change the pull-up/down settings.
 
-## Control flow
 
 ## Input
+
+All the operations related to the input are in a single file, the aim is to achieve low coupling between components of the project, and allow future alterations with as little restructuring as possible.
+
+The numbers of the pins linked to digit keys and those connected to operation keys are stored in two different arrays.  
+This is because, although the operations on these are strikingly similar, they hardly ever occur on both sets of pins at the same time: it only happens when dealing with GPIO registers.  
+In those occurrences it is only necessary to use a mask, which can be computed once in advance, consequently having them in a single array offers no added benefit.    
+
+At the beginning of the code masks for both sets of pins are computed and, since they will not be changing at runtime, stored as literals.  
+These masks are used to only act on bits related to pins in use for this project.
 
 
 ### Debouncing
@@ -198,7 +206,7 @@ According to [@kinkead1975typing] and [@wiklund1987optimizing], the expected typ
 
 ## Inner representation
 
-
+## Control flow
 
 # Conclusion
 
