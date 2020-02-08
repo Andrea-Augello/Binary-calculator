@@ -17,7 +17,7 @@ author: "Andrea Augello, Università degli Studi di Palermo"
 
 ![Raspberry Pi model 4B\label{pi4}](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Raspberry_Pi_4_Model_B_-_Side.jpg/450px-Raspberry_Pi_4_Model_B_-_Side.jpg)
 
-The Raspberry Pi 4B [Fig. \ref{pi4}], is the latest iteration of the Raspberry Pi SoC, launched on 24th June 2019[@PI_release],
+The target for this project is a general-purpose Single-Board Computer: the Raspberry Pi 4B [Fig. \ref{pi4}], it is the latest iteration of the Raspberry Pi SoC, launched on 24th June 2019[@PI_release],
 it replaces the older Raspberry Pi 3 B+ which was based on the Broadcom BCM2835 chip[@BCM2835][@BCM2835_datasheet_errata] and boasts high-end specs:
 
 * A 1.5GHz quad-core 64-bit ARM Cortex-A72 CPU
@@ -97,9 +97,14 @@ GPIO# | Function
 
 
 ## pijFORTHos
+
+FORTH interpreters can be implemented easily for resource-constrained machines using no OS, so they are well-suited for bare-metal interactive development.
+
  The pijFORTHos environment is based on an assembly FORTH interpreter called JonesForth, originally written for i686 assembly by _Richard WM Jones_.
 
- Following portings  brought to the Bare-Metal OS for the Raspberry Pi
+ Due to its semplicity JonesForth has been adapted to many different architectures, some of those portings  brought to the Bare-Metal OS for the Raspberry Pi.  
+ This
+
 
 ## Ubuntu 19.04
 
@@ -142,7 +147,7 @@ A back-of-the-envelope estimate shows a reduction of the loading time of 76.9 se
 #!/bin/bash
 
 cd src
-cat se-ans.f setup.f logic.f output.f input.f control.f |
+cat se-ans.f utils.f logic.f output.f input.f control.f |
 awk -F"\\" '{print $1}' |                          # Removes '\' comments
 awk -F"[^A-Z]+[()][^A-Z]+" '{print $1 $    3}' |   # Removes '( )' comments
 awk '{ printf "%s ", $0 }' |                       # Removes newlines
@@ -160,6 +165,7 @@ This code is the first to be loaded to ensure that the subsequent instructions a
 
 ## Utilities
 
+This section of code provides some hardware abstraction
 The Raspberry Pi 4 B has a different procedure to set the internal pull-up/down compared to the older models, hence two functions are provided for compatibility's sake.
 The available documentation[@pi4_datasheet] does not show this change yet, however,
 by analyzing how some C libraries added support for the Broadcom 2711 GPIO[@pingpio] [@raspi-gpio], one can gain insight on how to change the pull-up/down settings.
