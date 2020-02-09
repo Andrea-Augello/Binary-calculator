@@ -4,10 +4,11 @@ CREATE DISPLAY 21 , 20 , 16 , 12 , 7 , 8 , 25 , 24 ,
 18 CONSTANT NEGATIVE
 
 : LSB_MASK 				( shift n -- n/2 mask )
-	2 /MOD SWAP	ROT	( shift n -- n/2 LSB shift )
-	DISPLAY SWAP GET  ( n/2 LSB shift -- n/2 LSB display[shift] )
-	LSHIFT ;
-	
+	DISPLAY ROT GET
+	MASK SWAP			
+	2 /MOD SWAP ROT	( mask n -- n/2 LSB mask )
+	* ;
+
 : DISPLAY_MASK ( n -- mask )
 	0 0 					\ adds an empy mask and a loop counter to the stack
 	BEGIN
