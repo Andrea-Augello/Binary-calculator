@@ -62,7 +62,7 @@ Their mechanical life expectancy is of 100000 uses which leads to a worst-case s
 
 Due to the choice of base two for the calculator, a straightforward approach to display values is through the use of LED lights, with lit LEDs representing a 1 bit and an off light representing a 0 bit.    
 
-![\label{led}](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.ZH9pjkkcFhmGqhmbgSffQAHaHa%26pid%3DApi&f=1)
+![\label{led}](./media/led.jpeg)
 
 To avoid possible confusion when interpreting the result, an extra LED lights up to signal if the shown number is negative and, as such, has to be read as a two's complement.  
 Moreover, since there is a very limited number of bits to display values if the actual result of an operation lies outside the representable range and is thus truncated, an extra LED light will turn on to signal the overflow.
@@ -94,7 +94,6 @@ GPIO# | Function
 26|Input
 
 # Environment
-
 
 ## pijFORTHos
 
@@ -225,6 +224,10 @@ After extensive testing[^Bounce_test], it was found that the second falling edge
 According to the data from [@kinkead1975typing] and [@wiklund1987optimizing], the expected typing speed of a user is such that these added delays would not introduce noticeable unresponsiveness.
 
 ## Output
+
+With the same objective of achieving low coupling the file `output.f` contains all the words related to the output functions.  
+
+Since there is no direct relationship between how many bits the display can show and the actual size of the numbers (although it would be a natural choice to have them coincide), the code begins declaring the size of the display, followed by the GPIO pins used to control the output.  
 
 ## Inner representation
 
