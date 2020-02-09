@@ -187,7 +187,7 @@ The development of this module was based on the assumption that only binary oper
 
 As binary operators require two operands, two variables are declared to hold them; moreover, another variable has to store the operation. An extra variable keeps track of the status, in a way akin to the 31st and 28th bits of the program status registers in the ARM Instruction Set[@seal2001arm][^difference_with_ARM], since this is signer arithmetics no attention is paid to the carry flag[@iandallenOverflow].
 
-[^difference_with_ARM]: Note: for the sake of clarity and consistency when reading results,there is a lax interpretation of overflow, and multiplications can also set the overflow bit.
+[^difference_with_ARM]: Note: for the sake of clarity and consistency when reading results, there is a lax interpretation of overflow, and multiplications can also set the overflow bit.
 
 
 An array contains the execution tokens of the supported operations; addition, subtraction, and multiplication work as one would expect, division and equality, however, differ from their FORTH implementation.  
@@ -276,6 +276,10 @@ Of course, since the procedure previously described is only concerned with turni
 
 ![Naive approach\label{non}](./media/N-O-N.png)
 
+This section ties together all the previous modules, before delving into lower-level aspects of the code in `control.f`, analyzing how the calculator is intended to be used may bring greater clarity.
+
+ A naive approach is to iteratively go through the states, as seen in Fig. \ref{non}, and then start back from the beginning.
+ 
 ![Possible improvement\label{no_repeat}](./media/N-O_repeat.png)
 
 ![Final configuration\label{final}](./media/final.png)
