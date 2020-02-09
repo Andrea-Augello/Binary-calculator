@@ -5,7 +5,11 @@ date: "February 2020"
 author: "Andrea Augello, Università degli Studi di Palermo"
 
 ---
+\pagebreak
+
 # Introduction
+
+\pagebreak
 
 # Hardware
 
@@ -59,17 +63,15 @@ Their mechanical life expectancy is of 100000 uses which leads to a worst-case s
 
 ### LED
 
+![\label{led}](./media/led.jpeg)
 
 Due to the choice of base two for the calculator, a straightforward approach to display values is through the use of LED lights, with lit LEDs representing a 1 bit and an off light representing a 0 bit.    
-
-![\label{led}](./media/led.jpeg)
 
 To avoid possible confusion when interpreting the result, an extra LED lights up to signal if the shown number is negative and, as such, has to be read as a two's complement.  
 Moreover, since there is a very limited number of bits to display values if the actual result of an operation lies outside the representable range and is thus truncated, an extra LED light will turn on to signal the overflow.
 
 ### GPIO assignment
 
-As shown in the following table
 
 GPIO# | Function
 ------|---------
@@ -92,6 +94,10 @@ GPIO# | Function
 24|Output
 25|Output
 26|Input
+
+As shown in the preceding table [...]  
+
+\pagebreak
 
 # Environment
 
@@ -131,6 +137,8 @@ Trough the command
     * `-sv`: verbose send mode.
     * `-l100`: sets a 100 milliseconds delay after each line is sent, this usually gives enough time to run a command and be ready for the next line in time.
     * `-c10`: waits 8 milliseconds between each character sent.
+
+\pagebreak
 
 # Software
 Since it is not possible with the selected environment to have the Raspberry automatically load the source code at startup, the code is to be sent via a serial connection.
@@ -233,10 +241,14 @@ Since there is no direct relationship between how many bits the display can show
 
 ## Control flow
 
+\pagebreak
+
 # Conclusion
 
 
 ## Possible improvements
+
+\pagebreak
 
 # References
 
