@@ -52,7 +52,7 @@ The FTDI module is connected to a computer through its USB port, and to the Rasp
 With ease of use and familiarity of a potential end-user with similar products in mind, push buttons were considered an appropriate choice for the input method,
 moreover, single buttons were chosen in favor of a button matrix because a 3x3 button matrix would require 6 pin connections against the 7 needed in the other case, but the added complexity does not make it a worthwhile trade-off.  
 
-The chosen buttons are 6x6x5 mm tactile push buttons with two pins produced by Qteatak, a Shenzhen based electronics company.  
+The chosen buttons are 6x6x5 mm tactile push buttons with two pins[Fig. \ref{buttons}] produced by Qteatak, a Shenzhen based electronics company.  
 These buttons are rated to work with up to 12V of direct current, so they are safe for use with the 3,3V output of the GPIO pins of the Raspberry.
 
 Their mechanical life expectancy is of 100000 uses which leads to a worst-case scenario of 6250 operations before a malfunction, considering the intended purpose of this project, such a life expectancy is deemed sufficient.  
