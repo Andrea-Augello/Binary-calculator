@@ -278,9 +278,22 @@ Of course, since the procedure previously described is only concerned with turni
 
 This section ties together all the previous modules, before delving into lower-level aspects of the code in `control.f`, analyzing how the calculator is intended to be used may bring greater clarity.
 
- A naive approach is to iteratively go through the states, as seen in Fig. \ref{non}, and then start back from the beginning.
- 
+ A naive approach is to iteratively go through the states, as seen in Fig. \ref{non}, and then start back from the beginning.  
+
+```
+1.	fetch first_operand
+2.	fetch operation
+3.	fetch second_operand
+4.	compute result
+5.	display result
+6.	GOTO 1
+```
+
+While the simplicity of this model is quite attractive, it puts severe limits on the capabilities of the system: there is no way to do any further computation on the calculated value without writing it back, which is very inconvenient.
+
 ![Possible improvement\label{no_repeat}](./media/N-O_repeat.png)
+
+A first improvement is to add a condition in the loop: after a number is entered the software will wait for an operation, if that operation is an `EQUALS` operation the result will be shown; otherwise, the partial result is calculated, and another number is expected[Fig. \ref{no_repeat}].
 
 ![Final configuration\label{final}](./media/final.png)
 
