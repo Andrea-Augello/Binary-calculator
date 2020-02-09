@@ -185,9 +185,9 @@ by analyzing how some C libraries added support for the Broadcom 2711 GPIO[@ping
 This section of code contains the variables used to maintain the state of the software.  
 The development of this module was based on the assumption that only binary operation would be employed, introducing unary operators would require a radical change of some procedures.
 
-As binary operators require two operands, two variables are declared to hold them; moreover, another variable has to store the operation. An extra variable keeps track of the status, in a way akin to the 31st and 28th bits of the program status registers in the ARM Instruction Set[@seal2001arm][^difference_with_ARM].
+As binary operators require two operands, two variables are declared to hold them; moreover, another variable has to store the operation. An extra variable keeps track of the status, in a way akin to the 31st and 28th bits of the program status registers in the ARM Instruction Set[@seal2001arm][^difference_with_ARM], since this is signer arithmetics no attention is paid to the carry flag[@iandallenOverflow].
 
-[^difference_with_ARM]: Note: for the sake of clarity and consistency when reading results, multiplications can also set the overflow bit.
+[^difference_with_ARM]: Note: for the sake of clarity and consistency when reading results,there is a lax interpretation of overflow, and multiplications can also set the overflow bit.
 
 
 An array contains the execution tokens of the supported operations; addition, subtraction, and multiplication work as one would expect, division and equality, however, differ from their FORTH implementation.  
@@ -198,6 +198,10 @@ The decision here was to leave `EQUALS` as a dummy operation and to delegate to 
 The `/` FORTH operation has several issues: there is no check in place to prevent division by zero, and divisions with negative numbers return 0.  
 To overcome the latter of these issues, the absolute value of the operands replaces the given values for the division, and the sign of the result is then adjusted accordingly.  
 Before any computation, there's an additional check to avoid division by zero, in case the divisor is zero, the `DIVISION` function will leave on the stack the highest positive integer 32 bits can represent.
+
+The `COMPUTE_RESULT` function puts on the stack the last two values, the execution token of the selected operation, and executes it, leaving on the stack the result.  After that, it checks whether an overflow has happened and works out the sign of the result.
+
+Figuring out the sign of the 8-bit number is not necessarily straightforward, even in seemingly simple cases:  
 
 [...] bit twiddling[@BitTwiddling] [...]
 
