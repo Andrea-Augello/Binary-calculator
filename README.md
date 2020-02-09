@@ -274,6 +274,8 @@ Of course, since the procedure previously described is only concerned with turni
 
 ## Control flow
 
+![Naive approach\label{non}](./media/N-O-N.png)
+
 \pagebreak
 
 # Conclusion
