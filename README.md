@@ -100,7 +100,7 @@ GPIO# | Function
 
 FORTH interpreters can be implemented easily for resource-constrained machines using no OS, so they are well-suited for bare-metal interactive development.
 
- The pijFORTHos environment is based on an assembly FORTH interpreter called JonesForth, originally written for i686 assembly by _Richard WM Jones_.
+ The pijFORTHos environment is based on an assembly FORTH interpreter called JonesForth[@JonesForth], originally written for i686 assembly by _Richard WM Jones_.
 
  Due to its simplicity, JonesForth has been adapted to many different architectures, some of those portings brought to the Bare-Metal OS for the Raspberry Pi.  
  This
@@ -184,23 +184,45 @@ In those occurrences it is only necessary to use a mask, which can be computed o
 At the beginning of the code masks for both sets of pins are computed and, since they will not be changing at runtime, stored as literals.  
 These masks are used to only act on bits related to pins in use for this project.
 
+ Two separate words implement procedures to read which keys have been pressed and to clear the event detection status. This is because the capability to pause until a key is pressed, without wiping the register, can be beneficial in many occurrences.
+
+A different word has the task to determine whether the registered keypress is a digit or an operation. Subsequent procedures will resolve, from the value of the event detection register, the specific button which prompted the status change.
 
 ### Debouncing
 
-While testing the input code, a single button press sometimes would, due to a phenomenon known as bouncing[@ganssle2004guide], generate two falling edges.
+While testing the input code, a single button press sometimes would, due to a phenomenon known as bouncing[@ganssle2004guide], generate multiple falling edges.
 
 Although there are some widely available valid hardware solutions[@gay2017mc14490], the nature of this application does not warrant the added hardware complexity: the responsiveness requirements are quite lax, so it is possible to use some CPU cycles to solve the bouncing issues in software.
 
-![Bouncing distribution\label{Bouncing_distribution}](./media/Bouncing_distribution.png)
+
+Trial and error showed that undesired falling edges could happen in two circumstances: while pressing the button and after release.  
+The first issue was trivial to fix: after detecting a button release, a check on the GPLEV0 register, after a short delay, can easily confirm whether the button release truly happened or the circuit is still closed.
+
+```forth
+: PEEK_KEYPRESS    
+   [ OP_MASK DIGIT_MASK OR ] LITERAL
+   GPEDS0 @ AND
+   DUP 0 <>
+   IF  
+      1 MILLISECONDS DELAY
+      GPLEV0 @ INVERT AND        
+   THEN ;                       
+```
+
+To prevent the second case of incorrect triggering, the former approach will not yield satisfying results: in both genuine and spurious falling edges, the level after they are registered is low.  
+It is not either a reasonable solution to check the level a short interval of time before each read of the event detection status:
+this approach would be equivalent to constantly polling the pin level at a fixed sampling rate and waiting for a change, which defeats the purpose of setting up an event detection.
 
 After extensive testing[^Bounce_test], it was found that the second falling edge happened, on average, after $170.3 \mu s$ $(\sigma = 113.97)$ from the first one,
- so, assuming Gaussian distribution, 99% of the bouncing events will be within $435\mu s$ ,[Fig. \ref{Bouncing_distribution}]  so adding a delay of 1ms before clearing the event detect register is guaranteed to avoid reading a bounce as an actual key press.
+ so, assuming Gaussian distribution, 99% of the bouncing events will be within $435\mu s$,[Fig. \ref{Bouncing_distribution}] which implies that adding a delay of 1ms before clearing the event detect register guarantees avoiding reading a bounce as an actual key press.
+
+
+ ![Bouncing distribution\label{Bouncing_distribution}](./media/Bouncing_distribution.png)
 
 [^Bounce_test]: The time intercurring between falling edges was computed by polling the event detection register in a loop and storing a timestamp.
   To achieve more accurate readings, all output operations were executed after the measurements were completed.
 
-According to [@kinkead1975typing] and [@wiklund1987optimizing], the expected typing speed of a user is such that the aforementioned delay would not introduce a noticeable delay.
-
+According to the data from [@kinkead1975typing] and [@wiklund1987optimizing], the expected typing speed of a user is such that these added delays would not introduce noticeable unresponsiveness.
 
 ## Output
 
