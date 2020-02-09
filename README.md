@@ -180,6 +180,10 @@ The available documentation[@pi4_datasheet] does not show this change yet, howev
 by analyzing how some C libraries added support for the Broadcom 2711 GPIO[@pingpio] [@raspi-gpio], one can gain insight on how to change the pull-up/down settings.
 
 
+## Inner representation
+
+[...] bit twiddling[@BitTwiddling] [...]
+
 ## Input
 
 All the operations related to the input are in a single file, the aim is to achieve low coupling between components of the project, and allow future alterations with as little restructuring as possible.
@@ -237,7 +241,11 @@ With the same objective of achieving low coupling the file `output.f` contains a
 
 Since there is no direct relationship between how many bits the display can show and the actual size of the numbers (although it would be a natural choice to have them coincide), the code begins declaring the size of the display, followed by the GPIO pins used to control the output.  
 
-## Inner representation
+The chosen method to display values is a set of 8 LED lights, so the actual implementation here is quite straightforward: given a value to show, a mask is computed[^mask] and written into GPSET0.   
+Additionally,  a second value passed to the `SHOW` function dictates whether to turn on or off the status LED.  
+Of course, since the procedure previously described is only concerned with turning on LEDs, the first operation to show correct values is to clear the display; to do so a mask for every display pin is written into GPCLR0.
+
+[^mask]: The n-th bit of the number multiplies the mask for the n-th pin, and a logic `OR` is performed amongst those values.
 
 ## Control flow
 
