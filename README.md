@@ -293,7 +293,9 @@ While the simplicity of this model is quite attractive, it puts severe limits on
 
 ![Possible improvement\label{no_repeat}](./media/N-O_repeat.png)
 
-A first improvement is to add a condition in the loop: after a number is entered the software will wait for an operation, if that operation is an `EQUALS` operation the result will be shown; otherwise, the partial result is calculated, and another number is expected[Fig. \ref{no_repeat}].
+A first improvement is to add a condition in the loop: after a number is entered the software will wait for an operation, if that operation is an `EQUALS` operation the result will be shown; otherwise, the partial result is calculated, and another number is expected[Fig. \ref{no_repeat}].  
+It is to be noted that every operation will be executed in the order it is written, the PEMDAS[@jeon2012reflecting] order is not respected.
+
 
 ![Final configuration\label{final}](./media/final.png)
 
