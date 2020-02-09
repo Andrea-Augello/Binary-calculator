@@ -199,11 +199,15 @@ The `/` FORTH operation has several issues: there is no check in place to preven
 To overcome the latter of these issues, the absolute value of the operands replaces the given values for the division, and the sign of the result is then adjusted accordingly.  
 Before any computation, there's an additional check to avoid division by zero, in case the divisor is zero, the `DIVISION` function will leave on the stack the highest positive integer 32 bits can represent.
 
-The `COMPUTE_RESULT` function puts on the stack the last two values, the execution token of the selected operation, and executes it, leaving on the stack the result.  After that, it checks whether an overflow has happened and works out the sign of the result.
+The `STORE_VALUE` procedure is tasked with taking from the stack a value to be interpreted as an 8-bit signed integer and storing it into the current value variable as a 32-bit number.  
+This is not a trivial operation as a negative number in two's notation will be regarded as a different positive if proper care is not taken in performing a sign extension.  
+The chosen approach is to truncate the 32-bit value and perform the sign extension with the method reported in [@BitTwiddling].
 
-Figuring out the sign of the 8-bit number is not necessarily straightforward, even in seemingly simple cases:  
+Another word in this section plays an important role when one wants to perform operations on intermediate results: the `COMPUTE_RESULT` word works strictly on a $"last\_value \circ current\_value"$ fashion, so there is a need to take the contents of `CURRENT_VALUE` and storing them into `LAST_VALUE`, this is accomplished by `PREPARE_NEXT`.
 
-[...] bit twiddling[@BitTwiddling] [...]
+One could argue that a circular buffer may be best suited to store the numbers to work with, however, with only two values, the required number of operations would be the same, with no added clarity in the code[^rephrasing].
+
+[^rephrasing]: Of course, in that case, `LAST_VALUE` and `CURRENT_VALUE` could be words defined in such a way to leave on the stack the address on the correct cell of the circular buffer, leaving the rest of the code unchanged, but there seems to be no benefit in doing so.
 
 ## Input
 
@@ -251,7 +255,7 @@ After extensive testing[^Bounce_test], it was found that the second falling edge
 
  ![Bouncing distribution\label{Bouncing_distribution}](./media/Bouncing_distribution.png)
 
-[^Bounce_test]: The time intercurring between falling edges was computed by polling the event detection register in a loop and storing a timestamp.
+[^Bounce_test]: The time intercurring between falling edges was computed by polling the event detection register in a loop and storing a timestamp.  
   To achieve more accurate readings, all output operations were executed after the measurements were completed.
 
 According to the data from [@kinkead1975typing] and [@wiklund1987optimizing], the expected typing speed of a user is such that these added delays would not introduce noticeable unresponsiveness.
