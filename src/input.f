@@ -50,20 +50,10 @@ CREATE DIGIT_KEYS 9 , 11 ,
 		CLEAR_KEYPRESS 
 	THEN ;
 
-: READ_LOOP
-		0
-	BEGIN
-		READ_KEYPRESS .
-		1 + DUP
-		100 >=
-		10 milliseconds delay
-	UNTIL 
-	DROP ;
-
 : ?DIGIT ( GPEDS0@ -- T/F )
 	DIGIT_MASK AND 0 <>  ;
 
-: READ_OP ( GPEDS0@ -- operation )
+: GET_OP# ( GPEDS0@ -- operation )
 	-1 0 										\ By default, if no op matches, 
 												\ an invalid code ( -1 ) is returned
 	BEGIN
@@ -87,17 +77,27 @@ CREATE DIGIT_KEYS 9 , 11 ,
 	DROP NIP ;
 		
 : GET_DIGIT ( GPEDS0@ -- 0/1 )
-	DUP
-	DIGIT_KEYS 0 GET MASK 
-	AND
-	IF
-		DROP 0
-	ELSE
-		DIGIT_KEYS 1 GET MASK AND
-		IF
-			1
+	-1 0 										\ By default, if no digit matches, 
+												\ an invalid code ( -1 ) is returned
+	BEGIN
+		DUP >R								\ Stores in the return stack a copy of the
+												\ loop counter, the other one will be consumed
+		DIGIT_KEYS SWAP GET MASK		\ Computes mask for digit_keys[loop_counter]
+		ROT DUP 								\ Brings GPEDS0@ on top of the stack and makes
+												\ a copy
+		ROT AND 0 <>						\ Compares GPEDS0@ with the previously 
+												\ computed mask
+		IF 
+			NIP								\ Removes the previous digit value
+			R> DUP >R						\ and replaces it with the loop counter
+		ELSE
+			SWAP
 		THEN
-	THEN  ;
+		R> 1 + 
+		DUP
+		#DIGITS >=
+	UNTIL
+	DROP NIP ;
 
 : OP_KEYS_SETUP 
 	0

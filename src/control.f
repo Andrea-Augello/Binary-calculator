@@ -4,7 +4,7 @@
 	SHOW ;
 
 : SET_OPERATION
-	READ_OP OP_SET SWAP
+	GET_OP# OP_SET SWAP
 	GET OPERATION ! ;
 
 : APPEND ( n1 n2  -- 2n2 + n1  )
