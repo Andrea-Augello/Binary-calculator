@@ -276,6 +276,8 @@ Of course, since the procedure previously described is only concerned with turni
 
 ![Naive approach\label{non}](./media/N-O-N.png)
 
+![Possible improvement\label{non}](./media/N-O_repeat.png)
+
 \pagebreak
 
 # Conclusion
