@@ -38,6 +38,7 @@ it replaces the older Raspberry Pi 3 B+ which was based on the Broadcom BCM2835 
 Although claiming complete backward compatibility with earlier products, the documentation available[@pi4_datasheet] is not very comprehensive, which makes porting code not always straightforward.
 
 ## FTDI FT232RL
+
 The FT232RL is a USB to serial UART interface[@FT232RL].
 Without this peripheral, it is not possible to send data to and from the  Board with ease: modern computers do not expose serial ports that can be connected to the GPIOs.  
 This module is needed to provide a virtual communication port for the computer to send data over to the Pi.
@@ -280,7 +281,7 @@ This section ties together all the previous modules, before delving into lower-l
 
  A naive approach is to iteratively go through the states, as seen in Fig. \ref{non}, and then start back from the beginning.  
 
-```
+```pseudocode
 1.	fetch first_operand
 2.	fetch operation
 3.	fetch second_operand
@@ -307,7 +308,7 @@ This mode of operation is shown in Fig. \ref{final}, and is the one that is bein
 
 Within the previously stated mode of operation, there are some quite complex steps, so it is beneficial to examine them in more detail.
 
-
+![GET_NUMBER procedure\label{getnum}](./media/get_number.png)
 
 \pagebreak
 
