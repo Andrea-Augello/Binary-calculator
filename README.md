@@ -196,7 +196,8 @@ The `=` FORTH word is a binary logical operand, so its behavior is unsuitable to
 The decision here was to leave `EQUALS` as a dummy operation and to delegate to the control flow module the appropriate action to take; the rationale being that on keypress the user would expect a result to be shown, and such an event would be outside the scope of this module.
 
 The `/` FORTH operation has several issues: there is no check in place to prevent division by zero, and divisions with negative numbers return 0.  
-
+To overcome the latter of these issues, the absolute value of the operands replaces the given values for the division, and the sign of the result is then adjusted accordingly.  
+Before any computation, there's an additional check to avoid division by zero, in case the divisor is zero, the `DIVISION` function will leave on the stack the highest positive integer 32 bits can represent.
 
 [...] bit twiddling[@BitTwiddling] [...]
 
