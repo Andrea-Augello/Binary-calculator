@@ -167,7 +167,7 @@ JonesForth is not ANSI compliant[@pijFORTHos], hence some standard words do not 
 
 The `se-ans.f` code provided in the course materials contains some definitions to ensure compliance for some words of common use.
 
-This code is the first to be loaded to ensure that the subsequent instructions are executed correctly.
+This code is the first to be loaded to guarantee that each subsequent instruction is executed as intended.
 
 ## Utilities
 
@@ -181,6 +181,22 @@ by analyzing how some C libraries added support for the Broadcom 2711 GPIO[@ping
 
 
 ## Inner representation
+
+This section of code contains the variables used to maintain the state of the software.  
+The development of this module was based on the assumption that only binary operation would be employed, introducing unary operators would require a radical change of some procedures.
+
+As binary operators require two operands, two variables are declared to hold them; moreover, another variable has to store the operation. An extra variable keeps track of the status, in a way akin to the 31st and 28th bits of the program status registers in the ARM Instruction Set[@seal2001arm][^difference_with_ARM].
+
+[^difference_with_ARM]: Note: for the sake of clarity and consistency when reading results, multiplications can also set the overflow bit.
+
+
+An array contains the execution tokens of the supported operations; addition, subtraction, and multiplication work as one would expect, division and equality, however, differ from their FORTH implementation.  
+
+The `=` FORTH word is a binary logical operand, so its behavior is unsuitable to implement what happens when pressing the equals sign in a calculator.
+The decision here was to leave `EQUALS` as a dummy operation and to delegate to the control flow module the appropriate action to take; the rationale being that on keypress the user would expect a result to be shown, and such an event would be outside the scope of this module.
+
+The `/` FORTH operation has several issues: there is no check in place to prevent division by zero, and divisions with negative numbers return 0.  
+
 
 [...] bit twiddling[@BitTwiddling] [...]
 
