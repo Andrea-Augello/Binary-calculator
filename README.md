@@ -42,7 +42,7 @@ Although claiming complete backward compatibility with earlier products, the doc
 
 ![FTDI FR232RL UART to USB interface\label{ftchip}](https://a.allegroimg.com/s128/11b94d/bbc6e2ba4498b156045c38731c08/RS232-UART-FT232RL-konwerter-USB-FTDI)
 
-The FT232RL [Fig. \ref{ftchip}] is a USB to serial UART interface[@FT232RL].
+The FT232RL [Fig. \ref{ftchip}] is a USB to serial UART[@laddha2013review] interface[@FT232RL].
 Without this peripheral, it is not possible to send data to and from the  Board with ease: modern computers do not expose serial ports that can be connected to the GPIOs.  
 This module is needed to provide a virtual communication port for the computer to send data over to the Pi.
 The FTDI module is connected to a computer through its USB port, and to the Raspberry Pi 4 UART1 by the following configuration:
