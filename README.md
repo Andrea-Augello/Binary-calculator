@@ -101,8 +101,10 @@ GPIO# | Function | Usage
 25|Output | 8th bit
 26|Input  | $=$ Key
 
-As shown in the preceding table [...]  
-in Fig. \ref{schema}.
+In Fig. \ref{schema}, for added clarity, there is a breadboard view of the hardware configuration employed[^wrongpi]
+
+[^wrongpi]: The illustration shows a Raspberry Pi 3 B + due to constraints in the CAD software emplyed[@knorig2009fritzing], but, in the actual project, a Raspberry Pi 4 B is used.
+
 
 \pagebreak
 
