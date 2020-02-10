@@ -11,6 +11,38 @@ author: "Andrea Augello, Università degli Studi di Palermo"
 
 The Embedded System course at Università degli Studi di Palermo requires each student to develop a working and documented embedded application as a final project, which is to be thoroughly discussed during the oral exam.
 
+The course deals with:
+
+* Embedded systems architectures
+* Sensors and actuators
+* Embedded processors
+* Memory architectures
+* Input and output
+* Multitasking
+* Scheduling
+* Buses
+* Machine language and assembly (ARM)
+* Integer and floating-point arithmetics
+* Vectorial instructions
+* Multimedia extension
+* Data processing instructions
+* Condition flags
+* Jumps
+* Selection constructs
+* Loops
+* Memory operations
+* Subroutine calls
+* Stack handling
+* BCM2835/7 Architecture
+* STM32-F446 architecture
+* Forth
+
+The aim of the course is for the student to know the necessary advanced concepts to the comprehension of the structure of embedded elaboration systems. And also have deep knowledge of embedded system programming.
+
+The following discussion describes the aim, structure, behavior, and usage of the developed system.  
+It also reports the design and implementation choices made  every development phase.
+
+
 \pagebreak
 
 # Hardware
