@@ -9,6 +9,8 @@ author: "Andrea Augello, Università degli Studi di Palermo"
 
 # Introduction
 
+The Embedded System course at Università degli Studi di Palermo requires each student to develop a working and documented embedded application as a final project, which is to be thoroughly discussed during the oral exam.
+
 \pagebreak
 
 # Hardware
