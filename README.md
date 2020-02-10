@@ -101,7 +101,7 @@ GPIO# | Function | Usage
 25|Output | 8th bit
 26|Input  | $=$ Key
 
-In Fig. \ref{schema}, for added clarity, there is a breadboard view of the hardware configuration employed[^wrongpi]
+In Fig. \ref{schema}, for added clarity, there is a breadboard view of the hardware configuration employed[^wrongpi].
 
 [^wrongpi]: The illustration shows a Raspberry Pi 3 B + due to constraints in the CAD software emplyed[@knorig2009fritzing], but, in the actual project, a Raspberry Pi 4 B is used.
 
@@ -116,8 +116,7 @@ FORTH interpreters can be implemented easily for resource-constrained machines u
 
  The pijFORTHos environment is based on an assembly FORTH interpreter called JonesForth[@JonesForth], originally written for i686 assembly by _Richard WM Jones_.
 
- Due to its simplicity, JonesForth has been adapted to many different architectures, some of those portings brought to the Bare-Metal OS for the Raspberry Pi.  
- This
+ Due to its simplicity, JonesForth has been adapted to many different architectures, one of those in particular, Jonesforth-ARM[@jfa], brought to the Bare-Metal OS for the Raspberry Pi.  
 
 ## Picocom, Minicom and ASCII-XFR
 Minicom is a terminal emulator software for Unix-like operating systems. It is commonly used when setting up a remote serial console.[@Minicom]  
