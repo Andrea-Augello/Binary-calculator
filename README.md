@@ -127,9 +127,11 @@ In effect, picocom is not an "emulator" per se. It is a simple program that open
 
 In the scope of this project, it is used as a serial communications program to allow access to the serial console of the Raspberry.
 
-As ASCII-XFR[@ASCII] was chosen to send the source file to the Raspberry, it  
+As ASCII-XFR[@ASCII] was chosen to send the source file to the Raspberry, it allows a delay between each character and line sent.  
+This characteristic is beneficial because the UART communication is asynchronous: if, while the receiver is busy compiling or executing FORTH words, the sender is transmitting data, there is a danger of an overrun error and incoming characters will be lost, with disastrous consequences for the correct execution of the program.  
 
-[...]
+The introduced pause hopefully gives the Raspberry enough time to execute the received instructions in time, before the transmission of the next character.  
+This is, however, only a heuristic, and proper care should be taken that no time-consuming operation is executed in the middle of the file transmission.
 
 Trough the command
 `picocom --b 115200 /dev/tyyUSB0 --imap delbs -s "ascii-xfr -sv -l100 -c10"
