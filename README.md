@@ -39,12 +39,12 @@ The course deals with:
 
 The aim of the course is for the student to know the necessary advanced concepts to the comprehension of the structure of embedded elaboration systems. And also have deep knowledge of embedded system programming.
 
-The following discussion describes the aim, structure, behavior, and usage of the developed system.  
+The following discussion describes the aim, structure, behavior, and usage of the developed system. 
 It also reports the design and implementation choices made  every development phase.
 
-The __hardware__ section briefly describes what components will be used in this project and the rationale behind some of those choices.
-The __environment__ section outlines the characteristics of the software tools used to load and run the code.
-The __software__ section will describe the developed modules and the decison making process that brought to their finalized form.
+The __hardware__ section briefly describes what components will be used in this project and the rationale behind some of those choices.  
+The __environment__ section outlines the characteristics of the software tools used to load and run the code.  
+The __software__ section will describe the developed modules and the decison making process that brought to their finalized form.  
 Finally, the __conclusion__ section will sum up the contents of this report and present some possible directions for future improvements to this project.
 
 
