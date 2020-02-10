@@ -55,7 +55,7 @@ CREATE DIGIT_KEYS 9 , 11 ,
 : ?DIGIT ( GPEDS0@ -- T/F )
 	DIGIT_MASK AND 0 <>  ;
 
-: GET_OP# ( GPEDS0@ -- operation )
+: GET_OP#			\	( GPEDS0@ -- operation )
 	-1 0 										\ By default, if no op matches, 
 												\ an invalid code ( -1 ) is returned
 	BEGIN
