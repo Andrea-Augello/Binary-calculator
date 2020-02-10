@@ -117,7 +117,7 @@ FORTH interpreters can be implemented easily for resource-constrained machines u
  Due to its simplicity, JonesForth has been adapted to many different architectures, some of those portings brought to the Bare-Metal OS for the Raspberry Pi.  
  This
 
-## Picocom and Minicom
+## Picocom, Minicom and ASCII-XFR
 Minicom is a terminal emulator software for Unix-like operating systems. It is commonly used when setting up a remote serial console.[@Minicom]  
 Picocom is, in principle, very similar to minicom.
 It was designed as a simple, manual, modem configuration, testing, and debugging tool.[@Picocom]  
@@ -127,7 +127,7 @@ In effect, picocom is not an "emulator" per se. It is a simple program that open
 
 In the scope of this project, it is used as a serial communications program to allow access to the serial console of the Raspberry.
 
-As ASCII-XFR[@ASCII] was chosen to send the source file to the Raspberry, it allows a delay between each character and line sent.  
+ASCII-XFR[@ASCII] was chosen to send the source file to the Raspberry because it allows a delay between each character and line sent.  
 This characteristic is beneficial because the UART communication is asynchronous: if, while the receiver is busy compiling or executing FORTH words, the sender is transmitting data, there is a danger of an overrun error and incoming characters will be lost, with disastrous consequences for the correct execution of the program.  
 
 The introduced pause hopefully gives the Raspberry enough time to execute the received instructions in time, before the transmission of the next character.  
