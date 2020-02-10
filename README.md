@@ -21,8 +21,9 @@ author: "Andrea Augello, Università degli Studi di Palermo"
 
 ![Raspberry Pi model 4B\label{pi4}](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Raspberry_Pi_4_Model_B_-_Side.jpg/450px-Raspberry_Pi_4_Model_B_-_Side.jpg)
 
-The target for this project is a general-purpose Single-Board Computer: the Raspberry Pi 4B [Fig. \ref{pi4}], it is the latest iteration of the Raspberry Pi SoC, launched on 24th June 2019[@PI_release],
-it replaces the older Raspberry Pi 3 B+ which was based on the Broadcom BCM2835 chip[@BCM2835][@BCM2835_datasheet_errata] and boasts high-end specs:
+The target for this project is a general-purpose Single-Board Computer: the Raspberry Pi 4 B [Fig. \ref{pi4}].  
+It is the latest iteration of the Raspberry Pi SoC, launched on 24th June 2019[@PI_release],
+it replaces the older __Raspberry Pi 3 B+__ which was based on the Broadcom BCM2835 chip[@BCM2835][@BCM2835_datasheet_errata] and boasts high-end specs:
 
 * A 1.5GHz quad-core 64-bit ARM Cortex-A72 CPU
 * 1GB, 2GB, or 4GB of LPDDR4 SDRAM
@@ -39,7 +40,9 @@ Although claiming complete backward compatibility with earlier products, the doc
 
 ## FTDI FT232RL
 
-The FT232RL is a USB to serial UART interface[@FT232RL].
+![FTDI FR232RL UART to USB interface\label{ftchip}](https://a.allegroimg.com/s128/11b94d/bbc6e2ba4498b156045c38731c08/RS232-UART-FT232RL-konwerter-USB-FTDI)
+
+The FT232RL [Fig. \ref{ftchip}] is a USB to serial UART interface[@FT232RL].
 Without this peripheral, it is not possible to send data to and from the  Board with ease: modern computers do not expose serial ports that can be connected to the GPIOs.  
 This module is needed to provide a virtual communication port for the computer to send data over to the Pi.
 The FTDI module is connected to a computer through its USB port, and to the Raspberry Pi 4 UART1 by the following configuration:
@@ -48,6 +51,7 @@ The FTDI module is connected to a computer through its USB port, and to the Rasp
 * FTDI-RX to RPi-GPIO14 (TX)
 * FTDI-TX to RPi-GPIO15 (RX)
 * FTDI-Ground to RPi-GND
+
 
 ## I/O choices
 ### Qteatak push buttons
@@ -66,37 +70,39 @@ Their mechanical life expectancy is of 100000 uses which leads to a worst-case s
 
 ![\label{led}](./media/led.jpeg)
 
-Due to the choice of base two for the calculator, a straightforward approach to display values is through the use of LED lights, with lit LEDs representing a 1 bit and an off light representing a 0 bit.    
+Due to the choice of base two for the calculator, a straightforward approach to display values is through the use of LED lights [Fig. \ref{led}], with lit LEDs representing a 1 bit and an off light representing a 0 bit.    
 
 To avoid possible confusion when interpreting the result, an extra LED lights up to signal if the shown number is negative and, as such, has to be read as a two's complement.  
 Moreover, since there is a very limited number of bits to display values if the actual result of an operation lies outside the representable range and is thus truncated, an extra LED light will turn on to signal the overflow.
 
 ### GPIO assignment
 
+Since this project uses many external components, here it is shown a table with all the used GPIO pins and their use.
 
-GPIO# | Function
-------|---------
- 5|Input
- 6|Input
- 7|Output
- 8|Output
- 9|Input
-11|Input
-12|Output
-13|Input
-14|TX
-15|RX
-16|Output
-18|Output
-19|Input
-20|Output
-21|Output
-23|Output
-24|Output
-25|Output
-26|Input
+GPIO# | Function | Usage
+------|----------|------
+ 5|Input  | $+$ Key
+ 6|Input  | $-$ Key
+ 7|Output | 5th bit
+ 8|Output | 6th bit
+ 9|Input  | $0$ Key
+11|Input  | $1$ Key
+12|Output | 4th bit
+13|Input  | $\times$ Key
+14|TX     | UART transmitter
+15|RX     | UART receiver
+16|Output | 3rd bit
+18|Output | Negative flag
+19|Input  | $\div$ Key
+20|Output | 2nd bit
+21|Output | 1st bit
+23|Output | Overflow flag
+24|Output | 7th bit
+25|Output | 8th bit
+26|Input  | $=$ Key
 
 As shown in the preceding table [...]  
+in Fig. \ref{schema}.
 
 \pagebreak
 
@@ -110,9 +116,6 @@ FORTH interpreters can be implemented easily for resource-constrained machines u
 
  Due to its simplicity, JonesForth has been adapted to many different architectures, some of those portings brought to the Bare-Metal OS for the Raspberry Pi.  
  This
-
-
-## Ubuntu 19.04
 
 ## Picocom and Minicom
 Minicom is a terminal emulator software for Unix-like operating systems. It is commonly used when setting up a remote serial console.[@Minicom]  
@@ -142,7 +145,7 @@ Trough the command
 \pagebreak
 
 # Software
-Since it is not possible with the selected environment to have the Raspberry automatically load the source code at startup, the code is to be sent via a serial connection.
+Since it is not possible with the selected environment to have the Raspberry automatically load the source code from the storage at startup, the code is to be sent via a serial connection.
 
 The file transfer happens character by character at a quite limited speed, with significant delay after every character and newline, furthermore, every file has to be selected singularly.  
 To cut down on transfer times, it is convenient to use a bash script to exclude unessential parts of the code (i.e. comments and empty lines), remove unnecessary newlines, and merge everything into a single file.
@@ -180,6 +183,24 @@ The Raspberry Pi 4 B has a different procedure to set the internal pull-up/down 
 The available documentation[@pi4_datasheet] does not show this change yet, however,
 by analyzing how some C libraries added support for the Broadcom 2711 GPIO[@pingpio] [@raspi-gpio], one can gain insight on how to change the pull-up/down settings.
 
+In the models up to the Raspberry Pi 3 B +, the procedure to set the internal pull for the input pins comprised multiple steps:  
+
+1. Write to GPPUD to set the required control signal (i.e. Pull-up or Pull-Down or neither to remove the current Pull-up/down)
+
+1. Wait for 150 cycles – this provides the required set-up time for the control signal
+
+1. Write to GPPUDCLK0/1 to clock the control signal into the GPIO pads you wish to modify
+
+1. Wait for 150 cycles – this provides the required hold time for the control signal
+
+1. Write to GPPUD to remove the control signal
+
+1. Write to GPPUDCLK0/1 to remove the clock
+
+With the values to write into GPPUD being 1 to enable Pull Down control and 2 to enable Pull Up control, moreover there is no way to check what is the current pull for a pin.
+
+The new model however uses the opposite convention to indicate the pull, and the procedure requires a single step, analogous to the one used to select the alternate functions.  
+Another key difference is that from those same registers used to set the pull it is possible to read what the current setting is, even after a power off.
 
 ## Inner representation
 
@@ -309,6 +330,19 @@ This mode of operation is shown in Fig. \ref{final}, and is the one that is bein
 Within the previously stated mode of operation, there are some quite complex steps, so it is beneficial to examine them in more detail.
 
 ![GET_NUMBER procedure\label{getnum}](./media/get_number.png)
+
+
+The user keys in values one bit at a time, starting from the most significant.  
+Since an 8-bit representation is in use, it is not unreasonable to expect a user to fill in all the bits, however, such a procedure is quite cumbersome, more so for small positive integers as it is necessary to input all the leading zero bits and it is quite easy to make mistakes while doing so.  
+The proposed approach is to stop waiting for more digit if an operation is selected and to assume the inputted value zero-padded on the left [Fig. \ref{getnum}].
+
+
+This issue does not occur while getting the operation since that is a single key, but a similar approach could be taken if alternate functions were added to some keys, as is customary in scientific calculators.
+
+As it was anticipated while discussing the internal representation, the behavior of the system when the user presses the "equals" key was offloaded to this section.  
+At the end of each loop, there is a check in place to verify whether the uses selected equals; in that circumstance, the current value is shown until a key is pressed.
+
+
 
 \pagebreak
 
