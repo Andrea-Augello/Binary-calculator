@@ -145,7 +145,7 @@ Trough the command
 * `-s "ascii-xfr -sv -l100 -c10"`: specifies ascii-xfr as the external command to use for transmitting files.
     * `-sv`: verbose send mode.
     * `-l100`: sets a 100 milliseconds delay after each line is sent, this usually gives enough time to run a command and be ready for the next line in time.
-    * `-c10`: waits 8 milliseconds between each character sent.
+    * `-c10`: waits 10 milliseconds between each character sent.
 
 \pagebreak
 
