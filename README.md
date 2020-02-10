@@ -116,7 +116,9 @@ FORTH interpreters can be implemented easily for resource-constrained machines u
 
  The pijFORTHos environment is based on an assembly FORTH interpreter called JonesForth[@JonesForth], originally written for i686 assembly by _Richard WM Jones_.
 
- Due to its simplicity, JonesForth has been adapted to many different architectures, one of those in particular, Jonesforth-ARM[@jfa], brought to the Bare-Metal OS for the Raspberry Pi.  
+ Due to its simplicity, JonesForth has been adapted to many different architectures, one of those in particular, Jonesforth-ARM[@jfa], brought to the Bare-Metal FORTH interpreter for the Raspberry Pi pijFORTHos.  
+ This interpreter, not only allows executing FORTH code but also allows connection to another machine through the Raspberry Pi serial console
+
 
 ## Picocom, Minicom and ASCII-XFR
 Minicom is a terminal emulator software for Unix-like operating systems. It is commonly used when setting up a remote serial console.[@Minicom]  
