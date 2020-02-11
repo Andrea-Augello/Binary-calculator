@@ -253,6 +253,90 @@ With the values to write into GPPUD being 1 to enable Pull Down control and 2 to
 
 The new model, however, uses the opposite convention to indicate the pull, and the procedure requires a single step, analogous to the one used to select the alternate functions.  
 The GPPUPDN0, GPPUPDN1, GPPUPDN2, and GPPUPDN3 registers, located starting from the 0xFE2000E4 memory address, hold the information on the current pull for each pin.  
+
+Each of the 54 GPIO pins (except the 3rd and 5th which are pulled high by default and cannot be brought down) can have the internal pull set to high, low or have no pull at all. The PUD{n} field determines the pull of the nth GPIO pin. The pull is maintained on restart.
+
+__GPIO pull select register 0:__
+
+Bit(s) | Field Name | Description | Type  
+-------|------------|-------------|------
+31-30| PUD15 | PUD15 - Pull select 15 | R/W
+29-28| PUD14 | PUD14 - Pull select 14 | R/W
+27-26| PUD13 | PUD13 - Pull select 13 | R/W
+25-24| PUD12 | PUD12 - Pull select 12 | R/W
+23-22| PUD11 | PUD11 - Pull select 11 | R/W
+21-20| PUD10 | PUD10 - Pull select 10 | R/W
+19-18| PUD9  | PUD9  - Pull select 9  | R/W
+17-16| PUD8  | PUD8  - Pull select 8  | R/W
+15-14| PUD7  | PUD7  - Pull select 7  | R/W
+13-12| PUD6  | PUD6  - Pull select 6  | R/W
+11-10| PUD5  | PUD5  - Pull select 5  | R/W
+9-8  | PUD4  | PUD4  - Pull select 4  | R/W
+7-4  | PUD3  | PUD3  - Pull select 3  | R/W
+5-4  | PUD2  | PUD2  - Pull select 2  | R/W
+3-2  | PUD1  | PUD1  - Pull select 1  | R/W
+1-0  | PUD0  | PUD0  - Pull select 0  | R/W
+
+
+__GPIO pull select register 1:__
+
+Bit(s) | Field Name | Description | Type
+-------|------------|-------------|------
+31-30| PUD31 | PUD31 - Pull select 31 | R/W
+29-28| PUD30 | PUD30 - Pull select 30 | R/W
+27-26| PUD29 | PUD29 - Pull select 29 | R/W
+25-24| PUD28 | PUD28 - Pull select 28 | R/W
+23-22| PUD27 | PUD27 - Pull select 27 | R/W
+21-20| PUD26 | PUD26 - Pull select 26 | R/W
+19-18| PUD25 | PUD25 - Pull select 25 | R/W
+17-16| PUD24 | PUD24 - Pull select 24 | R/W
+15-14| PUD23 | PUD23 - Pull select 23 | R/W
+13-12| PUD22 | PUD22 - Pull select 22 | R/W
+11-10| PUD21 | PUD21 - Pull select 21 | R/W
+9-8  | PUD20 | PUD20 - Pull select 20 | R/W
+7-4  | PUD19 | PUD19 - Pull select 19 | R/W
+5-4  | PUD18 | PUD18 - Pull select 18 | R/W
+3-2  | PUD17 | PUD17 - Pull select 17 | R/W
+1-0  | PUD16 | PUD16 - Pull select 16 | R/W
+
+
+__GPIO pull select register 2:__
+
+Bit(s) | Field Name | Description | Type  
+-------|------------|-------------|------
+31-30| PUD47 | PUD47 - Pull select 47 | R/W1
+29-28| PUD46 | PUD46 - Pull select 46 | R/W1
+27-26| PUD45 | PUD45 - Pull select 45 | R/W1
+25-24| PUD44 | PUD44 - Pull select 44 | R/W
+23-22| PUD43 | PUD43 - Pull select 43 | R/W
+21-20| PUD42 | PUD42 - Pull select 42 | R/W
+19-18| PUD41 | PUD41 - Pull select 41 | R/W
+17-16| PUD40 | PUD40 - Pull select 40 | R/W
+15-14| PUD39 | PUD39 - Pull select 39 | R/W
+13-12| PUD38 | PUD38 - Pull select 38 | R/W
+11-10| PUD37 | PUD37 - Pull select 37 | R/W
+9-8  | PUD36 | PUD36 - Pull select 36 | R/W
+7-4  | PUD35 | PUD35 - Pull select 35 | R/W
+5-4  | PUD34 | PUD34 - Pull select 34 | R/W
+3-2  | PUD33 | PUD33 - Pull select 33 | R/W
+1-0  | PUD32 | PUD32 - Pull select 32 | R/W
+
+
+__GPIO pull select register 3:__
+
+Bit(s) | Field Name | Description | Type
+-------|------------|-------------|------
+31-12|  ---  | Reserved | R | 1
+11-10| PUD53 | PUD53 - Pull select 53 | R/W
+9-8  | PUD52 | PUD52 - Pull select 52 | R/W
+7-4  | PUD51 | PUD51 - Pull select 51 | R/W
+5-4  | PUD50 | PUD50 - Pull select 50 | R/W
+3-2  | PUD49 | PUD49 - Pull select 49 | R/W
+1-0  | PUD48 | PUD48 - Pull select 48 | R/W
+
+
+
+
 Another key difference is that from those same registers used to set the pull it is possible to read what the current setting is, even after a power off.
 
 ## Inner representation
