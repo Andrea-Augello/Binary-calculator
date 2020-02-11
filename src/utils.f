@@ -65,6 +65,7 @@ DECIMAL
    DROP ;
 
 : SET_PUD_PI3						\ ONLY VALID FOR PI3 and preceding	( GPPUDCLK0_MASK, UP/DOWN -- )
+	3 XOR								\ In the PI 4 the value for up and down are switched
 	GPPUD !
 	150_OPS_DELAY
 	DUP INVERT SWAP
