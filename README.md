@@ -39,7 +39,7 @@ The course deals with:
 
 The aim of the course is for the student to know the necessary advanced concepts to the comprehension of the structure of embedded elaboration systems. And also have deep knowledge of embedded system programming.
 
-The following discussion describes the aim, structure, behavior, and usage of the developed system. 
+The following discussion describes the aim, structure, behavior, and usage of the developed system.
 It also reports the design and implementation choices made  every development phase.
 
 The __hardware__ section briefly describes what components will be used in this project and the rationale behind some of those choices.  
@@ -223,6 +223,9 @@ This section of code provides some hardware abstraction. The code begins with pe
 Another utility function defined in this file is `DELAY`, which implements with a busy loop a wait for the time passed as argument (in microseconds).  
 
 The other FORTH words in this file deal with low-level GPIO functionalities: function selection and setting the pull for the input pins.  
+
+### Setting the internal pull
+
 The Raspberry Pi 4 B has a different procedure to set the internal pull-up/down compared to the older models, hence two functions are provided for compatibility's sake.
 The available documentation[@pi4_datasheet] does not show this change yet, however,
 by analyzing how some C libraries added support for the Broadcom 2711 GPIO[@pingpio] [@raspi-gpio], one can gain insight on how to change the pull-up/down settings.
@@ -244,6 +247,7 @@ In the models up to the Raspberry Pi 3 B +, the procedure to set the internal pu
 With the values to write into GPPUD being 1 to enable Pull Down control and 2 to enable Pull Up control, moreover there is no way to check what is the current pull for a pin.
 
 The new model however uses the opposite convention to indicate the pull, and the procedure requires a single step, analogous to the one used to select the alternate functions.  
+The GPPUPDN0 and GPPUPDN1 registers, located starting from the 0xFE2000E4 memory address, hold the information on the current pull for each pin 
 Another key difference is that from those same registers used to set the pull it is possible to read what the current setting is, even after a power off.
 
 ## Inner representation
