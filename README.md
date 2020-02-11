@@ -304,9 +304,9 @@ __GPIO pull select register 2:__
 
 Bit(s) | Field Name | Description | Type  
 -------|------------|-------------|------
-31-30| PUD47 | PUD47 - Pull select 47 | R/W1
-29-28| PUD46 | PUD46 - Pull select 46 | R/W1
-27-26| PUD45 | PUD45 - Pull select 45 | R/W1
+31-30| PUD47 | PUD47 - Pull select 47 | R/W
+29-28| PUD46 | PUD46 - Pull select 46 | R/W
+27-26| PUD45 | PUD45 - Pull select 45 | R/W
 25-24| PUD44 | PUD44 - Pull select 44 | R/W
 23-22| PUD43 | PUD43 - Pull select 43 | R/W
 21-20| PUD42 | PUD42 - Pull select 42 | R/W
