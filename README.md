@@ -226,12 +226,14 @@ The other FORTH words in this file deal with low-level GPIO functionalities: fun
 
 ### Setting the internal pull
 
-[...] floating value [...], so, even if a synchronous falling edge detection is set, random electromagnetic noise could trigger spurious detection events.  
-A common solution to this issue is the usage of pull-up or pull-down resistors[...]
+Each button is connected to a 3.3V power supply pin of the Raspberry, so, while the circuit is closed, the input pin will surely read a logical high.  
+However when the button is kept open, the rest of the circuit would be left floating and the voltage undetermined, so, even if synchronous falling edge detection is set, random electromagnetic noise could trigger spurious detection events.  
+A popular solution to this issue is the usage of pull-up or pull-down resistors, by connecting a resistor to the voltage which should be read when the circuit is open, a well-defined tension is ensured.  
+Since the Raspberry Pi CPU is CMOS[@voinigescu2013high]-based[@gay20173v], in this project, as previously mentioned, buttons are connected to the $V_{CC}$, and internal pull-downs will be employed[@artofelectronics].
 
-The Raspberry Pi 4 B has a different procedure to set the internal pull-up/down compared to the older models, hence two functions are provided for compatibility's sake.
-The available documentation[@pi4_datasheet] does not show this change yet, however,
-by analyzing how some C libraries added support for the Broadcom 2711 GPIO[@pingpio] [@raspi-gpio], one can gain insight on how to change the pull-up/down settings.
+The BCM2711, currently only in use on the Raspberry Pi 4 B, introduces several changes on the GPIO peripherals, each pin has many more alternate functions compared to previous models, and there is also a different procedure to set the internal pull-up/down.
+The available documentation[@pi4_datasheet] does not show the latter change yet, it references a "BCM2711 Peripherals Specification document", which is nowhere to be found.  
+However, by analyzing how some C libraries added support for the Broadcom 2711 GPIO[@pingpio] [@raspi-gpio], one can gain insight on how to change the pull-up/down settings.
 
 In the models up to the Raspberry Pi 3 B +, the procedure to set the internal pull for the input pins comprised multiple steps:  
 
@@ -250,7 +252,7 @@ In the models up to the Raspberry Pi 3 B +, the procedure to set the internal pu
 With the values to write into GPPUD being 1 to enable Pull Down control and 2 to enable Pull Up control, moreover, there is no way to check what is the current pull for a pin.
 
 The new model, however, uses the opposite convention to indicate the pull, and the procedure requires a single step, analogous to the one used to select the alternate functions.  
-The GPPUPDN0 and GPPUPDN1 registers, located starting from the 0xFE2000E4 memory address, hold the information on the current pull for each pin
+The GPPUPDN0, GPPUPDN1, GPPUPDN2, and GPPUPDN3 registers, located starting from the 0xFE2000E4 memory address, hold the information on the current pull for each pin.  
 Another key difference is that from those same registers used to set the pull it is possible to read what the current setting is, even after a power off.
 
 ## Inner representation
