@@ -256,6 +256,16 @@ The GPPUPDN0, GPPUPDN1, GPPUPDN2, and GPPUPDN3 registers, located starting from 
 
 Each of the 54 GPIO pins (except the 3rd and 5th which are pulled high by default and cannot be brought down) can have the internal pull set to high, low or have no pull at all. The PUD{n} field determines the pull of the nth GPIO pin. The pull is maintained on restart.
 
+
+ Value  Action
+------- -------
+0        Remove pull
+1        Enable pull up
+2        Enable pull down
+3        Reserved
+----- -------
+
+
 __GPIO pull select register 0:__
 
 Bit(s) | Field Name | Description | Type  
@@ -326,7 +336,7 @@ __GPIO pull select register 3:__
 
 Bit(s) | Field Name | Description | Type
 -------|------------|-------------|------
-31-12|  ---  | Reserved | R | 1
+31-12| - - - | Reserved | R | 1
 11-10| PUD53 | PUD53 - Pull select 53 | R/W
 9-8  | PUD52 | PUD52 - Pull select 52 | R/W
 7-4  | PUD51 | PUD51 - Pull select 51 | R/W
