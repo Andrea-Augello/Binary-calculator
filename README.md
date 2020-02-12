@@ -116,7 +116,7 @@ Moreover, since there is a very limited number of bits to display values if the 
 
 ### GPIO assignment
 
-Since this project uses many external components, here it is shown a table with all the used GPIO pins and their use.
+Since this project uses many external components, here it is shown a table with all the used GPIO pins and their use. In the following table, and the rest of the discussion, GPIO pins are addressed by the Broadcom SOC channel number.
 
 GPIO# | Function | Usage
 ------|----------|------
@@ -251,11 +251,7 @@ In the models up to the Raspberry Pi 3 B +, the procedure to set the internal pu
 
 With the values to write into GPPUD being 1 to enable Pull Down control and 2 to enable Pull Up control, moreover, there is no way to check what is the current pull for a pin.
 
-The new model, however, uses the opposite convention to indicate the pull, and the procedure requires a single step, analogous to the one used to select the alternate functions.  
-The GPPUPDN0, GPPUPDN1, GPPUPDN2, and GPPUPDN3 registers, located starting from the 0xFE2000E4 memory address, hold the information on the current pull for each pin.  
-
-Each of the 54 GPIO pins (except the 3rd and 5th which are pulled high by default and cannot be brought down) can have the internal pull set to high, low or have no pull at all. The PUD{n} field determines the pull of the nth GPIO pin. The pull is maintained on restart.
-
+The new model, however, uses the opposite convention to indicate the pull, which is the same one used by STM32F446xx MCUs[@STM32F446xx]:
 
  Value  Action
 ------- -------
@@ -265,89 +261,109 @@ Each of the 54 GPIO pins (except the 3rd and 5th which are pulled high by defaul
 3        Reserved
 ----- -------
 
-
-__GPIO pull select register 0:__
-
-Bit(s) | Field Name | Description | Type  
--------|------------|-------------|------
-31-30| PUD15 | PUD15 - Pull select 15 | R/W
-29-28| PUD14 | PUD14 - Pull select 14 | R/W
-27-26| PUD13 | PUD13 - Pull select 13 | R/W
-25-24| PUD12 | PUD12 - Pull select 12 | R/W
-23-22| PUD11 | PUD11 - Pull select 11 | R/W
-21-20| PUD10 | PUD10 - Pull select 10 | R/W
-19-18| PUD9  | PUD9  - Pull select 9  | R/W
-17-16| PUD8  | PUD8  - Pull select 8  | R/W
-15-14| PUD7  | PUD7  - Pull select 7  | R/W
-13-12| PUD6  | PUD6  - Pull select 6  | R/W
-11-10| PUD5  | PUD5  - Pull select 5  | R/W
-9-8  | PUD4  | PUD4  - Pull select 4  | R/W
-7-4  | PUD3  | PUD3  - Pull select 3  | R/W
-5-4  | PUD2  | PUD2  - Pull select 2  | R/W
-3-2  | PUD1  | PUD1  - Pull select 1  | R/W
-1-0  | PUD0  | PUD0  - Pull select 0  | R/W
-
-
-__GPIO pull select register 1:__
-
-Bit(s) | Field Name | Description | Type
--------|------------|-------------|------
-31-30| PUD31 | PUD31 - Pull select 31 | R/W
-29-28| PUD30 | PUD30 - Pull select 30 | R/W
-27-26| PUD29 | PUD29 - Pull select 29 | R/W
-25-24| PUD28 | PUD28 - Pull select 28 | R/W
-23-22| PUD27 | PUD27 - Pull select 27 | R/W
-21-20| PUD26 | PUD26 - Pull select 26 | R/W
-19-18| PUD25 | PUD25 - Pull select 25 | R/W
-17-16| PUD24 | PUD24 - Pull select 24 | R/W
-15-14| PUD23 | PUD23 - Pull select 23 | R/W
-13-12| PUD22 | PUD22 - Pull select 22 | R/W
-11-10| PUD21 | PUD21 - Pull select 21 | R/W
-9-8  | PUD20 | PUD20 - Pull select 20 | R/W
-7-4  | PUD19 | PUD19 - Pull select 19 | R/W
-5-4  | PUD18 | PUD18 - Pull select 18 | R/W
-3-2  | PUD17 | PUD17 - Pull select 17 | R/W
-1-0  | PUD16 | PUD16 - Pull select 16 | R/W
-
-
-__GPIO pull select register 2:__
-
-Bit(s) | Field Name | Description | Type  
--------|------------|-------------|------
-31-30| PUD47 | PUD47 - Pull select 47 | R/W
-29-28| PUD46 | PUD46 - Pull select 46 | R/W
-27-26| PUD45 | PUD45 - Pull select 45 | R/W
-25-24| PUD44 | PUD44 - Pull select 44 | R/W
-23-22| PUD43 | PUD43 - Pull select 43 | R/W
-21-20| PUD42 | PUD42 - Pull select 42 | R/W
-19-18| PUD41 | PUD41 - Pull select 41 | R/W
-17-16| PUD40 | PUD40 - Pull select 40 | R/W
-15-14| PUD39 | PUD39 - Pull select 39 | R/W
-13-12| PUD38 | PUD38 - Pull select 38 | R/W
-11-10| PUD37 | PUD37 - Pull select 37 | R/W
-9-8  | PUD36 | PUD36 - Pull select 36 | R/W
-7-4  | PUD35 | PUD35 - Pull select 35 | R/W
-5-4  | PUD34 | PUD34 - Pull select 34 | R/W
-3-2  | PUD33 | PUD33 - Pull select 33 | R/W
-1-0  | PUD32 | PUD32 - Pull select 32 | R/W
-
-
-__GPIO pull select register 3:__
-
-Bit(s) | Field Name | Description | Type
--------|------------|-------------|------
-31-12| - - - | Reserved | R | 1
-11-10| PUD53 | PUD53 - Pull select 53 | R/W
-9-8  | PUD52 | PUD52 - Pull select 52 | R/W
-7-4  | PUD51 | PUD51 - Pull select 51 | R/W
-5-4  | PUD50 | PUD50 - Pull select 50 | R/W
-3-2  | PUD49 | PUD49 - Pull select 49 | R/W
-1-0  | PUD48 | PUD48 - Pull select 48 | R/W
-
-
-
-
+The GPPUPDN0, GPPUPDN1, GPPUPDN2, and GPPUPDN3 registers, located starting from the 0xFE2000E4 memory address, hold the information on the current pull for each pin.  
+To change the pull for a pin one only has the write into these registers the desired values.
 Another key difference is that from those same registers used to set the pull it is possible to read what the current setting is, even after a power off.
+
+Each of the 54 GPIO pins (except the 3rd and 5th which are pulled high by default and cannot be brought down) can have the internal pull set to high, low or have no pull at all. The PUPD{n} field determines the pull of the nth GPIO pin. The pull is maintained on restart.  
+
+
+
+
+
+
+__GPIO pull select register 0:__  
+        _0xFE2000E4_
+
+Bit(s) | Field Name | Description | Type  
+-------|------------|-------------|------
+31-30| PUPD15 | PUPD15 - Pull select 15 | R/W
+29-28| PUPD14 | PUPD14 - Pull select 14 | R/W
+27-26| PUPD13 | PUPD13 - Pull select 13 | R/W
+25-24| PUPD12 | PUPD12 - Pull select 12 | R/W
+23-22| PUPD11 | PUPD11 - Pull select 11 | R/W
+21-20| PUPD10 | PUPD10 - Pull select 10 | R/W
+19-18| PUPD9  | PUPD9  - Pull select 9  | R/W
+17-16| PUPD8  | PUPD8  - Pull select 8  | R/W
+15-14| PUPD7  | PUPD7  - Pull select 7  | R/W
+13-12| PUPD6  | PUPD6  - Pull select 6  | R/W
+11-10| PUPD5  | PUPD5  - Pull select 5  | R/W
+9-8  | PUPD4  | PUPD4  - Pull select 4  | R/W
+7-4  | PUPD3  | PUPD3  - Pull select 3  | R/W
+5-4  | PUPD2  | PUPD2  - Pull select 2  | R/W
+3-2  | PUPD1  | PUPD1  - Pull select 1  | R/W
+1-0  | PUPD0  | PUPD0  - Pull select 0  | R/W
+
+
+__GPIO pull select register 1:__  
+        _0xFE2000E8_
+
+Bit(s) | Field Name | Description | Type
+-------|------------|-------------|------
+31-30| PUPD31 | PUPD31 - Pull select 31 | R/W
+29-28| PUPD30 | PUPD30 - Pull select 30 | R/W
+27-26| PUPD29 | PUPD29 - Pull select 29 | R/W
+25-24| PUPD28 | PUPD28 - Pull select 28 | R/W
+23-22| PUPD27 | PUPD27 - Pull select 27 | R/W
+21-20| PUPD26 | PUPD26 - Pull select 26 | R/W
+19-18| PUPD25 | PUPD25 - Pull select 25 | R/W
+17-16| PUPD24 | PUPD24 - Pull select 24 | R/W
+15-14| PUPD23 | PUPD23 - Pull select 23 | R/W
+13-12| PUPD22 | PUPD22 - Pull select 22 | R/W
+11-10| PUPD21 | PUPD21 - Pull select 21 | R/W
+9-8  | PUPD20 | PUPD20 - Pull select 20 | R/W
+7-4  | PUPD19 | PUPD19 - Pull select 19 | R/W
+5-4  | PUPD18 | PUPD18 - Pull select 18 | R/W
+3-2  | PUPD17 | PUPD17 - Pull select 17 | R/W
+1-0  | PUPD16 | PUPD16 - Pull select 16 | R/W
+
+
+__GPIO pull select register 2:__  
+        _0xFE2000EC_
+
+Bit(s) | Field Name | Description | Type  
+-------|------------|-------------|------
+31-30| PUPD47 | PUPD47 - Pull select 47 | R/W
+29-28| PUPD46 | PUPD46 - Pull select 46 | R/W
+27-26| PUPD45 | PUPD45 - Pull select 45 | R/W
+25-24| PUPD44 | PUPD44 - Pull select 44 | R/W
+23-22| PUPD43 | PUPD43 - Pull select 43 | R/W
+21-20| PUPD42 | PUPD42 - Pull select 42 | R/W
+19-18| PUPD41 | PUPD41 - Pull select 41 | R/W
+17-16| PUPD40 | PUPD40 - Pull select 40 | R/W
+15-14| PUPD39 | PUPD39 - Pull select 39 | R/W
+13-12| PUPD38 | PUPD38 - Pull select 38 | R/W
+11-10| PUPD37 | PUPD37 - Pull select 37 | R/W
+9-8  | PUPD36 | PUPD36 - Pull select 36 | R/W
+7-4  | PUPD35 | PUPD35 - Pull select 35 | R/W
+5-4  | PUPD34 | PUPD34 - Pull select 34 | R/W
+3-2  | PUPD33 | PUPD33 - Pull select 33 | R/W
+1-0  | PUPD32 | PUPD32 - Pull select 32 | R/W
+
+
+__GPIO pull select register 3:__  
+        _0xFE2000F0_
+
+Bit(s) | Field Name | Description | Type
+-------|------------|-------------|------
+31-20| - - - | Reserved | R | 1
+19-18| PUPD57 | ??? | R/W
+17-16| PUPD56 | ??? | R/W
+15-14| PUPD55 | ??? | R/W
+13-12| PUPD54 | ??? | R/W
+11-10| PUPD53 | PUPD53 - Pull select 53 | R/W
+9-8  | PUPD52 | PUPD52 - Pull select 52 | R/W
+7-4  | PUPD51 | PUPD51 - Pull select 51 | R/W
+5-4  | PUPD50 | PUPD50 - Pull select 50 | R/W
+3-2  | PUPD49 | PUPD49 - Pull select 49 | R/W
+1-0  | PUPD48 | PUPD48 - Pull select 48 | R/W
+
+
+
+The GPPUPDN3 register allows write operations up to the 19th bit, which hints to the possibility of the BCM2711 chip having 58 GPIOs, not 54 as the BCM2837 and previous.  
+  Bits from the 20th to the 31st are set to zero, can be read, but attempts to write  into them were unsuccessful.
+
+
 
 ## Inner representation
 
