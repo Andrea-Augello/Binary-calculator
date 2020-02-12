@@ -273,7 +273,7 @@ Each of the 54 GPIO pins (except the 3rd and 5th which are pulled high by defaul
 
 
 __GPIO pull select register 0:__  
-        _0xFE2000E4_
+`        0xFE2000E4`
 
 Bit(s) | Field Name | Description | Type  
 -------|------------|-------------|------
@@ -296,7 +296,7 @@ Bit(s) | Field Name | Description | Type
 
 
 __GPIO pull select register 1:__  
-        _0xFE2000E8_
+`        0xFE2000E8`
 
 Bit(s) | Field Name | Description | Type
 -------|------------|-------------|------
@@ -319,7 +319,7 @@ Bit(s) | Field Name | Description | Type
 
 
 __GPIO pull select register 2:__  
-        _0xFE2000EC_
+`        0xFE2000EC`
 
 Bit(s) | Field Name | Description | Type  
 -------|------------|-------------|------
@@ -342,7 +342,7 @@ Bit(s) | Field Name | Description | Type
 
 
 __GPIO pull select register 3:__  
-        _0xFE2000F0_
+`        0xFE2000F0`
 
 Bit(s) | Field Name | Description | Type
 -------|------------|-------------|------
