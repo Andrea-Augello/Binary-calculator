@@ -360,8 +360,8 @@ Bit(s) | Field Name | Description | Type
 
 
 
-The GPPUPDN3 register allows write operations up to the 19th bit, which hints to the possibility of the BCM2711 chip having 58 GPIOs, not 54 as the BCM2837 and previous.  
-  Bits from the 20th to the 31st are set to zero, can be read, but attempts to write  into them were unsuccessful.
+The GPPUPDN3 register allows writing operations up to the 19th bit, which hints to the possibility of the BCM2711 chip having 58 GPIOs, not 54 as the BCM2837 and previous.  
+  Bits from the 20th to the 31st are set to zero, can be read, but attempts to write into them were unsuccessful.
 
 
 
