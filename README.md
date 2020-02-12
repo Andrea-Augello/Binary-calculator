@@ -515,7 +515,19 @@ At the end of each loop, there is a check in place to verify whether the uses se
 # Conclusion
 
 
+
 ## Possible improvements
+
+The output section of the calculator takes up numerous GPIO pins, so trying to extend the range of numbers is not feasible by standard means.  
+A possible solution is to employ a port expander, like the MCP23017 or the MCP23S17[@portexpander], the added delay for the I2C or SPI communication would be tolerable as there are no strict requirements on response time, and anything on the tens of milliseconds scale is generally regarded as acceptable[@responsetime].  
+An output matrix[@matrix] is also feasible, but would complicate the interpretation of the displayed values; another alternative could be utilizing an LCD.
+
+
+Of course, if planning to use values larger than 32 bits, then most of the code on the internal representation would require changes to use variables spanning for multiple words.  
+
+A challenging augmentation for the calculator would be introducing more functions and complex expressions, which would require some form of syntactic analyzer (there is no need for a lexical analyzer, all the elements of the complex expression will be iteratively generated within the logic of the FORTH program).  
+Examples of nontrivial parsers written in FORTH already exist and achieve their goals with relatively small programs[@baranovformal].  
+If more functions were to be added, using a button matrix[@matrix] for the input would become a more suitable choice, a mechanic implementing a secondary function for each key would also be an effective way to utilize the limited GPIO pins available.
 
 \pagebreak
 
