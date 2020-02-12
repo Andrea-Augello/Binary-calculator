@@ -262,7 +262,7 @@ The new model, however, uses the opposite convention to indicate the pull, which
 ----- -------
 
 The GPPUPDN0, GPPUPDN1, GPPUPDN2, and GPPUPDN3 registers, located starting from the 0xFE2000E4 memory address, hold the information on the current pull for each pin.  
-To change the pull for a pin one only has the write into these registers the desired values.
+To change the pull for a pin one only has to write into these registers the desired values.
 Another key difference is that from those same registers used to set the pull it is possible to read what the current setting is, even after a power off.
 
 Each of the 54 GPIO pins (except the 3rd and 5th which are pulled high by default and cannot be brought down) can have the internal pull set to high, low or have no pull at all. The PUPD{n} field determines the pull of the nth GPIO pin. The pull is maintained on restart.  
