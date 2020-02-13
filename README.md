@@ -395,7 +395,7 @@ Another word in this section plays an important role when one wants to perform o
 
 One could argue that a circular buffer may be best suited to store the numbers to work with, however, with only two values, the required number of operations would be the same, with no added clarity in the code[^rephrasing].
 
-[^rephrasing]: Of course, in that case, `LAST_VALUE` and `CURRENT_VALUE` could be words defined in such a way to leave on the stack the address on the correct cell of the circular buffer, leaving the rest of the code unchanged, but there seems to be no benefit in doing so.
+[^rephrasing]: Of course, in that case, `LAST_VALUE` and `CURRENT_VALUE` could be words defined in such a way to leave on the stack the address of the correct cell of the circular buffer, leaving the rest of the code unchanged, but there seems to be no benefit in doing so.
 
 ## Input
 
