@@ -365,7 +365,7 @@ Bits from the 20th to the 31st are set to zero, can be read, but attempts to wri
 
 The GPPUD and GPPUDCLK registers do not appear to have any special use in the BCM2711 architecture, nevertheless only the first two bits in the GPPUD register can be modified, just like with the previous chip.  
 The GPPUDCLK0 register can be freely written, the GPPUDCLK1, however, can only be modified from the 0th to the 25th bit, which is the same range that would have been modifiable in the BCM2835/7 architecture, plus 4 extra bits, most likely because the BCM2711 has 4 extra GPIOs.    
-It can be speculated then, that either the new procedure to set the pull was added later on in the development phase (which could also explain why the new registers are so distant from the other GPIO related ones), or there is some hidden use for these registers yet to be determined.
+It can be speculated then, that there is some way to enforce backwards compatibility with the previous procedure to set the pull.
 
 
 ## Inner representation
