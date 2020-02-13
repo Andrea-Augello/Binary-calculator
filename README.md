@@ -116,7 +116,7 @@ Moreover, since there is a very limited number of bits to display values if the 
 
 ### GPIO assignment
 
-Since this project uses many external components, here it is shown a table with all the used GPIO pins and their use. In the following table, and the rest of the discussion, GPIO pins are addressed by the Broadcom SOC channel number.
+Since this project uses many external components, here it is shown a table with all the used GPIO pins and their use. In table {@tbl:pin_assignment}, and the rest of the discussion, GPIO pins are addressed by the Broadcom SOC channel number.
 
 GPIO# | Function | Usage
 ------|----------|------
@@ -139,6 +139,8 @@ GPIO# | Function | Usage
 24|Output | 7th bit
 25|Output | 8th bit
 26|Input  | $=$ Key
+
+Table: GPIO assignment {#tbl:pin_assignment}
 
 In Fig. \ref{schema}, for added clarity, there is a breadboard view of the hardware configuration employed[^wrongpi].
 
@@ -261,6 +263,7 @@ The new model, however, uses the opposite convention to indicate the pull, which
 3        Reserved
 ----- -------
 
+
 The GPPUPDN0, GPPUPDN1, GPPUPDN2, and GPPUPDN3 registers, located starting from the 0xFE2000E4 memory address, hold the information on the current pull for each pin.  
 To change the pull for a pin one only has to write into these registers the desired values.
 Another key difference is that from those same registers used to set the pull it is possible to read what the current setting is, even after a power off.
@@ -268,12 +271,6 @@ Another key difference is that from those same registers used to set the pull it
 Each of the 54 GPIO pins (except the 3rd and 5th which are pulled high by default and cannot be brought down) can have the internal pull set to high, low or have no pull at all. The PUPD{n} field determines the pull of the nth GPIO pin. The pull is maintained on restart.  
 
 
-
-
-
-
-__GPIO pull select register 0:__  
-`        0xFE2000E4`
 
 Bit(s) | Field Name | Description | Type  
 -------|------------|-------------|------
@@ -294,9 +291,8 @@ Bit(s) | Field Name | Description | Type
 3-2  | PUPD1  | PUPD1  - Pull select 1  | R/W
 1-0  | PUPD0  | PUPD0  - Pull select 0  | R/W
 
+Table: GPIO pull select register 0 (0xFE2000E4)  {#tbl:gpupd0}
 
-__GPIO pull select register 1:__  
-`        0xFE2000E8`
 
 Bit(s) | Field Name | Description | Type
 -------|------------|-------------|------
@@ -317,9 +313,8 @@ Bit(s) | Field Name | Description | Type
 3-2  | PUPD17 | PUPD17 - Pull select 17 | R/W
 1-0  | PUPD16 | PUPD16 - Pull select 16 | R/W
 
+Table: GPIO pull select register 1 (0xFE2000E8)  {#tbl:gpupd1}
 
-__GPIO pull select register 2:__  
-`        0xFE2000EC`
 
 Bit(s) | Field Name | Description | Type  
 -------|------------|-------------|------
@@ -340,9 +335,7 @@ Bit(s) | Field Name | Description | Type
 3-2  | PUPD33 | PUPD33 - Pull select 33 | R/W
 1-0  | PUPD32 | PUPD32 - Pull select 32 | R/W
 
-
-__GPIO pull select register 3:__  
-`        0xFE2000F0`
+Table: GPIO pull select register 2 (0xFE2000EC)  {#tbl:gpupd2}
 
 Bit(s) | Field Name | Description | Type
 -------|------------|-------------|------
@@ -358,9 +351,10 @@ Bit(s) | Field Name | Description | Type
 3-2  | PUPD49 | PUPD49 - Pull select 49 | R/W
 1-0  | PUPD48 | PUPD48 - Pull select 48 | R/W
 
+Table: GPIO pull select register 3 (0xFE2000F0)  {#tbl:gpupd3}
 
 
-The GPPUPDN3 register allows writing operations up to the 19th bit, which hints to the possibility of the BCM2711 chip having 58 GPIOs, not 54 as the BCM2837 and previous.  
+The GPPUPDN3 register [Table @tbl:gpupd3] allows writing operations up to the 19th bit, which hints to the possibility of the BCM2711 chip having 58 GPIOs, not 54 as the BCM2837 and previous.  
 Bits from the 20th to the 31st are set to zero, can be read, but attempts to write into them were unsuccessful.
 
 The GPPUD and GPPUDCLK registers do not appear to have any special use in the BCM2711 architecture, nevertheless only the first two bits in the GPPUD register can be modified, just like with the previous chip.  
