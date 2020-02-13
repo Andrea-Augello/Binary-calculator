@@ -373,7 +373,7 @@ It can be speculated then, that either the new procedure to set the pull was add
 This section of code contains the variables used to maintain the state of the software.  
 The development of this module was based on the assumption that only binary operation would be employed, introducing unary operators would require a radical change of some procedures.
 
-As binary operators require two operands, two variables are declared to hold them; moreover, another variable has to store the operation. An extra variable keeps track of the status, in a way akin to the 31st and 28th bits of the program status registers in the ARM Instruction Set[@seal2001arm][^difference_with_ARM], since this is signer arithmetics no attention is paid to the carry flag[@iandallenOverflow].
+As binary operators require two operands, two variables are declared to hold them; moreover, another variable has to store the operation. An extra variable keeps track of the status, in a way akin to the 31st and 28th bits of the program status registers in the ARM Instruction Set[@seal2001arm][^difference_with_ARM], since this is signed arithmetics no attention is paid to the carry flag[@iandallenOverflow].
 
 [^difference_with_ARM]: Note: for the sake of clarity and consistency when reading results, there is a lax interpretation of overflow, and multiplications can also set the overflow bit.
 
@@ -527,7 +527,7 @@ Of course, if planning to use values larger than 32 bits, then most of the code 
 
 A challenging augmentation for the calculator would be introducing more functions and complex expressions, which would require some form of syntactic analyzer (there is no need for a lexical analyzer, all the elements of the complex expression will be iteratively generated within the logic of the FORTH program).  
 Examples of nontrivial parsers written in FORTH already exist and achieve their goals with relatively small programs[@baranovformal].  
-If more functions were to be added, using a button matrix[@matrix] for the input would become a more suitable choice, a mechanic implementing a secondary function for each key would also be an effective way to utilize the limited GPIO pins available.
+If more functions were to be added, using a button matrix[@matrix]y for the input would become a more suitable choice, a mechanic implementing a secondary function for each key would also be an effective way to utilize the limited GPIO pins available.
 
 \pagebreak
 
