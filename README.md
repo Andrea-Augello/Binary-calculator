@@ -455,7 +455,7 @@ With the same objective of achieving low coupling the file `output.f` contains a
 Since there is no direct relationship between how many bits the display can show and the actual size of the numbers (although it would be a natural choice to have them coincide), the code begins declaring the size of the display, followed by the GPIO pins used to control the output.  
 
 The chosen method to display values is a set of 8 LED lights, so the actual implementation here is quite straightforward: given a value to show, a mask is computed[^mask] and written into GPSET0.   
-Additionally,  a second value passed to the `SHOW` function dictates whether to turn on or off the status LED.  
+Additionally,  a second value passed to the `SHOW` function dictates whether to turn on or off the status LEDs.  
 Of course, since the procedure previously described is only concerned with turning on LEDs, the first operation to show correct values is to clear the display; to do so a mask for every display pin is written into GPCLR0.
 
 [^mask]: The n-th bit of the number multiplies the mask for the n-th pin, and a logic `OR` is performed amongst those values.
@@ -464,7 +464,7 @@ Of course, since the procedure previously described is only concerned with turni
 
 ![Naive approach\label{non}](./media/N-O-N.png)
 
-This section ties together all the previous modules, before delving into lower-level aspects of the code in `control.f`, analyzing how the calculator is intended to be used may bring greater clarity.
+This section ties together all the previous modules, before delving into lower-level aspects of the code in `control.f`, analyzing how the calculator is intended to be used may bring greater clarity into the reasoning behind the actual implementation.
 
  A naive approach is to iteratively go through the states, as seen in Fig. \ref{non}, and then start back from the beginning.  
 
@@ -506,7 +506,7 @@ The proposed approach is to stop waiting for more digit if an operation is selec
 This issue does not occur while getting the operation since that is a single key, but a similar approach could be taken if alternate functions were added to some keys, as is customary in scientific calculators.
 
 As it was anticipated while discussing the internal representation, the behavior of the system when the user presses the "equals" key was offloaded to this section.  
-At the end of each loop, there is a check in place to verify whether the uses selected equals; in that circumstance, the current value is shown until a key is pressed.
+At the end of each loop, there is a check in place to verify whether the user selected equals; in that circumstance, the current value is shown until a key is pressed.
 
 
 
