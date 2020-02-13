@@ -289,7 +289,7 @@ Bit(s) | Field Name | Description | Type
 13-12| PUPD6  | PUPD6  - Pull select 6  | R/W
 11-10| PUPD5  | PUPD5  - Pull select 5  | R/W
 9-8  | PUPD4  | PUPD4  - Pull select 4  | R/W
-7-4  | PUPD3  | PUPD3  - Pull select 3  | R/W
+7-6  | PUPD3  | PUPD3  - Pull select 3  | R/W
 5-4  | PUPD2  | PUPD2  - Pull select 2  | R/W
 3-2  | PUPD1  | PUPD1  - Pull select 1  | R/W
 1-0  | PUPD0  | PUPD0  - Pull select 0  | R/W
@@ -312,7 +312,7 @@ Bit(s) | Field Name | Description | Type
 13-12| PUPD22 | PUPD22 - Pull select 22 | R/W
 11-10| PUPD21 | PUPD21 - Pull select 21 | R/W
 9-8  | PUPD20 | PUPD20 - Pull select 20 | R/W
-7-4  | PUPD19 | PUPD19 - Pull select 19 | R/W
+7-6  | PUPD19 | PUPD19 - Pull select 19 | R/W
 5-4  | PUPD18 | PUPD18 - Pull select 18 | R/W
 3-2  | PUPD17 | PUPD17 - Pull select 17 | R/W
 1-0  | PUPD16 | PUPD16 - Pull select 16 | R/W
@@ -335,7 +335,7 @@ Bit(s) | Field Name | Description | Type
 13-12| PUPD38 | PUPD38 - Pull select 38 | R/W
 11-10| PUPD37 | PUPD37 - Pull select 37 | R/W
 9-8  | PUPD36 | PUPD36 - Pull select 36 | R/W
-7-4  | PUPD35 | PUPD35 - Pull select 35 | R/W
+7-6  | PUPD35 | PUPD35 - Pull select 35 | R/W
 5-4  | PUPD34 | PUPD34 - Pull select 34 | R/W
 3-2  | PUPD33 | PUPD33 - Pull select 33 | R/W
 1-0  | PUPD32 | PUPD32 - Pull select 32 | R/W
@@ -353,7 +353,7 @@ Bit(s) | Field Name | Description | Type
 13-12| PUPD54 | ??? | R/W
 11-10| PUPD53 | PUPD53 - Pull select 53 | R/W
 9-8  | PUPD52 | PUPD52 - Pull select 52 | R/W
-7-4  | PUPD51 | PUPD51 - Pull select 51 | R/W
+7-6  | PUPD51 | PUPD51 - Pull select 51 | R/W
 5-4  | PUPD50 | PUPD50 - Pull select 50 | R/W
 3-2  | PUPD49 | PUPD49 - Pull select 49 | R/W
 1-0  | PUPD48 | PUPD48 - Pull select 48 | R/W
