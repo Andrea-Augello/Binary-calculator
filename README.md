@@ -459,7 +459,8 @@ Of course, since the procedure previously described is only concerned with turni
 
 ![Naive approach\label{non}](./media/N-O-N.png)
 
-This section ties together all the previous modules, before delving into lower-level aspects of the code in `control.f`, analyzing how the calculator is intended to be used may bring greater clarity into the reasoning behind the actual implementation.
+This section ties together all the previous modules.   
+Before delving into lower-level aspects of the code in `control.f`, analyzing how the calculator is intended to be used may bring greater clarity into the reasoning behind the actual implementation.
 
  A naive approach is to iteratively go through the states, as seen in Fig. \ref{non}, and then start back from the beginning.  
 
