@@ -510,7 +510,7 @@ At the end of each loop, there is a check in place to verify whether the user se
 
 # Conclusion
 
-[...] working calculator, all the functionalities were implemented as planned with satisfying reliability.  
+After a meticulous development phase, resulting in a basic, yet fully functional calculator, all the functionalities were implemented as planned with satisfying reliability.  
 This project, due to the critical nature of correct input interpretation, led to facing interesting hardware issues and delving into undocumented features of the target hardware.
 
 
