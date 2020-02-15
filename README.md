@@ -1,5 +1,6 @@
 
 ---
+toc: true
 title : "Binary Calculator on bare-metal Raspberry Pi 4"
 date: "February 2020"
 author: "Andrea Augello, Università degli Studi di Palermo"
@@ -525,7 +526,7 @@ Of course, if planning to use values larger than 32 bits, then most of the code 
 
 A challenging augmentation for the calculator would be introducing more functions and complex expressions, which would require some form of syntactic analyzer (there is no need for a lexical analyzer, all the elements of the complex expression will be iteratively generated within the logic of the FORTH program).  
 Examples of nontrivial parsers written in FORTH already exist and achieve their goals with relatively small programs[@baranovformal].  
-If more functions were to be added, using a button matrix[@matrix]y for the input would become a more suitable choice, a mechanic implementing a secondary function for each key would also be an effective way to utilize the limited GPIO pins available.
+If more functions were to be added, using a button matrix[@matrix] for the input would become a more suitable choice, a mechanic implementing a secondary function for each key would also be an effective way to utilize the limited GPIO pins available.
 
 \pagebreak
 
