@@ -3,7 +3,7 @@
 toc: true
 title : "Binary Calculator on bare-metal Raspberry Pi 4"
 date: "February 2020"
-author: "Andrea Augello, Università degli Studi di Palermo"
+author: "Augello Andrea, Università degli Studi di Palermo"
 
 ---
 \pagebreak
