@@ -41,7 +41,7 @@ The course deals with:
 The aim of the course is for the student to know the necessary advanced concepts to the comprehension of the structure of embedded elaboration systems. And also have deep knowledge of embedded system programming.
 
 The following discussion describes the aim, structure, behavior, and usage of the developed system.
-It also reports the design and implementation choices made every development phase.
+It also reports the design and implementation choices made during every development phase.
 
 The __hardware__ section briefly describes what components will be used in this project and the rationale behind some of those choices.  
 The __environment__ section outlines the characteristics of the software tools used to load and run the code.  
@@ -63,7 +63,7 @@ Finally, the __conclusion__ section will sum up the contents of this report and 
 
 The target for this project is a general-purpose Single-Board Computer: the Raspberry Pi 4 B [Fig. \ref{pi4}].  
 It is the latest iteration of the Raspberry Pi SoC, launched on 24th June 2019[@PI_release],
-it replaces the older __Raspberry Pi 3 B+__ which was based on the Broadcom BCM2835 chip[@BCM2835][@BCM2835_datasheet_errata] and boasts high-end specs:
+it replaces the older __Raspberry Pi 3 B+__ which was based on the Broadcom BCM2837 chip[@BCM2835][@BCM2835_datasheet_errata] and boasts high-end specs:
 
 * A 1.5GHz quad-core 64-bit ARM Cortex-A72 CPU
 * 1GB, 2GB, or 4GB of LPDDR4 SDRAM
