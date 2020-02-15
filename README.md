@@ -509,6 +509,7 @@ At the end of each loop, there is a check in place to verify whether the user se
 
 # Conclusion
 
+This project led to, due to the critical nature of correct input interpretation, facing interesting hardware issues, and delve into undocumented features of the target hardware.
 
 
 ## Code availability
