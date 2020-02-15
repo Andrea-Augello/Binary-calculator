@@ -510,6 +510,10 @@ At the end of each loop, there is a check in place to verify whether the user se
 
 
 
+## Code availability
+
+All the code written for this project is available on GitHub at [https://github.com/Andrea-Augello/Binary-calculator/tree/master/src](https://github.com/Andrea-Augello/Binary-calculator/tree/master/src).
+
 ## Possible improvements
 
 The output section of the calculator takes up numerous GPIO pins, so trying to extend the range of numbers is not feasible by standard means.  
