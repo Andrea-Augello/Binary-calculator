@@ -12,3 +12,5 @@ build_doc.sh
 Pull.md
 
 *.sh
+
+Makefile
