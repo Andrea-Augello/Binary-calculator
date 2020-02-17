@@ -10,3 +10,5 @@ build_doc.sh
 .fuse_*
 
 Pull.md
+
+*.sh
