@@ -4,10 +4,17 @@ CREATE DISPLAY 21 , 20 , 16 , 12 , 7 , 8 , 25 , 24 ,
 18 CONSTANT NEGATIVE
 
 : LSB_MASK 				( shift n -- n/2 mask )
-	DISPLAY ROT GET
-	MASK SWAP			
+	DISPLAY ROT GET	\ Puts on the stack the GPIO pin that shows the next bit
+	MASK SWAP			\ Computes the mask for that pin
 	2 /MOD SWAP ROT	( mask n -- n/2 LSB mask )
-	* ;
+							\ Divides n by two to prepare for the next iteration, this
+	* ;					\ Multiplies the mask by the least significant bit of the
+							\ number, so if the bit is 1 the mask is placed on the stack
+							\ if it is 0, 0 is put, so no pin will be set to high.
+							\ A multiplication is used in place of an IF statement
+							\ because, with the Booth multiplication algorithm usually
+							\ used in the ARM architecture this multipication is really
+							\ efficient, while the branching would waste many CPU cycles
 
 : DISPLAY_MASK ( n -- mask )
 	0 0 					\ adds an empy mask and a loop counter to the stack
@@ -37,13 +44,13 @@ CREATE DISPLAY 21 , 20 , 16 , 12 , 7 , 8 , 25 , 24 ,
 	BEGIN
 		DUP 1 + >R
 		DISPLAY SWAP GET
-		OUTPUT ENABLE
+		OUTPUT SET_FUNC
 		R> DUP
 		DISPLAY_SIZE >=
 	UNTIL
 	DROP 
-	OVERFLOW OUTPUT ENABLE
-	NEGATIVE OUTPUT ENABLE
+	OVERFLOW OUTPUT SET_FUNC
+	NEGATIVE OUTPUT SET_FUNC
 	CLEAR	
 ;
 
