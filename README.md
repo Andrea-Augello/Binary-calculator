@@ -223,7 +223,7 @@ This code is the first to be loaded to guarantee that each subsequent instructio
 ## Utilities
 
 This section of code provides some hardware abstraction. The code begins with peripherals registers definitions, followed by some short words used to make the code more readable.  
-Another utility function defined in this file is `DELAY`, which implements with a busy loop a wait for the time passed as argument (in microseconds).  
+Another utility function defined in this file is `DELAY`, which implements with a busy loop a wait for the time passed as argument (in microseconds). This function makes use of the CLO register of the system timer.  
 
 The other FORTH words in this file deal with low-level GPIO functionalities: function selection and setting the pull for the input pins.  
 
@@ -362,6 +362,23 @@ The GPPUD and GPPUDCLK registers do not appear to have any special use in the BC
 The GPPUDCLK0 register can be freely written, the GPPUDCLK1, however, can only be modified from the 0th to the 25th bit, which is the same range that would have been modifiable in the BCM2835/7 architecture, plus 4 extra bits, most likely because the BCM2711 has 4 extra GPIOs.    
 It can be speculated then, that there is some way to enforce backwards compatibility with the previous procedure to set the pull.
 
+### Setting the pin function
+
+
+
+Each GPIO pin on the Raspberry Pi 4 can have many different functions, the previous iteration of the SoC had at least two, and the Pi 4 has many more alternate functions. Six registers hold the information of which function is currently enabled into 3 bit wide fields.  
+
+Since the procedure to set the function is the same as the one to set the pull, a single, more general, word is used to, from a contiguous set of registers, changing the value of the n-th field. This word will expect on the stack:
+
+* the base address for those registers
+* the size of each field
+* the field to be modified
+* the value to be written in the said field  
+
+To modify only the selected fields, without influencing other pins, masking is used.
+
+This same word could be used to write into GPSET and GPCLEAR by setting both the value and the field size to 1, however, all the exposed GPIO pins fall into the first register. Moreover, there is no need to try not to accidentally set other fields to 0: doing so would not change the output from those pins, the only way to do so would be writing a 1 in the other register.  
+Therefore, using the same method to set them would introduce considerable overhead with no obvious benefit, and would also remove the possibility to modify the state of multiple pins with a single operation.
 
 ## Inner representation
 
