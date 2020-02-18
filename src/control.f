@@ -50,36 +50,38 @@
 		THEN
 	UNTIL ;
 
+: WAIT_KEYPRESS
+	BEGIN
+		PEEK_KEYPRESS 0 <>				\ busy loop until a key is pressed
+	UNTIL ;
+
 : MAIN_LOOP 
 	BEGIN 
 		OPERATION @ 0 <> 					\ check if a valid operation has been set
-		IF
+												\ the only way for no operation to be set
+												\ is if the previous operation was EQUALS
+		IF										\ If it has it gets the right operand and
+												\ computes the result.
 			PREPARE_NEXT
 			GET_NUMBER 
  			COMPUTE_RESULT
-			0 OPERATION !
+			CLEAR_OPERATION
 		ELSE
 			PEEK_KEYPRESS ?DIGIT
 			IF
 				PREPARE_NEXT
 				GET_NUMBER
-			ELSE
-				
 			THEN
 		THEN	
 		GET_OPERATION
 
-		OPERATION @ ['] EQUALS =
+		OPERATION @ ['] EQUALS =		\ The operations for equals were offloaded
+												\ to this module
 		IF
 			DISPLAY_RESULT
-			0 OPERATION !
-			BEGIN
-				PEEK_KEYPRESS 0 <>		\ displays result until a key is pressed
-			UNTIL
-		ELSE
+			CLEAR_OPERATION
+			WAIT_KEYPRESS
 		THEN
-
-
 	0 UNTIL ;
 
 \ MAIN_LOOP

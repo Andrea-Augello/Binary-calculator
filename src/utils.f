@@ -19,6 +19,9 @@ TIMER_BASE 4 +			CONSTANT TIMER_CNT
 : ABS ( n -- |n| )
 	DUP NEGATE DUP 0 > IF NIP ELSE DROP THEN ;
 
+: R@
+	R> R> DUP >R SWAP >R ;	\ The return stack will have an extra value due to 
+									\ the call of R@
 
 : GET ( array, cell -- array[cell] )
 	CELLS + @ ;
@@ -92,10 +95,9 @@ DECIMAL
 \ Specfic words will be then written for each specific register for ease of use.
 	>R						\ puts field_size on the return stack
 	ROT					\ Puts field_num on top of the stack
-	R> DUP >R			\ put a copy of field_size back on the stack
+	R@						\ put a copy of field_size back on the stack
 	REBASE				\ now on stack: value, address, field_num
-	R> DUP >R			
-	*						\ Converts field_num into a bit shift
+	R@ *					\ Converts field_num into a bit shift
 	2DUP R> WHITEN		\ Now on stack: value, address, field_shift whitened_address_content
 	>R ROT #MASK 		\ Moves whitened_address_content to the return stack to avoid complex
 							\ stack manipulation, then shifts value by field_shift positions.

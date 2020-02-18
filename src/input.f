@@ -9,8 +9,8 @@ CREATE DIGIT_KEYS 9 , 11 ,
 		DUP 1 + >R
 		OP_KEYS SWAP GET 	\ On each cycle gets the pin# of the 
 								\ (loop number)th button
-		MASK OR			\ Computes the mask for the current pin and adds it to the
-								\ mask computed so far
+		MASK OR				\ Computes the mask for the current pin and adds it to 
+								\ the mask computed so far
 		R> DUP
 		#OPS >=
 	UNTIL
@@ -67,8 +67,8 @@ CREATE DIGIT_KEYS 9 , 11 ,
 		ROT AND 0 <>						\ Compares GPEDS0@ with the previously 
 												\ computed mask
 		IF 
-			NIP								\ Removes the previous operation value
-			R> DUP >R						\ and replaces it with the loop counter
+			NIP R@							\ Removes the previous operation value
+												\ and replaces it with the loop counter
 		ELSE
 			SWAP
 		THEN
@@ -90,8 +90,8 @@ CREATE DIGIT_KEYS 9 , 11 ,
 		ROT AND 0 <>						\ Compares GPEDS0@ with the previously 
 												\ computed mask
 		IF 
-			NIP								\ Removes the previous digit value
-			R> DUP >R						\ and replaces it with the loop counter
+			NIP R@							\ Removes the previous digit value
+												\ and replaces it with the loop counter
 		ELSE
 			SWAP
 		THEN
@@ -104,11 +104,12 @@ CREATE DIGIT_KEYS 9 , 11 ,
 : OP_KEYS_SETUP 
 	0
 	BEGIN
-		DUP 1 + >R
-		OP_KEYS SWAP GET 
-		DUP
-		INPUT SET_FUNC
-		DOWN SET_PUD
+		DUP 1 + >R				\ Puts on the return stack an incrememtned copy of the
+									\ loop counter
+		OP_KEYS SWAP GET DUP	\ Puts on the stack twice the pin number for this 
+									\ iteration 
+		INPUT SET_FUNC			\ Sets the pin as in input
+		DOWN SET_PUD			\ Sets the pull for the pin
 		R> DUP 
 		#OPS >=
 	UNTIL
