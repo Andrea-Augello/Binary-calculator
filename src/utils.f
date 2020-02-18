@@ -17,7 +17,7 @@ PERI_BASE 3000 +	 	CONSTANT TIMER_BASE
 TIMER_BASE 4 +			CONSTANT TIMER_CNT
 
 : ABS ( n -- |n| )
-	DUP NEGATE DUP 0 > IF NIP ELSE DROP THEN ;
+	DUP 0 > IF ELSE NEGATE THEN ;
 
 : R@
 	R> R> DUP >R SWAP >R ;	\ The return stack will have an extra value due to 
