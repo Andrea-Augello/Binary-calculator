@@ -106,7 +106,7 @@ These buttons are rated to work with up to 12V of direct current, so they are sa
 
 Their mechanical life expectancy is of 100000 uses which leads to a worst-case scenario of 6250 operations before a malfunction, considering the intended purpose of this project, such a life expectancy is deemed sufficient.  
 
-### LED
+### LEDs
 
 ![\label{led}](./media/led.jpeg)
 
@@ -552,5 +552,3 @@ If more functions were to be added, using a button matrix[@matrix] for the input
 \pagebreak
 
 # References
-
-[Bibtex file](./paper.bib)
