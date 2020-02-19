@@ -74,7 +74,7 @@ DECIMAL
 \ Return the register that contains the required field, and the position
 \ of the field relative to this register instead of the absolute one.
 	32 SWAP /				\ Computes how many fields fit into a register
-	/MOD 4 *					\ Computes which register contains data pertaining to the
+	/MOD CELLS				\ Computes which register contains data pertaining to the
 								\ selected field
 	ROT + SWAP ;			\ Adds the offset to the base address
 

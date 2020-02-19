@@ -40,7 +40,8 @@
 : GET_OPERATION
 	BEGIN
 		READ_KEYPRESS DUP
-		0 <> OVER ?DIGIT INVERT AND	\ Input is not null and is not a digit
+		0 <> OVER ?DIGIT INVERT AND	\ Input is not null and is not a digit,
+												\ in this phase digits are discarded.
 		IF
 			SET_OPERATION
 			TRUE								\ exit loop
@@ -68,20 +69,29 @@
 			CLEAR_OPERATION
 		ELSE
 			PEEK_KEYPRESS ?DIGIT
-			IF
-				PREPARE_NEXT
-				GET_NUMBER
+			IF									\ If, after an EQUALS, a digit is pressed
+				PREPARE_NEXT				\ the previous result is discarded and
+				GET_NUMBER					\ a new operand is expected.
 			THEN
 		THEN	
-		GET_OPERATION
+		GET_OPERATION						\ At this point either an operand has been
+												\ inputed, or the previous result is used.
+												\ In any case, it is safe to ask for an
+												\ operation.
 
 		OPERATION @ ['] EQUALS =		\ The operations for equals were offloaded
-												\ to this module
-		IF
-			DISPLAY_RESULT
-			CLEAR_OPERATION
-			WAIT_KEYPRESS
-		THEN
+												\ to this module.
+		IF										\ If EQUALS is selected the current result
+			DISPLAY_RESULT					\ is displayed,
+			CLEAR_OPERATION				\ the current operations (EQUALS) is cleared
+			WAIT_KEYPRESS					\ and the calculator will wait for further
+		THEN									\ isntructions.
 	0 UNTIL ;
 
-\ MAIN_LOOP
+: START
+	LOGIC_SETUP
+	DISPLAY_SETUP
+	INPUT_SETUP
+	MAIN_LOOP ;
+
+\ START
