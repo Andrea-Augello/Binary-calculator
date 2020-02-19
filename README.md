@@ -24,7 +24,7 @@ The course deals with:
 * Buses
 * Machine language and assembly (ARM)
 * Integer and floating-point arithmetics
-* Vectorial instructions
+* Vectored instructions
 * Multimedia extension
 * Data processing instructions
 * Condition flags
@@ -111,6 +111,8 @@ Their mechanical life expectancy is of 100000 uses which leads to a worst-case s
 ![\label{led}](./media/led.jpeg)
 
 Due to the choice of base two for the calculator, a straightforward approach to display values is through the use of LED lights [Fig. \ref{led}], with lit LEDs representing a 1 bit and an off light representing a 0 bit.    
+Each LED is connected to an output pin, and all the LEDs have a common cathode connected to GND. More pin efficient technique exist, for example Charlieplexing[@gupta2008multiplexing], or using an output matrix[@matrix],
+however the added hardware complexity and the need for constant refreshes of the display make them unsuitable choices for this project.
 
 To avoid possible confusion when interpreting the result, an extra LED lights up to signal if the shown number is negative and, as such, has to be read as a two's complement.  
 Moreover, since there is a very limited number of bits to display values if the actual result of an operation lies outside the representable range and is thus truncated, an extra LED light will turn on to signal the overflow.
@@ -195,7 +197,7 @@ Trough the command
 Since it is not possible with the selected environment to have the Raspberry automatically load the source code from the storage at startup, the code is to be sent via a serial connection.
 
 The file transfer happens character by character at a quite limited speed, with significant delay after every character and newline, furthermore, every file has to be selected singularly.  
-To cut down on transfer times, it is convenient to use a bash script to exclude unessential parts of the code (i.e. comments and empty lines), remove unnecessary newlines, and merge everything into a single file.
+To cut down on transfer times, it is convenient to use a bash script to exclude unessential parts of the code (i.e. comments and empty lines), remove unnecessary newlines, and merge everything into a single file. This script can be called from a Makefile for ease of use.
 
 The developed script, `merge_source.sh`, makes use of `awk`[@awk] to recognize comments and not print them, and remove newlines,
  `sed`[@sed] adds a newline after each ';' so that after each word is compiled, there will be a 100 ms delay.  
@@ -267,9 +269,9 @@ The new model, however, uses the opposite convention to indicate the pull, which
 
 The GPPUPDN0, GPPUPDN1, GPPUPDN2, and GPPUPDN3 registers, located starting from the 0xFE2000E4 memory address, hold the information on the current pull for each pin.  
 To change the pull for a pin one only has to write into these registers the desired values.
-Another key difference is that from those same registers used to set the pull it is possible to read what the current setting is, even after a power off.
+Another key difference is that from those same registers used to set the pull it is possible to read what the current setting is.
 
-Each of the 54 GPIO pins (except the 3rd and 5th which are pulled high by default and cannot be brought down) can have the internal pull set to high, low or have no pull at all. The PUPD{n} field determines the pull of the nth GPIO pin. The pull is maintained on restart.  
+Each of the 54 GPIO pins (except the 3rd and 5th which are pulled high by default and cannot be brought down) can have the internal pull set to high, low or have no pull at all. The PUPD{n} field determines the pull of the nth GPIO pin. During the booting process the pull for every pin is reverted to the default settings.
 
 
 
@@ -538,8 +540,7 @@ All the code written for this project is available on GitHub at [https://github.
 ## Possible improvements
 
 The output section of the calculator takes up numerous GPIO pins, so trying to extend the range of numbers is not feasible by standard means.  
-A possible solution is to employ a port expander, like the MCP23017 or the MCP23S17[@portexpander], the added delay for the I2C or SPI communication would be tolerable as there are no strict requirements on response time, and anything on the tens of milliseconds scale is generally regarded as acceptable[@responsetime].  
-An output matrix[@matrix] is also feasible, but would complicate the interpretation of the displayed values; another alternative could be utilizing an LCD.
+A possible solution is to employ a port expander, like the MCP23017 or the MCP23S17[@portexpander], the added delay for the I2C or SPI communication would be tolerable as there are no strict requirements on response time, and anything on the tens of milliseconds scale is generally regarded as acceptable[@responsetime], another alternative could be utilizing an LCD.
 
 
 Of course, if planning to use values larger than 32 bits, then most of the code on the internal representation would require changes to use variables spanning for multiple words.  
@@ -551,5 +552,3 @@ If more functions were to be added, using a button matrix[@matrix] for the input
 \pagebreak
 
 # References
-
-[Bibtex file](./paper.bib)
