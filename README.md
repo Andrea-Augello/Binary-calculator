@@ -552,3 +552,5 @@ If more functions were to be added, using a button matrix[@matrix] for the input
 \pagebreak
 
 # References
+
+[Bibtex file](./paper.bib)
