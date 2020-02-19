@@ -452,7 +452,7 @@ It is not either a reasonable solution to check the level a short interval of ti
 this approach would be equivalent to constantly polling the pin level at a fixed sampling rate and waiting for a change, which defeats the purpose of setting up an event detection.
 
 After extensive testing[^Bounce_test], it was found that the second falling edge happened, on average, after $170.3 \mu s$ $(\sigma = 113.97)$ from the first one,
- so, assuming Gaussian distribution, 99% of the bouncing events will be within $435\mu s$,[Fig. \ref{Bouncing_distribution}] which implies that adding a delay of 1ms before clearing the event detect register guarantees avoiding reading a bounce as an actual key press.
+ so, assuming Gaussian distribution, 99% of the bouncing events will be within $435\mu s$[Fig. \ref{Bouncing_distribution}], which implies that adding a delay of 1ms before clearing the event detect register guarantees avoiding reading a bounce as an actual key press.
 
 
  ![Bouncing distribution\label{Bouncing_distribution}](./media/Bouncing_distribution.png)
