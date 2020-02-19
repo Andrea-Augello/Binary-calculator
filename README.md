@@ -402,7 +402,7 @@ To overcome the latter of these issues, the absolute value of the operands repla
 Before any computation, there's an additional check to avoid division by zero, in case the divisor is zero, the `DIVISION` function will leave on the stack the highest positive integer 32 bits can represent.
 
 The `STORE_VALUE` procedure is tasked with taking from the stack a value to be interpreted as an 8-bit signed integer and storing it into the current value variable as a 32-bit number.  
-This is not a trivial operation as a negative number in two's notation will be regarded as a different positive if proper care is not taken in performing a sign extension.  
+This is not a trivial operation as a negative number in two's notation will be regarded as a different positive one if proper care is not taken in performing a sign extension.  
 The chosen approach is to truncate the 32-bit value and perform the sign extension with the method reported in [@BitTwiddling].
 
 Another word in this section plays an important role when one wants to perform operations on intermediate results: the `COMPUTE_RESULT` word works strictly on a $"last\_value \circ current\_value"$ fashion, so there is a need to take the contents of `CURRENT_VALUE` and storing them into `LAST_VALUE`, this is accomplished by `PREPARE_NEXT`.
