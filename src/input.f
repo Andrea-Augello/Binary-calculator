@@ -1,138 +1,111 @@
-5 CONSTANT #OPS
-2 CONSTANT #DIGITS
-CREATE OP_KEYS 5 , 6 , 13 , 19 , 26 ,
-CREATE DIGIT_KEYS 9 , 11 ,
+5 					CONSTANT #OPS
+2 					CONSTANT #DIGITS
+#OPS #DIGITS + CONSTANT #KEYS
 
-: OP_MASK 
+CREATE KEYS	5 , 6 , 13 , 19 , 26 ,	\ Operations
+				9 , 11 ,						\ Digits
+
+: KEYS_MASK 
 	0 0						\ 0-set mask and loop counter
 	BEGIN
 		DUP 1 + >R
-		OP_KEYS SWAP GET 	\ On each cycle gets the pin# of the 
+		KEYS SWAP GET 		\ On each cycle gets the pin# of the 
 								\ (loop number)th button
 		MASK OR				\ Computes the mask for the current pin and adds it to 
 								\ the mask computed so far
 		R> DUP
-		#OPS >=
+		#KEYS >=
 	UNTIL
 	DROP NIP ;
 
-: OP_MASK [ OP_MASK ] LITERAL ;
+: KEYS_MASK [ KEYS_MASK ] LITERAL ;
 
-: DIGIT_MASK 				\ Same as OP_MASK
-	0 0
+: GET_KEY ( GPEDS0@ -- KEY_NUM )
+	-1 0 								\ By default, if no digit matches, 
+										\ an invalid code ( -1 ) is returned
 	BEGIN
-		DUP 1 + >R
-		DIGIT_KEYS SWAP GET 
-		MASK OR
-		R> DUP
-		#DIGITS >=
+		DUP >R						\ Stores in the return stack a copy of the
+										\ loop counter, the other one will be consumed
+		KEYS SWAP GET MASK		\ Computes mask for digit_keys[loop_counter]
+		ROT DUP 						\ Brings GPEDS0@ on top of the stack and makes
+										\ a copy
+		ROT AND 0 <>				\ Compares GPEDS0@ with the previously 
+										\ computed mask
+		IF 
+			NIP R@					\ Removes the previous digit value
+										\ and replaces it with the loop counter
+		ELSE
+			SWAP
+		THEN
+		R> 1 + 
+		DUP
+		#KEYS >=
 	UNTIL
 	DROP NIP ;
-
-: DIGIT_MASK [ DIGIT_MASK ] LITERAL ;
 
 : PEEK_KEYPRESS							
-	[ OP_MASK DIGIT_MASK OR ] LITERAL 
+	KEYS_MASK 
 	GPEDS0 @ AND 
 	DUP 0 <>
 	IF
-		1 MILLISECONDS DELAY
-		GPLEV0 @ INVERT AND 			\ Makes sure the button has properly been 
-	THEN ;								\ released, else a keypress could be read twice
+		1 MILLISECONDS DELAY		\ Makes sure the button has properly been
+		GPLEV0 @ INVERT AND 		\ released, else a keypress could be read twice 
+	THEN
+	DUP 0 <>
+	IF
+		GET_KEY 
+	ELSE								\ Returns an invalid code without having to go
+		-1								\ through GET_KEY for faster execution.
+	THEN ;						
 
 : CLEAR_KEYPRESS
-	[ OP_MASK DIGIT_MASK OR ] LITERAL
-	GPEDS0 ! ;
+	KEYS_MASK GPEDS0 ! ;			\ Only clears event related to the input pins
+
+: ?VALID	( KEY_NUM -- T/F )	\ Returns true if KEY_NUM is in the
+	DUP 0 >=							\ allowed range.
+	SWAP #KEYS <  AND ;
+
+: ?DIGIT ( KEY_NUM -- T/F )
+	#OPS >=  ;
+: ?OPERATION ( KEY_NUM -- T/F )
+	#OPS < ;
 
 : READ_KEYPRESS
 	PEEK_KEYPRESS
-	DUP 0 <>
+	DUP ?VALID
 	IF
-		1 MILLISECONDS DELAY				\ Debouncing, delay found by trial and error
+		1 MILLISECONDS DELAY		\ Debouncing, delay found by trial and error
 		CLEAR_KEYPRESS 
 	THEN ;
 
-: ?DIGIT ( GPEDS0@ -- T/F )
-	DIGIT_MASK AND 0 <>  ;
+\ The following two words will ALWAYS leave on the stack a valid value to be used
+\ for following operations, even with malformed input, so proper care should be
+\ taken to validate the input before calling these routines
 
-: GET_OP#			\	( GPEDS0@ -- operation )
-	-1 0 										\ By default, if no op matches, 
-												\ an invalid code ( -1 ) is returned
-	BEGIN
-		DUP >R								\ Stores in the return stack a copy of the
-												\ loop counter, the other one will be consumed
-		OP_KEYS SWAP GET MASK			\ Computes the mask for op_keys[loop_counter]
-		ROT DUP 								\ Brings GPEDS0@ on top of the stack and makes
-												\ a copy
-		ROT AND 0 <>						\ Compares GPEDS0@ with the previously 
-												\ computed mask
-		IF 
-			NIP R@							\ Removes the previous operation value
-												\ and replaces it with the loop counter
-		ELSE
-			SWAP
-		THEN
-		R> 1 + 
-		DUP
-		#OPS >=
-	UNTIL
-	DROP NIP ;
-		
-: GET_DIGIT ( GPEDS0@ -- 0/1 )
-	-1 0 										\ By default, if no digit matches, 
-												\ an invalid code ( -1 ) is returned
-	BEGIN
-		DUP >R								\ Stores in the return stack a copy of the
-												\ loop counter, the other one will be consumed
-		DIGIT_KEYS SWAP GET MASK		\ Computes mask for digit_keys[loop_counter]
-		ROT DUP 								\ Brings GPEDS0@ on top of the stack and makes
-												\ a copy
-		ROT AND 0 <>						\ Compares GPEDS0@ with the previously 
-												\ computed mask
-		IF 
-			NIP R@							\ Removes the previous digit value
-												\ and replaces it with the loop counter
-		ELSE
-			SWAP
-		THEN
-		R> 1 + 
-		DUP
-		#DIGITS >=
-	UNTIL
-	DROP NIP ;
+: KEY>OPERATION ( KEY_NUM -- Operation_number )
+	#OPS MOD ;
 
-: OP_KEYS_SETUP 
+: KEY>DIGIT ( KEY_NUM -- Digit )
+	#OPS - #DIGITS MOD ;
+
+: KEYS_SETUP 
 	0
 	BEGIN
 		DUP 1 + >R				\ Puts on the return stack an incrememtned copy of the
 									\ loop counter
-		OP_KEYS SWAP GET DUP	\ Puts on the stack twice the pin number for this 
+		KEYS SWAP GET DUP		\ Puts on the stack twice the pin number for this 
 									\ iteration 
 		INPUT SET_FUNC			\ Sets the pin as in input
 		DOWN SET_PUD			\ Sets the pull for the pin
 		R> DUP 
-		#OPS >=
-	UNTIL
-	DROP ;
-
-: DIGIT_KEYS_SETUP 
-	0
-	BEGIN
-		DUP 1 + >R
-		DIGIT_KEYS SWAP GET 
-		DUP
-		INPUT SET_FUNC
-		DOWN SET_PUD
-		R> DUP 
-		#DIGITS >=
+		#KEYS >=
 	UNTIL
 	DROP ;
 
 : FALLING_EDGE_DETECT_SET
-	DIGIT_MASK OP_MASK OR GPFEN0 ! ;
+	KEYS_MASK GPFEN0 ! ;
 
 : INPUT_SETUP 
-	OP_KEYS_SETUP
-	DIGIT_KEYS_SETUP
+	KEYS_SETUP
 	FALLING_EDGE_DETECT_SET 
 	CLEAR_KEYPRESS ;
