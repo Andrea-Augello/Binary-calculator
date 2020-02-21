@@ -200,7 +200,8 @@ The file transfer happens character by character at a quite limited speed, with 
 To cut down on transfer times, it is convenient to use a bash script to exclude unessential parts of the code (i.e. comments and empty lines), remove unnecessary newlines, and merge everything into a single file. This script can be called from a Makefile for ease of use.
 
 The developed script, `merge_source.sh`, makes use of `awk`[@awk] to recognize comments and not print them, and remove newlines,
- `sed`[@sed] adds a newline after each ';' so that after each word is compiled, there will be a 100 ms delay.  
+ `sed`[@sed] adds a newline after each ';' so that after each word is compiled, there will be a 100 ms delay.
+Finally, multiple consecutive whitespaces are merged into a single space.   
 A back-of-the-envelope estimate shows a reduction of the loading time of 124 seconds.
 
 ```bash
