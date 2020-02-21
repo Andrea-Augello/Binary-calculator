@@ -55,7 +55,7 @@ CREATE KEYS	5 , 6 , 13 , 19 , 26 ,	\ Operations
 	IF
 		GET_KEY 
 	ELSE								\ Returns an invalid code without having to go
-		-1								\ through GET_KEY for faster execution.
+		DROP	-1						\ through GET_KEY for faster execution.
 	THEN ;						
 
 : CLEAR_KEYPRESS

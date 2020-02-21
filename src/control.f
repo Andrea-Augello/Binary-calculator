@@ -85,10 +85,13 @@
 		THEN									\ isntructions.
 	0 UNTIL ;
 
-: START
+: SETUP
 	LOGIC_SETUP
 	DISPLAY_SETUP
-	INPUT_SETUP
+	INPUT_SETUP ;
+
+: START
+	SETUP
 	MAIN_LOOP ;
 
 \ START
