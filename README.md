@@ -201,18 +201,19 @@ To cut down on transfer times, it is convenient to use a bash script to exclude 
 
 The developed script, `merge_source.sh`, makes use of `awk`[@awk] to recognize comments and not print them, and remove newlines,
  `sed`[@sed] adds a newline after each ';' so that after each word is compiled, there will be a 100 ms delay.  
-A back-of-the-envelope estimate shows a reduction of the loading time of 76.9 seconds.
+A back-of-the-envelope estimate shows a reduction of the loading time of 124 seconds.
 
 ```bash
 #!/bin/bash
 
 cd src
 cat se-ans.f utils.f logic.f output.f input.f control.f |
-awk -F"\\" '{print $1}' |                          # Removes '\' comments
-awk -F"[^A-Z]+[()][^A-Z]+" '{print $1 $    3}' |   # Removes '( )' comments
-awk '{ printf "%s ", $0 }' |                       # Removes newlines
-sed 's/\;/\;\n/g' |                                # Adds a newline after ;
-sed '/^[[:space:]]*$/d' > ../merged_src.f   
+awk -F"\\" '{print $1}' |  				                 # Removes '\' comments
+awk -F"[^A-Z]+[()][^A-Z]+" '{print $1 $    3}' | 	 # Removes '( )' comments
+awk '{ printf "%s ", $0 }' |				               # Removes newlines
+sed 's/\;/\;\n/g' |					                       # Adds a newline after ';'
+sed '/^[[:space:]]*$/d' |				                   # Removes empty lines
+sed -e 's/\t/ /g' | tr -s ' ' > ../merged_src.f  	 # Squeezes whitespaces
 ```
 
 ## ANSI compliance
