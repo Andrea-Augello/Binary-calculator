@@ -2,8 +2,8 @@
 2 					CONSTANT #DIGITS
 #OPS #DIGITS + CONSTANT #KEYS
 
-CREATE KEYS	5 , 6 , 13 , 19 , 26 ,	\ Operations
-				9 , 11 ,						\ Digits
+CREATE KEYS	5 , 6 , 13 , 19 , 26 ,	\ Operations	( + - * / = )
+				9 , 11 ,						\ Digits			( 0 1 )
 
 : KEYS_MASK 
 	0 0						\ 0-set mask and loop counter
@@ -103,7 +103,7 @@ CREATE KEYS	5 , 6 , 13 , 19 , 26 ,	\ Operations
 	DROP ;
 
 : FALLING_EDGE_DETECT_SET
-	KEYS_MASK GPFEN0 ! ;
+	GPFEN0 @ KEYS_MASK OR  GPFEN0 ! ;
 
 : INPUT_SETUP 
 	KEYS_SETUP
