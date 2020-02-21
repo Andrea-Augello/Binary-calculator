@@ -234,7 +234,7 @@ The other FORTH words in this file deal with low-level GPIO functionalities: fun
 Each button is connected to a 3.3V power supply pin of the Raspberry, so, while the circuit is closed, the input pin will surely read a logical high.  
 However when the button is kept open, the rest of the circuit would be left floating and the voltage undetermined, so, even if synchronous falling edge detection is set, random electromagnetic noise could trigger spurious detection events.  
 A popular solution to this issue is the usage of pull-up or pull-down resistors, by connecting a resistor to the voltage which should be read when the circuit is open, a well-defined tension is ensured.  
-Since the Raspberry Pi CPU is CMOS[@voinigescu2013high]-based[@gay20173v], in this project, as previously mentioned, buttons are connected to the $V_{OH}$, and internal pull-downs will be employed[@artofelectronics].
+Since the Raspberry Pi CPU is CMOS[@voinigescu2013high]-based[@gay20173v], in this project, as previously mentioned, buttons are connected to the $V_{CC}$, and internal pull-downs will be employed[@artofelectronics].
 
 The BCM2711, currently only in use on the Raspberry Pi 4 B, introduces several changes on the GPIO peripherals, each pin has many more alternate functions compared to previous models, and there is also a different procedure to set the internal pull-up/down.
 The available documentation[@pi4_datasheet] does not show the latter change yet, it references a "BCM2711 Peripherals Specification document", which is nowhere to be found.  
