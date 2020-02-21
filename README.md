@@ -111,8 +111,8 @@ Their mechanical life expectancy is of 100000 uses which leads to a worst-case s
 ![\label{led}](./media/led.jpeg)
 
 Due to the choice of base two for the calculator, a straightforward approach to display values is through the use of LED lights [Fig. \ref{led}], with lit LEDs representing a 1 bit and an off light representing a 0 bit.    
-Each LED is connected to an output pin, and all the LEDs have a common cathode connected to GND. More pin efficient technique exist, for example Charlieplexing[@gupta2008multiplexing], or using an output matrix[@matrix],
-however the added hardware complexity and the need for constant refreshes of the display make them unsuitable choices for this project.
+Each LED is connected to an output pin, and all the LEDs have a common cathode connected to GND. More pin efficient technique exist, for example, Charlieplexing[@gupta2008multiplexing], or using an output matrix[@matrix].
+However the added hardware complexity and the need for constant refreshes of the display make them unsuitable choices for this project.
 
 To avoid possible confusion when interpreting the result, an extra LED lights up to signal if the shown number is negative and, as such, has to be read as a two's complement.  
 Moreover, since there is a very limited number of bits to display values if the actual result of an operation lies outside the representable range and is thus truncated, an extra LED light will turn on to signal the overflow.
@@ -271,7 +271,7 @@ The GPPUPDN0, GPPUPDN1, GPPUPDN2, and GPPUPDN3 registers, located starting from 
 To change the pull for a pin one only has to write into these registers the desired values.
 Another key difference is that from those same registers used to set the pull it is possible to read what the current setting is.
 
-Each of the 54 GPIO pins (except the 3rd and 5th which are pulled high by default and cannot be brought down) can have the internal pull set to high, low or have no pull at all. The PUPD{n} field determines the pull of the nth GPIO pin. During the booting process the pull for every pin is reverted to the default settings.
+Each of the 54 GPIO pins (except the 3rd and 5th which are pulled high by default and cannot be brought down) can have the internal pull set to high, low or have no pull at all. The PUPD{n} field determines the pull of the nth GPIO pin. During the booting process, the pull for every pin is reverted to the default settings.
 
 
 
@@ -415,16 +415,19 @@ One could argue that a circular buffer may be best suited to store the numbers t
 
 All the operations related to the input are in a single file, the aim is to achieve low coupling between components of the project, and allow future alterations with as little restructuring as possible.
 
-The numbers of the pins linked to digit keys and those connected to operation keys are stored in two different arrays.  
-This is because, although the operations on these are strikingly similar, they hardly ever occur on both sets of pins at the same time: it only happens when dealing with GPIO registers.  
-In those occurrences it is only necessary to use a mask, which can be computed once in advance, consequently having them in a single array offers no added benefit.    
+The numbers of the pins linked to digit keys and those connected to operation keys are stored in a single array, a constant holds the position in the array where the operations end and the digits begin.  
+This is because, although from a logical standpoint, those buttons have different functions, the low-level operations on them are the same, and they regularly occur on both sets of pins at the same time.
 
-At the beginning of the code masks for both sets of pins are computed and, since they will not be changing at runtime, stored as literals.  
-These masks are used to only act on bits related to pins in use for this project.
+In those occurrences where different actions need to be taken depending on whether a digit or an operation has been selected, two special-purpose words can generate a flag used for decision-making. Consequently, having them in two separate arrays offers no added benefit.    
+
+At the beginning of the module, a mask for the input GPIO pins is computed and, since they will not be changing at runtime, stored as a literal.  
+When working with registers, this mask permits operating only on the bits related to the output pins.
 
  Two separate words implement procedures to read which keys have been pressed and to clear the event detection status. This is because the capability to pause until a key is pressed, without wiping the register, can be beneficial in many occurrences.
 
-A different word has the task to determine whether the registered keypress is a digit or an operation. Subsequent procedures will resolve, from the value of the event detection register, the specific button which prompted the status change.
+After detecting a valid keypress, the hardware level is abandoned, and a number indicating which button prompted the status change is used in place of the content of the event detection register.  
+
+A different set of words has the task to convert the button number to a valid operation number, or digit, that is guaranteed to be safe for use in other parts of the code. Nevertheless, if these words receive a button number that does not belong to the correct range, their outputs will not hold any meaning, hence before using them, the proper test words should be used.
 
 ### Debouncing
 
@@ -444,7 +447,7 @@ The first issue was trivial to fix: after detecting a button release, a check on
    IF  
       1 MILLISECONDS DELAY
       GPLEV0 @ INVERT AND        
-   THEN ;                       
+   THEN [...] ;                       
 ```
 
 To prevent the second case of incorrect triggering, the former approach will not yield satisfying results: in both genuine and spurious falling edges, the level after they are registered is low.  
