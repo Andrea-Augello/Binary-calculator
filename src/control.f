@@ -5,7 +5,7 @@
 : GET_OPERATION
 	BEGIN
 		READ_KEYPRESS DUP
-		?VALID OVER ?OPERATION AND 	\ Checks if input is a valid operation;
+		?VALID OVER ?OPERATION AND		\ Checks if input is a valid operation;
 												\ in this phase digits are discarded.
 		IF
 			SET_OPERATION
@@ -17,10 +17,10 @@
 	UNTIL ;
 
 : APPEND ( n1 n2  -- 2n2 + n1  )
-	1 LSHIFT OR ;	 		\ n2 is always a single bit, so a more efficient OR 
+	1 LSHIFT OR ;			\ n2 is always a single bit, so a more efficient OR 
 								\ operation is used in place of a sum.
 
-: GET_NUMBER 				\ reads digits until a full word has been inputed 
+: GET_NUMBER				\ reads digits until a full word has been inputed 
 								\ or an operation is selected.
 	CLEAR_DISPLAY
 	0 CURRENT_VALUE !
@@ -28,17 +28,17 @@
 	BEGIN
 		>R 
 		PEEK_KEYPRESS DUP
-		?VALID 					
+		?VALID					
 		IF
 			?DIGIT 
-	 		IF 
-		 		R> 1 + >R 
+			IF 
+				R> 1 + >R 
 				READ_KEYPRESS KEY>DIGIT 
 				CURRENT_VALUE @ APPEND 
-		 		STORE_VALUE 
+				STORE_VALUE 
 				RESULT SHOW
-	 		ELSE 
-				R> DROP WORD_SIZE >R 	\ sets the loop termination condition
+			ELSE 
+				R> DROP WORD_SIZE >R		\ sets the loop termination condition
 			THEN
 		ELSE
 			DROP 
@@ -55,14 +55,14 @@
 
 : MAIN_LOOP 
 	BEGIN 
-		OPERATION @ 0 <> 					\ check if a valid operation has been set
+		OPERATION @ 0 <>					\ check if a valid operation has been set
 												\ the only way for no operation to be set
 												\ is if the previous operation was EQUALS
 		IF										\ If it has it gets the right operand and
 												\ computes the result.
 			PREPARE_NEXT
 			GET_NUMBER 
- 			COMPUTE_RESULT
+			COMPUTE_RESULT
 			CLEAR_OPERATION
 		ELSE
 			PEEK_KEYPRESS ?DIGIT

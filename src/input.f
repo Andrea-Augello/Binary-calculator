@@ -93,7 +93,7 @@ CREATE KEYS	5 , 6 , 13 , 19 , 26 ,	\ Operations	( + - * / = )
 	BEGIN
 		DUP 1 + >R				\ Puts on the return stack an incrememtned copy of the
 									\ loop counter
-		KEYS SWAP GET DUP		\ Puts on the stack twice the pin number for this 
+		KEYS SWAP GET DUP		\ Puts twice on the stack the pin number for this 
 									\ iteration 
 		INPUT SET_FUNC			\ Sets the pin as in input
 		DOWN SET_PUD			\ Sets the pull for the pin

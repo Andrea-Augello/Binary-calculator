@@ -16,6 +16,8 @@ GPIO_BASE E4 +			CONSTANT	GPPUPDN0
 PERI_BASE 3000 +	 	CONSTANT TIMER_BASE
 TIMER_BASE 4 +			CONSTANT TIMER_CNT
 
+DECIMAL
+
 : ABS ( n -- |n| )
 	DUP 0 > IF ELSE NEGATE THEN ;
 
@@ -34,8 +36,6 @@ TIMER_BASE 4 +			CONSTANT TIMER_CNT
 
 : ON  GPSET0 ! ;
 : OFF GPCLR0 ! ;
-
-DECIMAL
 
 : MILLISECONDS 1000 * ;
 : SECONDS 1000000 * ;
@@ -80,8 +80,8 @@ DECIMAL
 
 : WHITEN ( ADDRESS STARTING_POINT NUM_BITS -- whitened address content )
 	MASK 1 -					\ Sets NUM_BITS bits to 1
-	#MASK INVERT			\ Shifts those bits, by inverting this mask every other bit
-								\ but those are now 1
+	#MASK INVERT			\ Shifts those bits by STARTING_POINT, by inverting this
+								\ mask every other bit but those are now 1
 	SWAP @ AND ;			\ Performs a logic AND between the current content of the
 								\ register and the computed mask
 	

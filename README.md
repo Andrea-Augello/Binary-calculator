@@ -273,7 +273,7 @@ The GPPUPDN0, GPPUPDN1, GPPUPDN2, and GPPUPDN3 registers, located starting from 
 To change the pull for a pin one only has to write into these registers the desired values.
 Another key difference is that from those same registers used to set the pull it is possible to read what the current setting is.
 
-Each of the 54 GPIO pins (except the 3rd and 5th which are pulled high by default and cannot be brought down) can have the internal pull set to high, low or have no pull at all. The PUPD{n} field determines the pull of the nth GPIO pin. During the booting process, the pull for every pin is reverted to the default settings.
+Each of the 54 GPIO pins (except the 2nd and 3rd which are pulled high by default and cannot be brought down) can have the internal pull set to high, low or have no pull at all. The PUPD{n} field determines the pull of the nth GPIO pin. During the booting process, the pull for every pin is reverted to the default settings.
 
 
 
